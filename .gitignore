@@ -1,0 +1,19 @@
+# === Back-end (Python) ===
+/backend/venv/
+/backend/__pycache__/
+/backend/*.pyc
+/backend/*.pyo
+/backend/.pytest_cache/
+/backend/.env
+
+# === Front-end (Quasar / Node) ===
+/frontend/node_modules/
+/frontend/dist/
+/frontend/.quasar/
+/frontend/.env
+
+# === IDEs, sistemas operativos ===
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
