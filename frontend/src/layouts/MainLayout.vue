@@ -1,117 +1,127 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh lpr lFr">
+
+    <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          Quasar App
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+          </q-avatar>
+          Title
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
+<!-- Left panel with routes list and controls -->
+    <q-drawer v-model="leftDrawerOpen" side="left" overlay elevated>
+      <div class="q-pa-md">
+        <!-- Button para crear una ruta nueva -->
+        <q-btn label="Nueva ruta" color="primary" @click="addRoute" class="full-width" />
+        <q-separator spaced />
 
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
+        <!-- Lista de rutas existentes -->
+        <q-list bordered>
+          <q-item
+            v-for="(route, idx) in routes"
+            :key="idx"
+            clickable
+            @click="selectRoute(idx)"
+            :active="idx === selectedRouteIdx"
+          >
+            <q-item-section>{{ route.name }}</q-item-section>
+          </q-item>
+        </q-list>
+
+        <!-- Datos y acciones de la ruta seleccionada -->
+        <div v-if="currentRoute">
+          <q-separator spaced />
+          <div class="q-pa-sm">
+            <div>Puntos: {{ currentRoute.points.length }}</div>
+            <q-btn
+              label="Limpiar ruta"
+              color="negative"
+              @click="clearCurrentRoute"
+              flat
+              dense
+            />
+          </div>
+        </div>
+      </div>
     </q-drawer>
 
-    <q-page-container>
-      <router-view />
+    <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated>
+      <!-- drawer content -->
+    </q-drawer>
+
+    <q-page-container class="bg-grey-1">
+ <router-view
+   :routes="routes"
+  :selected-route-idx="selectedRouteIdx"
+   :current-route="currentRoute"
+   @update-route="updateRoute"  />
     </q-page-container>
+
   </q-layout>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import { ref } from 'vue'
 
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-]
-
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink
-  },
-
-  data () {
+export default {
+  data() {
     return {
-      linksList,
-      leftDrawerOpen: false
+      // lógica de rutas
+      routes: [],
+      selectedRouteIdx: null
     }
   },
-
+  computed: {
+    currentRoute() {
+      return this.selectedRouteIdx !== null
+        ? this.routes[this.selectedRouteIdx]
+        : null
+    }
+  },
   methods: {
-    toggleLeftDrawer () {
-      this.leftDrawerOpen = !this.leftDrawerOpen
+
+    addRoute() {
+      const idx = this.routes.length + 1
+      this.routes.push({ name: `Ruta ${idx}`, points: [] })
+      this.selectedRouteIdx = this.routes.length - 1
+    },
+    selectRoute(idx) {
+      this.selectedRouteIdx = idx
+    },
+    clearCurrentRoute() {
+      if (this.currentRoute) {
+        this.currentRoute.points = []
+      }
+    },
+    updateRoute(updatedPoints) {
+      if (this.currentRoute) {
+        this.currentRoute.points = updatedPoints
+      }
+    }
+  },
+  setup () {
+    const leftDrawerOpen = ref(false)
+    const rightDrawerOpen = ref(false)
+    
+    return {
+      leftDrawerOpen,
+      toggleLeftDrawer () {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      },
+
+      rightDrawerOpen,
+      toggleRightDrawer () {
+        rightDrawerOpen.value = !rightDrawerOpen.value
+      }
     }
   }
-})
+}
 </script>
