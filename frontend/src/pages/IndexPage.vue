@@ -1,3 +1,4 @@
+<!-- IndexPage.vue -->
 <template>
   <q-page class="relative-position no-padding">
     <div class="absolute-full">
@@ -10,14 +11,26 @@
         @click="onMapClick"
       >
         <l-tile-layer :url="tileUrl" />
-        <l-marker
-          v-for="(pt, idx) in points"
-          :key="idx"
-          :lat-lng="pt"
-        />
+        <template v-if="currentRoute.visible">
+          <l-marker
+            v-for="(pt, idx) in points"
+            :key="idx"
+            :lat-lng="pt"
+          />
+          <l-polyline
+            v-if="route"
+            :lat-lngs="route"
+            :color="currentRoute.color"
+            :weight="5"
+            :opacity="1"
+          />
+        </template>
         <l-polyline
-          v-if="route"
+          v-else-if="route"
           :lat-lngs="route"
+          :color="currentRoute.color"
+          :weight="2"
+          :opacity="0.4"
         />
       </l-map>
     </div>
@@ -40,14 +53,14 @@ export default {
   props: {
     currentRoute: {
       type: Object,
-      default: null
+      default: () => ({ points: [], color: 'blue', visible: true })
     }
   },
 
   data() {
     return {
       zoom: 13,
-      center: [ -0.180653, -78.467838 ],  // Quito
+      center: [-0.180653, -78.467838],
       tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       points: [],
       route: null
@@ -57,30 +70,25 @@ export default {
   watch: {
     currentRoute: {
       handler(route) {
-        if (route) {
-          // cargar puntos de la ruta seleccionada
-          this.points = route.points.slice()
-          if (this.points.length >= 2) {
-            this.calcRoute(this.points)
-          } else {
-            this.route = null
-          }
-        }
-        else {
-          this.points = []
-          this.route  = null
+        console.log('Route changed', route)
+        this.points = route.points.slice()
+        if (this.points.length >= 2) {
+          this.calcRoute(this.points)
+        } else {
+          this.route = null
         }
       },
-      immediate: true
+      immediate: true,
+      deep: true
     }
   },
 
   methods: {
     onMapClick(evt) {
+      console.log('Map clicked at', evt.latlng)
       const { lat, lng } = evt.latlng
       this.points.push([lat, lng])
       this.$emit('update-route', this.points)
-
       if (this.points.length >= 2) {
         this.calcRoute(this.points)
       }
@@ -88,6 +96,7 @@ export default {
     },
 
     async calcRoute(ptArr) {
+      console.log('Calculating current route', ptArr)
       const coords = ptArr.map(([la, lo]) => `${lo},${la}`).join(';')
       try {
         const res = await fetch(`http://localhost:8000/api/route?coords=${coords}`)
@@ -101,17 +110,13 @@ export default {
   },
 
   mounted() {
-    // Forzar recálculo inicial y al hacer resize (drawer toggle)
     const resizeMap = () => {
       this.$nextTick(() => {
         const mapObj = this.$refs.mapRef?.mapObject
         if (mapObj) mapObj.invalidateSize()
       })
     }
-
-    // Una primera vez tras cargar
     setTimeout(resizeMap, 300)
-    // Cada vez que cambie el tamaño de ventana
     window.addEventListener('resize', resizeMap)
   },
 
@@ -122,9 +127,6 @@ export default {
 </script>
 
 <style scoped>
-.full-page {
-  /* ya no la usamos */
-}
 .q-page.no-padding {
   padding: 0 !important;
 }
