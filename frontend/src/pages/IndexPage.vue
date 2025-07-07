@@ -11,26 +11,18 @@
         @click="onMapClick"
       >
         <l-tile-layer :url="tileUrl" />
-        <template v-if="currentRoute.visible">
-          <l-marker
-            v-for="(pt, idx) in points"
-            :key="idx"
-            :lat-lng="pt"
-          />
-          <l-polyline
-            v-if="route"
-            :lat-lngs="route"
-            :color="currentRoute.color"
-            :weight="5"
-            :opacity="1"
-          />
-        </template>
+        <l-marker
+          v-for="(pt, idx) in points"
+          :key="idx"
+          :lat-lng="pt"
+        />
         <l-polyline
-          v-else-if="route"
-          :lat-lngs="route"
-          :color="currentRoute.color"
-          :weight="2"
-          :opacity="0.4"
+          v-for="item in routeLines"
+          :key="item.idx"
+          :lat-lngs="item.geom"
+          :color="item.route.color"
+          :weight=" item.idx === selectedRouteIdx ? 5 : 5"
+          :opacity=" item.idx === selectedRouteIdx ? 1 : 0.7"
         />
       </l-map>
     </div>
@@ -51,9 +43,13 @@ export default {
   components: { LMap, LTileLayer, LMarker, LPolyline },
 
   props: {
-    currentRoute: {
-      type: Object,
-      default: () => ({ points: [], color: 'blue', visible: true })
+    routes: {
+      type: Array,
+      required: true
+    },
+    selectedRouteIdx: {
+      type: Number,
+      default: null
     }
   },
 
@@ -63,57 +59,76 @@ export default {
       center: [-0.180653, -78.467838],
       tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       points: [],
-      route: null
+      routeGeometries: []
     }
   },
 
   watch: {
-    currentRoute: {
-      handler(route) {
-        console.log('Route changed', route)
-        this.points = route.points.slice()
-        if (this.points.length >= 2) {
-          this.calcRoute(this.points)
-        } else {
-          this.route = null
+    routes: {
+      handler(list) {
+        console.log('Routes changed', list)
+        while (this.routeGeometries.length < list.length) {
+          this.routeGeometries.push(null)
         }
+        list.forEach((r, i) => {
+          if (r.points.length >= 2 && this.routeGeometries[i] == null) {
+            this.calcRoute(i, r.points)
+          }
+        })
       },
       immediate: true,
       deep: true
+    },
+    selectedRouteIdx(idx) {
+      console.log('Selected route', idx)
+      const route = this.routes[idx]
+      this.points = route ? route.points.slice() : []
+      if (route && route.points.length >= 2 && this.routeGeometries[idx] == null) {
+        this.calcRoute(idx, route.points)
+      }
     }
   },
 
   methods: {
     onMapClick(evt) {
-      console.log('Map clicked at', evt.latlng)
+      console.log('Map clicked', evt.latlng)
       const { lat, lng } = evt.latlng
       this.points.push([lat, lng])
       this.$emit('update-route', this.points)
       if (this.points.length >= 2) {
-        this.calcRoute(this.points)
+        this.calcRoute(this.selectedRouteIdx, this.points)
       }
       this.center = [lat, lng]
     },
 
-    async calcRoute(ptArr) {
-      console.log('Calculating current route', ptArr)
-      const coords = ptArr.map(([la, lo]) => `${lo},${la}`).join(';')
+    async calcRoute(idx, pts) {
+      console.log(`Calculating route ${idx}`, pts)
+      const coords = pts.map(([la, lo]) => `${lo},${la}`).join(';')
       try {
         const res = await fetch(`http://localhost:8000/api/route?coords=${coords}`)
         const data = await res.json()
-        this.route = data.routes[0].geometry.coordinates.map(p => [p[1], p[0]])
+        const geom = data.routes[0].geometry.coordinates.map(p => [p[1], p[0]])
+        this.routeGeometries.splice(idx, 1, geom)
       }
       catch {
-        this.route = null
+        this.routeGeometries.splice(idx, 1, null)
       }
+    }
+  },
+
+  computed: {
+    routeLines() {
+      return this.routeGeometries
+        .map((geom, idx) => ({ geom, idx, route: this.routes[idx] }))
+        .filter(item => item.geom && item.route.visible)
     }
   },
 
   mounted() {
     const resizeMap = () => {
       this.$nextTick(() => {
-        const mapObj = this.$refs.mapRef?.mapObject
-        if (mapObj) mapObj.invalidateSize()
+        const m = this.$refs.mapRef?.mapObject
+        if (m) m.invalidateSize()
       })
     }
     setTimeout(resizeMap, 300)

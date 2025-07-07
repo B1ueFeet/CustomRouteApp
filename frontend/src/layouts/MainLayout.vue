@@ -47,6 +47,8 @@
 
     <q-page-container class="bg-grey-1">
       <router-view
+        :routes="routes"
+        :selected-route-idx="selectedRouteIdx"
         :current-route="currentRoute"
         @update-route="updateRoute"
       />
