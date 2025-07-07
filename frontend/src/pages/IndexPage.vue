@@ -21,7 +21,7 @@
           :key="item.idx"
           :lat-lngs="item.geom"
           :color="item.route.color"
-          :weight=" item.idx === selectedRouteIdx ? 5 : 5"
+          :weight=" item.idx === selectedRouteIdx ? 5 : 2"
           :opacity=" item.idx === selectedRouteIdx ? 1 : 0.7"
         />
       </l-map>
@@ -50,6 +50,10 @@ export default {
     selectedRouteIdx: {
       type: Number,
       default: null
+    },
+    recalcIdx: {
+      type: Number,
+      default: null
     }
   },
 
@@ -67,14 +71,15 @@ export default {
     routes: {
       handler(list) {
         console.log('Routes changed', list)
-        while (this.routeGeometries.length < list.length) {
-          this.routeGeometries.push(null)
-        }
+        const old = this.routeGeometries.slice()
+        this.routeGeometries = list.map((r,i) => old[i] ?? null)
         list.forEach((r, i) => {
           if (r.points.length >= 2 && this.routeGeometries[i] == null) {
             this.calcRoute(i, r.points)
           }
         })
+        const sel = list[this.selectedRouteIdx]
+        this.points = sel ? sel.points.slice() : []
       },
       immediate: true,
       deep: true
@@ -85,6 +90,12 @@ export default {
       this.points = route ? route.points.slice() : []
       if (route && route.points.length >= 2 && this.routeGeometries[idx] == null) {
         this.calcRoute(idx, route.points)
+      }
+    },
+    recalcIdx(idx) {
+      if (idx === this.selectedRouteIdx && this.routes[idx]?.points.length >= 2) {
+        console.log('Force recalculating route', idx)
+        this.calcRoute(idx, this.routes[idx].points)
       }
     }
   },

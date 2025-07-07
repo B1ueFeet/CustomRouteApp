@@ -28,17 +28,12 @@
           >
             <q-item-section>{{ route.name }}</q-item-section>
             <q-item-section side>
+              <q-btn dense flat icon="delete" @click.stop="deleteRoute(idx)" />
+              <q-btn dense flat icon="refresh" @click.stop="recalcRoute(idx)" />
               <q-toggle v-model="route.visible" dense />
             </q-item-section>
           </q-item>
         </q-list>
-        <div v-if="currentRoute">
-          <q-separator spaced />
-          <div class="q-pa-sm">
-            <div>Puntos: {{ currentRoute.points.length }}</div>
-            <q-btn label="Limpiar ruta" color="negative" @click="clearCurrentRoute" flat dense />
-          </div>
-        </div>
       </div>
     </q-drawer>
 
@@ -50,6 +45,7 @@
         :routes="routes"
         :selected-route-idx="selectedRouteIdx"
         :current-route="currentRoute"
+        :recalc-idx="recalcIdx"
         @update-route="updateRoute"
       />
     </q-page-container>
@@ -62,38 +58,57 @@ import { ref } from 'vue'
 export default {
   data() {
     return {
+      colors: ['red','blue','green','orange','purple'],
       routes: [
         { name: 'Ruta 1', points: [], color: 'red', visible: true }
       ],
-      selectedRouteIdx: 0
+      selectedRouteIdx: 0,
+      recalcIdx: null
     }
   },
   computed: {
     currentRoute() {
-      return this.routes[this.selectedRouteIdx]
+      return this.routes[this.selectedRouteIdx] || null
     }
   },
   methods: {
     addRoute() {
-      const idx = this.routes.length + 1
-      console.log('Adding route', idx)
+      const idx = this.routes.length
+      console.log('Adding route', idx + 1)
       this.routes.push({
-        name: `Ruta ${idx}`,
+        name: `Ruta ${idx + 1}`,
         points: [],
-        color: ['blue','green','orange','purple'][idx % 4],
+        color: this.colors[idx % this.colors.length],
         visible: true
       })
-      this.selectedRouteIdx = this.routes.length - 1
+      this.selectedRouteIdx = idx
     },
     selectRoute(idx) {
       console.log('Selecting route', idx)
       this.selectedRouteIdx = idx
     },
-    clearCurrentRoute() {
-      if (this.currentRoute) {
-        console.log('Clearing route', this.selectedRouteIdx)
-        this.currentRoute.points = []
+    deleteRoute(idx) {
+      console.log('Deleting route', idx)
+      const prev = this.selectedRouteIdx
+      this.routes.splice(idx, 1)
+      this.routes.forEach((r, i) => {
+        r.name = `Ruta ${i + 1}`
+        r.color = this.colors[i % this.colors.length]
+      })
+      if (this.routes.length === 0) {
+        this.selectedRouteIdx = null
+      } else if (prev === idx) {
+        this.selectedRouteIdx = Math.min(idx, this.routes.length - 1)
+      } else if (prev > idx) {
+        this.selectedRouteIdx = prev - 1
+      } else {
+        this.selectedRouteIdx = prev
       }
+    },
+    recalcRoute(idx) {
+      console.log('Recalculating route', idx)
+      this.recalcIdx = idx
+      setTimeout(() => { this.recalcIdx = null }, 0)
     },
     updateRoute(updatedPoints) {
       if (this.currentRoute) {
