@@ -43,11 +43,12 @@
           :clickable="false"
         />
 
-        <!-- User location arrow -->
+        <!-- User location icon -->
         <l-marker
           v-if="position"
           :lat-lng="position"
-          :icon="userIcon"
+          :iconP="userIcon"
+
         />
       </l-map>
     </div>
@@ -64,6 +65,7 @@ import {
   LCircle
 } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
+import personaIcon from '../assets/persona.png'  // tu PNG en src/assets/persona.png
 
 // Default, start, end icons
 const defaultIcon = L.icon({
@@ -82,24 +84,25 @@ const redIcon = L.icon({
   iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
 })
 
-// Google-style arrow for user location
-const userIcon = L.divIcon({
-  className: 'user-location-arrow',
-  iconSize: [24, 24],
-  iconAnchor: [12, 12]
+// Icon de ubicación (flecha) usando tu PNG
+const userIcon = L.icon({
+  iconUrl: personaIcon,
+  iconSize: [32, 32],
+  iconAnchor: [16, 16],
+  popupAnchor: [0, -16]
 })
 
 export default {
   name: 'IndexPage',
   components: { LMap, LTileLayer, LMarker, LPolyline, LCircle },
   props: {
-    routes:     { type: Array,  required: true },
+    routes:           { type: Array,  required: true },
     selectedRouteIdx: { type: Number, default: null },
-    recalcIdx:  { type: Number, default: null },
+    recalcIdx:        { type: Number, default: null },
     currentRoute:     { type: Object, default: null },
-    editing:    { type: Boolean, default: false },
-    cleaning:   { type: Boolean, default: false },
-    position:   { type: Array,  default: null }
+    editing:          { type: Boolean, default: false },
+    cleaning:         { type: Boolean, default: false },
+    position:         { type: Array,   default: null }
   },
   data() {
     return {
@@ -143,8 +146,8 @@ export default {
   methods: {
     getMarkerIcon(i) {
       const last = this.points.length - 1
-      if (i === 0)       return greenIcon
-      if (i === last)    return redIcon
+      if (i === 0)    return greenIcon
+      if (i === last) return redIcon
       return defaultIcon
     },
     isNearAnySegment(latlng, r) {
@@ -227,10 +230,7 @@ export default {
       let md = Infinity, idx = 1
       pts.forEach((p, i) => {
         if (i < pts.length - 1) {
-          const mid = L.latLng(
-            (p[0] + pts[i+1][0]) / 2,
-            (p[1] + pts[i+1][1]) / 2
-          )
+          const mid = L.latLng((p[0]+pts[i+1][0])/2, (p[1]+pts[i+1][1])/2)
           const d = latlng.distanceTo(mid)
           if (d < md) { md = d; idx = i+1 }
         }
@@ -260,9 +260,7 @@ export default {
     }
   },
   mounted() {
-    const resize = () => {
-      this.$nextTick(() => this.$refs.mapRef?.mapObject.invalidateSize())
-    }
+    const resize = () => this.$refs.mapRef?.mapObject.invalidateSize()
     setTimeout(resize, 300)
     window.addEventListener('resize', resize)
   },
@@ -275,14 +273,4 @@ export default {
 <style scoped>
 .q-page.no-padding { padding: 0 !important; }
 .clean-mode .leaflet-container { cursor: crosshair !important; }
-
-/* Google-style blue arrow */
-.user-location-arrow {
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 24px solid #4285F4;
-  transform: rotate(0deg);
-}
 </style>
