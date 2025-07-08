@@ -15,7 +15,6 @@
 
     <q-drawer v-model="leftDrawerOpen" side="left" overlay elevated>
       <div class="q-pa-md">
-
         <q-btn label="Nueva ruta" color="primary" @click="addRoute" class="full-width">
           <q-tooltip>Nueva ruta</q-tooltip>
         </q-btn>
@@ -31,7 +30,6 @@
 
         <q-separator spaced />
         <q-list bordered padding>
-
           <q-item
             v-for="(route, idx) in routes"
             :key="idx"
@@ -69,9 +67,7 @@
                 <q-tooltip>Mostrar/Ocultar ruta</q-tooltip>
               </q-toggle>
             </q-item-section>
-
           </q-item>
-
         </q-list>
 
         <q-separator spaced />
@@ -84,7 +80,27 @@
       </div>
     </q-drawer>
 
-    <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated />
+    <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated>
+      <div class="q-pa-md">
+        <div v-if="instructions.length">
+          <h6>Indicaciones</h6>
+          <q-list bordered>
+            <q-item
+              v-for="(step, i) in instructions"
+              :key="i"
+              :active="i === currentStepIndex"
+            >
+              <q-item-section>{{ i + 1 }}. {{ step.text }}</q-item-section>
+              <q-item-section side>{{ Math.round(step.distance) }} m</q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+        <div v-else class="text-grey">
+          Calcula o selecciona una ruta
+        </div>
+      </div>
+    </q-drawer>
+
     <q-page-container class="bg-grey-1">
       <router-view
         :routes="routes"
@@ -93,7 +109,9 @@
         :recalc-idx="recalcIdx"
         :editing="editing"
         :cleaning="cleaning"
+        :position="position"
         @update-route="updateRoute"
+        @update-instructions="setInstructions"
       />
     </q-page-container>
   </q-layout>
@@ -101,8 +119,15 @@
 
 <script>
 import { ref } from 'vue'
+import L from 'leaflet'
 
 export default {
+  setup() {
+    return {
+      leftDrawerOpen: ref(false),
+      rightDrawerOpen: ref(false)
+    }
+  },
   data() {
     return {
       colors: ['red','blue','green','orange','purple'],
@@ -110,7 +135,11 @@ export default {
       selectedRouteIdx: 0,
       recalcIdx: null,
       editing: false,
-      cleaning: false
+      cleaning: false,
+      instructions: [],
+      currentStepIndex: 0,
+      position: null,
+      watchId: null
     }
   },
   computed: {
@@ -129,7 +158,7 @@ export default {
       reader.onload = () => {
         const json = JSON.parse(reader.result)
         const arr = Array.isArray(json) ? json : [json]
-        this.routes = arr.map((r,i) => ({
+        this.routes = arr.map((r, i) => ({
           name: r.name || `Ruta ${i+1}`,
           points: (r.waypoints||[]).map(w => [w.lat, w.lng]),
           color: r.color || this.colors[i % this.colors.length],
@@ -218,20 +247,46 @@ export default {
         visible: b.visible
       })
       this.selectedRouteIdx = j
+    },
+    setInstructions(idx, steps) {
+      if (idx === this.selectedRouteIdx) {
+        this.instructions = steps
+        this.currentStepIndex = 0
+      }
+    },
+    updateCurrentStep() {
+      if (!this.instructions.length || !this.position) return
+      let next = this.currentStepIndex
+      for (let i = 0; i < this.instructions.length; i++) {
+        const [lat, lng] = this.instructions[i].location
+        const d = L.latLng(...this.position).distanceTo(L.latLng(lat, lng))
+        if (d < 20) next = i + 1
+        else break
+      }
+      this.currentStepIndex = Math.min(next, this.instructions.length - 1)
+    },
+    toggleLeftDrawer() {
+      this.leftDrawerOpen = !this.leftDrawerOpen
+    },
+    toggleRightDrawer() {
+      this.rightDrawerOpen = !this.rightDrawerOpen
     }
   },
-  setup() {
-    const leftDrawerOpen = ref(false)
-    const rightDrawerOpen = ref(false)
-    return {
-      leftDrawerOpen,
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-      rightDrawerOpen,
-      toggleRightDrawer() {
-        rightDrawerOpen.value = !rightDrawerOpen.value
-      }
+  mounted() {
+    if ('geolocation' in navigator) {
+      this.watchId = navigator.geolocation.watchPosition(
+        pos => {
+          this.position = [pos.coords.latitude, pos.coords.longitude]
+          this.updateCurrentStep()
+        },
+        console.error,
+        { enableHighAccuracy: true }
+      )
+    }
+  },
+  beforeUnmount() {
+    if (this.watchId != null) {
+      navigator.geolocation.clearWatch(this.watchId)
     }
   }
 }
