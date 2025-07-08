@@ -5,7 +5,7 @@
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
         <q-toolbar-title>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
           </q-avatar>
           Title
         </q-toolbar-title>
@@ -29,24 +29,18 @@
             <q-item-section side>
               <q-btn dense flat icon="delete" @click.stop="deleteRoute(idx)" />
               <q-btn dense flat icon="refresh" @click.stop="recalcRoute(idx)" />
+              <q-btn dense flat icon="undo" @click.stop="undoRoute(idx)" />
               <q-toggle v-model="route.visible" dense />
             </q-item-section>
           </q-item>
         </q-list>
         <q-separator spaced />
-        <q-btn label="Modo edición" color="secondary" @click="toggleEditing" class="full-width" />
+        <q-toggle v-model="editing" label="Modo edición" class="full-width" dense />
         <q-separator spaced />
         <q-btn
           label="Limpiar ruta"
           color="primary"
           @click="clearRoute"
-          class="full-width"
-          :disable="!currentRoute || currentRoute.points.length === 0"
-        />
-        <q-btn
-          label="Deshacer último punto"
-          color="primary"
-          @click="undoLastPoint"
           class="full-width"
           :disable="!currentRoute || currentRoute.points.length === 0"
         />
@@ -75,10 +69,8 @@ import { ref } from 'vue'
 export default {
   data() {
     return {
-      colors: ['red','blue','green','orange','purple'],
-      routes: [
-        { name: 'Ruta 1', points: [], color: 'red', visible: true }
-      ],
+      colors: ['red', 'blue', 'green', 'orange', 'purple'],
+      routes: [{ name: 'Ruta 1', points: [], color: 'red', visible: true }],
       selectedRouteIdx: 0,
       recalcIdx: null,
       editing: false
@@ -129,33 +121,33 @@ export default {
         this.currentRoute.points = updatedPoints
       }
     },
-    toggleEditing() {
-      console.log('Toggling editing mode', this.editing)
-      this.editing = !this.editing
+    undoRoute(idx) {
+      if (this.routes[idx].points.length) {
+        console.log('Undoing last point for route', idx)
+        this.routes[idx].points.pop()
+        this.recalcIdx = idx
+        setTimeout(() => { this.recalcIdx = null }, 0)
+      }
     },
     clearRoute() {
       if (this.currentRoute) {
         console.log('Clearing route', this.selectedRouteIdx)
         this.currentRoute.points = []
-      }
-    },
-    undoLastPoint() {
-      if (this.currentRoute && this.currentRoute.points.length) {
-        console.log('Undoing last point', this.selectedRouteIdx)
-        this.currentRoute.points.pop()
+        this.recalcIdx = this.selectedRouteIdx
+        setTimeout(() => { this.recalcIdx = null }, 0)
       }
     }
   },
-  setup () {
+  setup() {
     const leftDrawerOpen = ref(false)
     const rightDrawerOpen = ref(false)
     return {
       leftDrawerOpen,
-      toggleLeftDrawer () {
+      toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       rightDrawerOpen,
-      toggleRightDrawer () {
+      toggleRightDrawer() {
         rightDrawerOpen.value = !rightDrawerOpen.value
       }
     }

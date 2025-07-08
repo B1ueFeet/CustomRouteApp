@@ -91,7 +91,8 @@ export default {
         console.log('Current route changed, updating points', newRoute)
         this.points = newRoute && newRoute.points ? newRoute.points.slice() : []
       },
-      immediate: true
+      immediate: true,
+      deep: true
     },
     recalcIdx(val) {
       if (val === this.selectedRouteIdx && this.points.length >= 2) {
@@ -177,7 +178,7 @@ export default {
         if (data.routes && data.routes.length) {
           const coordsGeo = data.routes[0].geometry.coordinates
           const latlngs = coordsGeo.map(c => [c[1], c[0]])
-          this.routeGeometries[idx] = latlngs
+          this.routeGeometries.splice(idx, 1, latlngs)
         }
       } catch (err) {
         console.error('Error fetching route', err)
