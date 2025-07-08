@@ -15,7 +15,9 @@
 
     <q-drawer v-model="leftDrawerOpen" side="left" overlay elevated>
       <div class="q-pa-md">
-        <q-btn label="Nueva ruta" color="primary" @click="addRoute" class="full-width" />
+        <q-btn label="Nueva ruta" color="primary" @click="addRoute" class="full-width">
+          <q-tooltip>Nueva ruta</q-tooltip>
+        </q-btn>
         <q-separator spaced />
         <q-list bordered>
           <q-item
@@ -27,23 +29,28 @@
           >
             <q-item-section>{{ route.name }}</q-item-section>
             <q-item-section side>
-              <q-btn dense flat icon="delete" @click.stop="deleteRoute(idx)" />
-              <q-btn dense flat icon="refresh" @click.stop="recalcRoute(idx)" />
-              <q-btn dense flat icon="undo" @click.stop="undoRoute(idx)" />
-              <q-toggle v-model="route.visible" dense />
+              <q-btn dense flat icon="delete" @click.stop="deleteRoute(idx)">
+                <q-tooltip>Eliminar ruta</q-tooltip>
+              </q-btn>
+              <q-btn dense flat icon="refresh" @click.stop="recalcRoute(idx)">
+                <q-tooltip>Recalcular ruta</q-tooltip>
+              </q-btn>
+              <q-btn dense flat icon="undo" @click.stop="undoRoute(idx)">
+                <q-tooltip>Deshacer último punto</q-tooltip>
+              </q-btn>
+              <q-btn dense flat icon="clear_all" @click.stop="clearRoute(idx)">
+                <q-tooltip>Limpiar ruta completa</q-tooltip>
+              </q-btn>
+              <q-toggle v-model="route.visible" dense>
+                <q-tooltip>Mostrar/Ocultar ruta</q-tooltip>
+              </q-toggle>
             </q-item-section>
           </q-item>
         </q-list>
         <q-separator spaced />
-        <q-toggle v-model="editing" label="Modo edición" class="full-width" dense />
-        <q-separator spaced />
-        <q-btn
-          label="Limpiar ruta"
-          color="primary"
-          @click="clearRoute"
-          class="full-width"
-          :disable="!currentRoute || currentRoute.points.length === 0"
-        />
+        <q-toggle v-model="editing" label="Modo edición" class="full-width" dense>
+          <q-tooltip>Activar/Desactivar edición de puntos</q-tooltip>
+        </q-toggle>
       </div>
     </q-drawer>
 
@@ -129,11 +136,11 @@ export default {
         setTimeout(() => { this.recalcIdx = null }, 0)
       }
     },
-    clearRoute() {
-      if (this.currentRoute) {
-        console.log('Clearing route', this.selectedRouteIdx)
-        this.currentRoute.points = []
-        this.recalcIdx = this.selectedRouteIdx
+    clearRoute(idx) {
+      if (this.routes[idx].points.length) {
+        console.log('Clearing route', idx)
+        this.routes[idx].points = []
+        this.recalcIdx = idx
         setTimeout(() => { this.recalcIdx = null }, 0)
       }
     }

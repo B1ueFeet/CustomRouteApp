@@ -67,7 +67,8 @@ export default {
       tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       points: [],
       routeGeometries: [],
-      hoverCircle: null
+      hoverCircle: null,
+      skipMapClick: false
     }
   },
   computed: {
@@ -112,6 +113,10 @@ export default {
       return false
     },
     onMapClick(evt) {
+      if (this.skipMapClick) {
+        this.skipMapClick = false
+        return
+      }
       console.log('Map clicked', evt.latlng)
       const { lat, lng } = evt.latlng
       if (this.editing && this.points.length >= 2) {
@@ -151,6 +156,9 @@ export default {
       if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
     },
     onPolylineClick(item, evt) {
+      if (!this.editing) return
+      evt.originalEvent.stopPropagation()
+      this.skipMapClick = true
       console.log('Polyline clicked', item.idx, evt.latlng)
       const newPt = [evt.latlng.lat, evt.latlng.lng]
       const insertIndex = this.findInsertIndex(this.points, evt.latlng)
