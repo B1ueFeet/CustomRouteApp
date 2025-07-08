@@ -37,9 +37,14 @@
 
         <!-- Hover/delete circle -->
         <l-circle
-          v-if="hoverCircle"
-          :center="hoverCircle"
-          :radius="cleaning ? 500 : 200"
+          v-if="cleaning && hoverCircle"
+          :lat-lng="hoverCircle"
+          :radius="200"
+          :stroke="true"
+          :fill="true"
+          :fill-opacity="0.2"
+          fill-color="red"
+          color="red"
           :clickable="false"
         />
 
@@ -50,6 +55,41 @@
           :icon="userIcon"
         />
 
+<!-- Hover circle para definir paradas -->
+        <l-circle
+          v-if="stopsMode && hoverCircle"
+          :lat-lng="hoverCircle"
+          :radius="stopsRadius"
+          :stroke="true"
+          :fill="true"
+          :fill-opacity="0.2"
+          :clickable="false"
+        />
+
+        <!-- Círculo alrededor de cada parada -->
+        <l-circle
+          v-for="(s, i) in localStops"
+          :key="'stop-circle-'+i"
+          :lat-lng="s"
+          :radius="stopsRadius"
+          :stroke="true"
+          :fill="true"
+          :fill-opacity="0.2"
+          fill-color="stopCircleColor"
+          :clickable="false"
+        />
+        <!-- Marcadores de paradas -->
+        <l-marker
+          v-for="(s, i) in localStops"
+          :key="'stop-'+i"
+          :lat-lng="s"
+          :icon="busIcon"
+          :draggable="stopsEditing"
+          @dragend="onStopDragEnd($event, i)"
+          @click.stop="removeLocalStop(i)"
+        />
+
+
       </l-map>
     </div>
   </q-page>
@@ -57,17 +97,11 @@
 
 <script>
 import L from 'leaflet'
-import {
-  LMap,
-  LTileLayer,
-  LMarker,
-  LPolyline,
-  LCircle
-} from '@vue-leaflet/vue-leaflet'
+import { LMap, LTileLayer, LMarker, LPolyline, LCircle } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
-import personaIcon from '/persona.png'  
 
-// Default, start, end icons
+const stopCircleColor = '#86158e'
+
 const defaultIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
   shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
@@ -83,13 +117,15 @@ const redIcon = L.icon({
   shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
   iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
 })
-
-// FontAwesome divIcon for user location
 const userIcon = L.divIcon({
-  className: '',            // sin estilos extra
+  className: '',
   html: '<i class="fa-solid fa-person" style="color:#63E6BE; font-size:30px;"></i>',
-  iconSize:   [24, 24],
-  iconAnchor: [12, 12]
+  iconSize: [24,24], iconAnchor: [12,12]
+})
+const busIcon = L.divIcon({
+  className: '',
+  html: '<i class="fa-solid fa-bus" style="color: #86158e; font-size:30px;"></i>',
+  iconSize: [24,24], iconAnchor: [12,12]
 })
 
 export default {
@@ -102,7 +138,11 @@ export default {
     currentRoute:     { type: Object, default: null },
     editing:          { type: Boolean, default: false },
     cleaning:         { type: Boolean, default: false },
-    position:         { type: Array,   default: null }
+    position:         { type: Array,   default: null },
+    stops:            { type: Array,   default: () => [] },
+    stopsMode:        { type: Boolean, default: false },
+    stopsRadius:      { type: Number,  default: 200 },
+    stopsEditing:     { type: Boolean, default: false }
   },
   data() {
     return {
@@ -113,8 +153,26 @@ export default {
       routeGeometries: [],
       hoverCircle: null,
       skipMapClick: false,
-      userIcon
+      localStops: this.stops.slice(),
+      userIcon,
+      busIcon
     }
+  },
+  watch: {
+    routes: {
+      handler(r) { this.routeGeometries = r.map(x => x.points ? x.points.slice() : []) },
+      deep: true, immediate: true
+    },
+    currentRoute: {
+      handler(r) { this.points = r && r.points ? r.points.slice() : [] },
+      deep: true, immediate: true
+    },
+    recalcIdx(val) {
+      if (val === this.selectedRouteIdx && this.points.length >= 2) {
+        this.calcRoute(val, this.points)
+      }
+    },
+    stops(newVal) { this.localStops = newVal.slice() }
   },
   computed: {
     routeLines() {
@@ -123,92 +181,76 @@ export default {
         .filter(item => item.route.visible && item.geom.length > 1)
     }
   },
-  watch: {
-    routes: {
-      handler(r) {
-        this.routeGeometries = r.map(x => x.points ? x.points.slice() : [])
-      },
-      deep: true,
-      immediate: true
-    },
-    currentRoute: {
-      handler(r) {
-        this.points = r && r.points ? r.points.slice() : []
-      },
-      deep: true,
-      immediate: true
-    },
-    recalcIdx(val) {
-      if (val === this.selectedRouteIdx && this.points.length >= 2) {
-        this.calcRoute(val, this.points)
-      }
-    }
-  },
   methods: {
+    onMapMouseOut() {
+  this.hoverCircle = null
+},
     getMarkerIcon(i) {
       const last = this.points.length - 1
       if (i === 0)    return greenIcon
       if (i === last) return redIcon
       return defaultIcon
     },
-    isNearAnySegment(latlng, r) {
-      for (let i = 0; i < this.points.length - 1; i++) {
-        const p1 = L.latLng(...this.points[i])
-        const p2 = L.latLng(...this.points[i+1])
-        const mid = L.latLng((p1.lat+p2.lat)/2, (p1.lng+p2.lng)/2)
-        if (latlng.distanceTo(mid) <= r) return true
-      }
-      return false
-    },
-    findNearbyPointIndex(latlng, r) {
-      let idx = -1, dmin = r
-      this.points.forEach((p, i) => {
-        const d = latlng.distanceTo(L.latLng(...p))
-        if (d < dmin) { dmin = d; idx = i }
-      })
-      return idx
-    },
     onMapClick(evt) {
-      if (this.skipMapClick) { this.skipMapClick = false; return }
       const ll = evt.latlng
-      if (this.cleaning) {
-        const rem = this.findNearbyPointIndex(ll, 200)
-        if (rem !== -1) {
-          this.points.splice(rem, 1)
-          this.$emit('update-route', this.points)
-          if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
-          return
-        }
-      }
-      if (this.editing && this.points.length >= 2) {
-        const ins = this.findInsertIndex(this.points, ll)
-        const [p1,p2] = [this.points[ins-1], this.points[ins]]
-        const mid = L.latLng((p1[0]+p2[0])/2, (p1[1]+p2[1])/2)
-        if (ll.distanceTo(mid) <= 50) {
-          this.points.splice(ins, 0, [ll.lat, ll.lng])
-          this.$emit('update-route', this.points)
-          this.calcRoute(this.selectedRouteIdx, this.points)
-          return
-        }
-      }
+      if (this.stopsMode)           { this.handleStopClick(ll);   return }
+      if (this.cleaning)            { this.handleRouteCleaning(ll); return }
+      if (this.editing && this.points.length >= 2) { this.handleRouteEdit(ll);    return }
+      this.handleRouteAdd(ll)
+    },
+    handleStopClick(ll) {
+      console.log('Adding stop at', ll.lat, ll.lng)
+      this.localStops.push([ll.lat, ll.lng])
+      this.$emit('update-stops', this.localStops)
+    },
+    onMapMouseMove(evt) {
+      const ll = evt.latlng
+      if (this.stopsMode || this.cleaning) this.hoverCircle = [ll.lat, ll.lng]
+      else if (this.editing && this.points.length >= 2 && this.isNearAnySegment(ll, 50))
+                                           this.hoverCircle = [ll.lat, ll.lng]
+      else                                 this.hoverCircle = null
+    },
+    handleRouteAdd(ll) {
+      console.log('Adding route point', ll.lat, ll.lng)
       this.points.push([ll.lat, ll.lng])
       this.$emit('update-route', this.points)
       if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
       this.center = [ll.lat, ll.lng]
     },
-    onMapMouseMove(evt) {
-      const ll = evt.latlng
-      if (this.cleaning)         this.hoverCircle = [ll.lat, ll.lng]
-      else if (this.editing && this.points.length >= 2 && this.isNearAnySegment(ll, 50))
-                                 this.hoverCircle = [ll.lat, ll.lng]
-      else                       this.hoverCircle = null
+    handleRouteCleaning(ll) {
+      const rem = this.findNearbyPointIndex(ll, 200)
+      if (rem !== -1) {
+        console.log('Removing route point at index', rem)
+        this.points.splice(rem, 1)
+        this.$emit('update-route', this.points)
+        if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
+      }
     },
-    onMapMouseOut() { this.hoverCircle = null },
+    handleRouteEdit(ll) {
+      const ins = this.findInsertIndex(this.points, ll)
+      const [p1, p2] = [this.points[ins-1], this.points[ins]]
+      const mid = L.latLng((p1[0]+p2[0])/2, (p1[1]+p2[1])/2)
+      if (ll.distanceTo(mid) <= 50) {
+        console.log('Inserting route point at', ll.lat, ll.lng)
+        this.points.splice(ins, 0, [ll.lat, ll.lng])
+        this.$emit('update-route', this.points)
+        this.calcRoute(this.selectedRouteIdx, this.points)
+      }
+    },
     onMarkerDragEnd(evt, i) {
+      const icon = evt.target.options.icon
+      if (icon === this.busIcon) return
       const ll = evt.target.getLatLng()
+      console.log('Route marker moved', i, ll.lat, ll.lng)
       this.points.splice(i, 1, [ll.lat, ll.lng])
       this.$emit('update-route', this.points)
       if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
+    },
+    onStopDragEnd(evt, i) {
+      const ll = evt.target.getLatLng()
+      console.log('Stop moved', i, ll.lat, ll.lng)
+      this.localStops.splice(i, 1, [ll.lat, ll.lng])
+      this.$emit('update-stops', this.localStops)
     },
     onMarkerClick(i, evt) {
       if (!this.cleaning) return
@@ -226,6 +268,23 @@ export default {
       this.points.splice(ins, 0, [ll.lat, ll.lng])
       this.$emit('update-route', this.points)
       this.calcRoute(this.selectedRouteIdx, this.points)
+    },
+    isNearAnySegment(latlng, r) {
+      for (let i = 0; i < this.points.length - 1; i++) {
+        const p1 = L.latLng(...this.points[i])
+        const p2 = L.latLng(...this.points[i+1])
+        const mid = L.latLng((p1.lat+p2.lat)/2, (p1.lng+p2.lng)/2)
+        if (latlng.distanceTo(mid) <= r) return true
+      }
+      return false
+    },
+    findNearbyPointIndex(latlng, r) {
+      let idx = -1, dmin = r
+      this.points.forEach((p, i) => {
+        const d = latlng.distanceTo(L.latLng(...p))
+        if (d < dmin) { dmin = d; idx = i }
+      })
+      return idx
     },
     findInsertIndex(pts, latlng) {
       let md = Infinity, idx = 1
@@ -261,7 +320,7 @@ export default {
     }
   },
   mounted() {
-    const resize = () => this.$refs.mapRef?.mapObject.invalidateSize()
+    const resize = () => this.$refs.mapRef.mapObject.invalidateSize()
     setTimeout(resize, 300)
     window.addEventListener('resize', resize)
   },
