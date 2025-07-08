@@ -47,9 +47,9 @@
         <l-marker
           v-if="position"
           :lat-lng="position"
-          :iconP="userIcon"
-
+          :icon="userIcon"
         />
+
       </l-map>
     </div>
   </q-page>
@@ -65,7 +65,7 @@ import {
   LCircle
 } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
-import personaIcon from '../assets/persona.png'  // tu PNG en src/assets/persona.png
+import personaIcon from '/persona.png'  
 
 // Default, start, end icons
 const defaultIcon = L.icon({
@@ -84,12 +84,12 @@ const redIcon = L.icon({
   iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
 })
 
-// Icon de ubicación (flecha) usando tu PNG
-const userIcon = L.icon({
-  iconUrl: personaIcon,
-  iconSize: [32, 32],
-  iconAnchor: [16, 16],
-  popupAnchor: [0, -16]
+// FontAwesome divIcon for user location
+const userIcon = L.divIcon({
+  className: '',            // sin estilos extra
+  html: '<i class="fa-solid fa-person" style="color:#63E6BE; font-size:30px;"></i>',
+  iconSize:   [24, 24],
+  iconAnchor: [12, 12]
 })
 
 export default {
@@ -112,7 +112,8 @@ export default {
       points: [],
       routeGeometries: [],
       hoverCircle: null,
-      skipMapClick: false
+      skipMapClick: false,
+      userIcon
     }
   },
   computed: {

@@ -23,11 +23,12 @@ module.exports = configure(function (/* ctx */) {
     boot: [
       
       'axios',
+      'fontawesome'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: [
-      'app.css'
+      'app.css',
     ],
 
     // https://github.com/quasarframework/quasar/tree/dev/extras
@@ -40,6 +41,7 @@ module.exports = configure(function (/* ctx */) {
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
+      'fontawesome-v5', // Quasar's own FontAwesome v5 icon set
       'roboto-font', // optional, you are not bound to it
       'material-icons', // optional, you are not bound to it
     ],
