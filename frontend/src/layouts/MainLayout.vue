@@ -15,20 +15,35 @@
 
     <q-drawer v-model="leftDrawerOpen" side="left" overlay elevated>
       <div class="q-pa-md">
+
         <q-btn label="Nueva ruta" color="primary" @click="addRoute" class="full-width">
           <q-tooltip>Nueva ruta</q-tooltip>
         </q-btn>
         <q-separator spaced />
-        <q-list bordered>
+
+        <q-btn dense flat icon="file_upload" @click="triggerFileInput" class="full-width">
+          <q-tooltip>Importar rutas desde JSON</q-tooltip>
+        </q-btn>
+        <q-btn dense flat icon="cloud_download" @click="exportAllRoutes" class="full-width">
+          <q-tooltip>Exportar todas las rutas</q-tooltip>
+        </q-btn>
+        <input type="file" ref="fileInput" @change="onFileChange" style="display:none" accept=".json" />
+
+        <q-separator spaced />
+        <q-list bordered padding>
+
           <q-item
             v-for="(route, idx) in routes"
             :key="idx"
             clickable
             @click="selectRoute(idx)"
             :active="idx === selectedRouteIdx"
+            class="route-item"
           >
+            <q-item-section side class="route-color-bar" :style="{ backgroundColor: route.color }" />
             <q-item-section>{{ route.name }}</q-item-section>
-            <q-item-section side>
+
+            <q-item-section side top class="route-actions-top">
               <q-btn dense flat icon="delete" @click.stop="deleteRoute(idx)">
                 <q-tooltip>Eliminar ruta</q-tooltip>
               </q-btn>
@@ -38,31 +53,38 @@
               <q-btn dense flat icon="undo" @click.stop="undoRoute(idx)">
                 <q-tooltip>Deshacer último punto</q-tooltip>
               </q-btn>
+            </q-item-section>
+
+            <q-item-section side bottom class="route-actions-bottom">
               <q-btn dense flat icon="clear_all" @click.stop="clearRoute(idx)">
                 <q-tooltip>Limpiar ruta completa</q-tooltip>
               </q-btn>
               <q-btn dense flat icon="swap_vert" @click.stop="invertRoute(idx)">
                 <q-tooltip>Invertir ruta</q-tooltip>
               </q-btn>
+              <q-btn dense flat icon="file_download" @click.stop="exportRoute(idx)">
+                <q-tooltip>Exportar esta ruta</q-tooltip>
+              </q-btn>
               <q-toggle v-model="route.visible" dense>
                 <q-tooltip>Mostrar/Ocultar ruta</q-tooltip>
               </q-toggle>
             </q-item-section>
+
           </q-item>
+
         </q-list>
+
         <q-separator spaced />
         <q-toggle v-model="editing" label="Modo edición" class="full-width" dense>
           <q-tooltip>Activar edición</q-tooltip>
         </q-toggle>
         <q-toggle v-model="cleaning" label="Eliminar puntos" class="full-width" dense>
-          <q-tooltip>Modo limpieza de puntos</q-tooltip>
+          <q-tooltip>Activar limpieza de puntos</q-tooltip>
         </q-toggle>
       </div>
     </q-drawer>
 
-    <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated>
-    </q-drawer>
-
+    <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated />
     <q-page-container class="bg-grey-1">
       <router-view
         :routes="routes"
@@ -83,7 +105,7 @@ import { ref } from 'vue'
 export default {
   data() {
     return {
-      colors: ['red', 'blue', 'green', 'orange', 'purple'],
+      colors: ['red','blue','green','orange','purple'],
       routes: [{ name: 'Ruta 1', points: [], color: 'red', visible: true }],
       selectedRouteIdx: 0,
       recalcIdx: null,
@@ -97,65 +119,105 @@ export default {
     }
   },
   methods: {
+    triggerFileInput() {
+      this.$refs.fileInput.click()
+    },
+    onFileChange(e) {
+      const f = e.target.files[0]
+      if (!f) return
+      const reader = new FileReader()
+      reader.onload = () => {
+        const json = JSON.parse(reader.result)
+        const arr = Array.isArray(json) ? json : [json]
+        this.routes = arr.map((r,i) => ({
+          name: r.name || `Ruta ${i+1}`,
+          points: (r.waypoints||[]).map(w => [w.lat, w.lng]),
+          color: r.color || this.colors[i % this.colors.length],
+          visible: true
+        }))
+        this.selectedRouteIdx = 0
+      }
+      reader.readAsText(f)
+      e.target.value = ''
+    },
+    exportAllRoutes() {
+      const data = this.routes.map(r => ({
+        name: r.name,
+        color: r.color,
+        waypoints: r.points.map(p => ({ lat: p[0], lng: p[1] }))
+      }))
+      const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'})
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url; a.download = 'routes.json'; a.click()
+      URL.revokeObjectURL(url)
+    },
+    exportRoute(idx) {
+      const r = this.routes[idx]
+      const data = {
+        name: r.name,
+        color: r.color,
+        waypoints: r.points.map(p => ({ lat: p[0], lng: p[1] }))
+      }
+      const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'})
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url; a.download = `${r.name}.json`; a.click()
+      URL.revokeObjectURL(url)
+    },
     addRoute() {
-      const idx = this.routes.length
-      this.routes.push({
-        name: `Ruta ${idx + 1}`,
-        points: [],
-        color: this.colors[idx % this.colors.length],
-        visible: true
-      })
-      this.selectedRouteIdx = idx
+      const i = this.routes.length
+      this.routes.push({ name:`Ruta ${i+1}`, points:[], color:this.colors[i%this.colors.length], visible:true })
+      this.selectedRouteIdx = i
     },
-    selectRoute(idx) {
-      this.selectedRouteIdx = idx
+    selectRoute(i) {
+      this.selectedRouteIdx = i
     },
-    deleteRoute(idx) {
+    deleteRoute(i) {
       const prev = this.selectedRouteIdx
-      this.routes.splice(idx, 1)
-      this.routes.forEach((r, i) => {
-        r.name = `Ruta ${i + 1}`
-        r.color = this.colors[i % this.colors.length]
+      this.routes.splice(i,1)
+      this.routes.forEach((r,j) => {
+        r.name = `Ruta ${j+1}`
+        r.color = this.colors[j % this.colors.length]
       })
-      if (this.routes.length === 0) this.selectedRouteIdx = null
-      else if (prev === idx) this.selectedRouteIdx = Math.min(idx, this.routes.length - 1)
-      else if (prev > idx) this.selectedRouteIdx = prev - 1
-      else this.selectedRouteIdx = prev
+      this.selectedRouteIdx = this.routes.length
+        ? prev>i ? prev-1 : Math.min(prev,this.routes.length-1)
+        : null
     },
-    recalcRoute(idx) {
-      this.recalcIdx = idx
+    recalcRoute(i) {
+      this.recalcIdx = i
       setTimeout(() => { this.recalcIdx = null }, 0)
     },
-    updateRoute(updatedPoints) {
-      if (this.currentRoute) {
-        this.currentRoute.points = updatedPoints
-      }
+    updateRoute(pts) {
+      if (this.currentRoute) this.currentRoute.points = pts
     },
-    undoRoute(idx) {
-      if (this.routes[idx].points.length) {
-        this.routes[idx].points.pop()
-        this.recalcIdx = idx
+    undoRoute(i) {
+      const pts = this.routes[i].points
+      if (pts.length) {
+        pts.pop()
+        this.recalcIdx = i
         setTimeout(() => { this.recalcIdx = null }, 0)
       }
     },
-    clearRoute(idx) {
-      if (this.routes[idx].points.length) {
-        this.routes[idx].points = []
-        this.recalcIdx = idx
+    clearRoute(i) {
+      const pts = this.routes[i].points
+      if (pts.length) {
+        this.routes[i].points = []
+        this.recalcIdx = i
         setTimeout(() => { this.recalcIdx = null }, 0)
       }
     },
-    invertRoute(idx) {
-      const base = this.routes[idx]
-      const newIdx = this.routes.length
-      const invertedPoints = base.points.slice().reverse()
+    invertRoute(i) {
+      const b = this.routes[i]
+      const inv = b.points.slice().reverse()
+      const j = this.routes.length
       this.routes.push({
-        name: `${base.name} (Invertida)`,
-        points: invertedPoints,
-        color: this.colors[newIdx % this.colors.length],
-        visible: base.visible
+        name: `${b.name} (Invertida)`,
+        points: inv,
+        color: this.colors[j % this.colors.length],
+        visible: b.visible
       })
-      this.selectedRouteIdx = newIdx
+      this.selectedRouteIdx = j
     }
   },
   setup() {
@@ -174,3 +236,23 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.route-color-bar {
+  width: 4px;
+  margin-right: 8px;
+}
+.route-actions-top q-btn,
+.route-actions-bottom q-btn {
+  margin-left: 4px;
+}
+.route-actions-top {
+  display: flex;
+  align-items: center;
+}
+.route-actions-bottom {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+</style>

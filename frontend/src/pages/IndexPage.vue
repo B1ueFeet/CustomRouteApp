@@ -1,3 +1,4 @@
+<!-- IndexPage.vue -->
 <template>
   <q-page class="relative-position no-padding">
     <div class="absolute-full" :class="{ 'clean-mode': cleaning }">
@@ -52,7 +53,6 @@ import {
 } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
 
-// marker icons
 const defaultIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
   shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
@@ -60,7 +60,7 @@ const defaultIcon = L.icon({
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
-});
+})
 const greenIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
   shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
@@ -68,7 +68,7 @@ const greenIcon = L.icon({
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
-});
+})
 const redIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
@@ -76,7 +76,7 @@ const redIcon = L.icon({
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
-});
+})
 
 export default {
   name: 'IndexPage',
@@ -221,9 +221,9 @@ export default {
       let minDist = Infinity, index = 1
       pts.forEach((p, i) => {
         if (i < pts.length - 1) {
-          const mid = L.latLng((p[0] + pts[i + 1][0]) / 2, (p[1] + pts[i + 1][1]) / 2)
+          const mid = L.latLng((p[0] + pts[i+1][0]) / 2, (p[1] + pts[i+1][1]) / 2)
           const d = latlng.distanceTo(mid)
-          if (d < minDist) { minDist = d; index = i + 1 }
+          if (d < minDist) { minDist = d; index = i+1 }
         }
       })
       return index
@@ -233,7 +233,7 @@ export default {
       try {
         const res = await fetch(`http://localhost:8000/api/route?coords=${coords}`)
         const data = await res.json()
-        if (data.routes && data.routes.length) {
+        if (data.routes?.length) {
           const coordsGeo = data.routes[0].geometry.coordinates
           const latlngs = coordsGeo.map(c => [c[1], c[0]])
           this.routeGeometries.splice(idx, 1, latlngs)
@@ -244,8 +244,7 @@ export default {
   mounted() {
     const resizeMap = () => {
       this.$nextTick(() => {
-        const m = this.$refs.mapRef?.mapObject
-        if (m) m.invalidateSize()
+        this.$refs.mapRef?.mapObject.invalidateSize()
       })
     }
     setTimeout(resizeMap, 300)
@@ -258,10 +257,6 @@ export default {
 </script>
 
 <style scoped>
-.q-page.no-padding {
-  padding: 0 !important;
-}
-.clean-mode .leaflet-container {
-  cursor: crosshair !important;
-}
+.q-page.no-padding { padding: 0 !important; }
+.clean-mode .leaflet-container { cursor: crosshair !important; }
 </style>
