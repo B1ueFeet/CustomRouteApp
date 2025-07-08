@@ -1,4 +1,3 @@
-<!-- MainLayout.vue -->
 <template>
   <q-layout view="hHh lpr lFr">
     <q-header elevated class="bg-primary text-white">
@@ -34,6 +33,23 @@
             </q-item-section>
           </q-item>
         </q-list>
+        <q-separator spaced />
+        <q-btn label="Modo edición" color="secondary" @click="toggleEditing" class="full-width" />
+        <q-separator spaced />
+        <q-btn
+          label="Limpiar ruta"
+          color="primary"
+          @click="clearRoute"
+          class="full-width"
+          :disable="!currentRoute || currentRoute.points.length === 0"
+        />
+        <q-btn
+          label="Deshacer último punto"
+          color="primary"
+          @click="undoLastPoint"
+          class="full-width"
+          :disable="!currentRoute || currentRoute.points.length === 0"
+        />
       </div>
     </q-drawer>
 
@@ -46,6 +62,7 @@
         :selected-route-idx="selectedRouteIdx"
         :current-route="currentRoute"
         :recalc-idx="recalcIdx"
+        :editing="editing"
         @update-route="updateRoute"
       />
     </q-page-container>
@@ -63,7 +80,8 @@ export default {
         { name: 'Ruta 1', points: [], color: 'red', visible: true }
       ],
       selectedRouteIdx: 0,
-      recalcIdx: null
+      recalcIdx: null,
+      editing: false
     }
   },
   computed: {
@@ -95,15 +113,10 @@ export default {
         r.name = `Ruta ${i + 1}`
         r.color = this.colors[i % this.colors.length]
       })
-      if (this.routes.length === 0) {
-        this.selectedRouteIdx = null
-      } else if (prev === idx) {
-        this.selectedRouteIdx = Math.min(idx, this.routes.length - 1)
-      } else if (prev > idx) {
-        this.selectedRouteIdx = prev - 1
-      } else {
-        this.selectedRouteIdx = prev
-      }
+      if (this.routes.length === 0) this.selectedRouteIdx = null
+      else if (prev === idx) this.selectedRouteIdx = Math.min(idx, this.routes.length - 1)
+      else if (prev > idx) this.selectedRouteIdx = prev - 1
+      else this.selectedRouteIdx = prev
     },
     recalcRoute(idx) {
       console.log('Recalculating route', idx)
@@ -114,6 +127,22 @@ export default {
       if (this.currentRoute) {
         console.log('Updating route', this.selectedRouteIdx, updatedPoints)
         this.currentRoute.points = updatedPoints
+      }
+    },
+    toggleEditing() {
+      console.log('Toggling editing mode', this.editing)
+      this.editing = !this.editing
+    },
+    clearRoute() {
+      if (this.currentRoute) {
+        console.log('Clearing route', this.selectedRouteIdx)
+        this.currentRoute.points = []
+      }
+    },
+    undoLastPoint() {
+      if (this.currentRoute && this.currentRoute.points.length) {
+        console.log('Undoing last point', this.selectedRouteIdx)
+        this.currentRoute.points.pop()
       }
     }
   },
