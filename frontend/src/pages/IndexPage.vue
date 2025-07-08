@@ -75,7 +75,8 @@
           :stroke="true"
           :fill="true"
           :fill-opacity="0.2"
-          fill-color="stopCircleColor"
+          fill-color="purple"
+          color="purple"
           :clickable="false"
         />
         <!-- Marcadores de paradas -->
@@ -125,7 +126,7 @@ const userIcon = L.divIcon({
 const busIcon = L.divIcon({
   className: '',
   html: '<i class="fa-solid fa-bus" style="color: #86158e; font-size:30px;"></i>',
-  iconSize: [24,24], iconAnchor: [12,12]
+  iconSize: [30,30], iconAnchor: [15,15]
 })
 
 export default {

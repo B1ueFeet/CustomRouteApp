@@ -150,7 +150,8 @@ export default {
   },
   data() {
     return {
-      colors: ['red','blue','green','orange','purple'],
+      colors: ['red','blue','green','orange','purple','yellow','teal','magenta','cyan','brown','pink',
+               'lime','indigo','amber','deep-orange','light-blue','grey','deep-purple','light-green','blue-grey'],
       routes: [{ name: 'Ruta 1', points: [], color: 'red', visible: true }],
       selectedRouteIdx: 0,
       recalcIdx: null,
