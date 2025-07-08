@@ -1,6 +1,6 @@
 <template>
   <q-page class="relative-position no-padding">
-    <div class="absolute-full">
+    <div class="absolute-full" :class="{ 'clean-mode': cleaning }">
       <l-map
         ref="mapRef"
         :use-global-leaflet="false"
@@ -18,6 +18,7 @@
           :lat-lng="pt"
           :draggable="editing"
           @dragend="onMarkerDragEnd($event, idx)"
+          @click="onMarkerClick(idx, $event)"
         />
         <l-polyline
           v-for="item in routeLines"
@@ -31,7 +32,7 @@
         <l-circle
           v-if="hoverCircle"
           :center="hoverCircle"
-          :radius="50"
+          :radius="cleaning ? 200 : 50"
           :clickable="false"
         />
       </l-map>
@@ -58,7 +59,8 @@ export default {
     selectedRouteIdx: { type: Number, default: null },
     recalcIdx: { type: Number, default: null },
     currentRoute: { type: Object, default: null },
-    editing: { type: Boolean, default: false }
+    editing: { type: Boolean, default: false },
+    cleaning: { type: Boolean, default: false }
   },
   data() {
     return {
@@ -112,35 +114,59 @@ export default {
       }
       return false
     },
+    findNearbyPointIndex(latlng, radius) {
+      let idx = -1
+      let minDist = radius
+      this.points.forEach((p, i) => {
+        const d = latlng.distanceTo(L.latLng(p[0], p[1]))
+        if (d < minDist) {
+          minDist = d
+          idx = i
+        }
+      })
+      return idx
+    },
     onMapClick(evt) {
       if (this.skipMapClick) {
         this.skipMapClick = false
         return
       }
-      console.log('Map clicked', evt.latlng)
-      const { lat, lng } = evt.latlng
+      const ll = evt.latlng
+      if (this.cleaning) {
+        const removeIdx = this.findNearbyPointIndex(ll, 200)
+        if (removeIdx !== -1) {
+          console.log('Removing point', removeIdx)
+          this.points.splice(removeIdx, 1)
+          this.$emit('update-route', this.points)
+          if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
+          return
+        }
+      }
       if (this.editing && this.points.length >= 2) {
-        const insertIndex = this.findInsertIndex(this.points, evt.latlng)
+        const insertIndex = this.findInsertIndex(this.points, ll)
         const p1 = this.points[insertIndex - 1]
         const p2 = this.points[insertIndex]
         const mid = L.latLng((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2)
-        if (evt.latlng.distanceTo(mid) <= 50) {
-          console.log('Adding intermediate point', insertIndex, evt.latlng)
-          this.points.splice(insertIndex, 0, [lat, lng])
+        if (ll.distanceTo(mid) <= 50) {
+          console.log('Adding intermediate point', insertIndex, ll)
+          this.points.splice(insertIndex, 0, [ll.lat, ll.lng])
           this.$emit('update-route', this.points)
           this.calcRoute(this.selectedRouteIdx, this.points)
           return
         }
       }
-      this.points.push([lat, lng])
+      console.log('Adding end point', ll)
+      this.points.push([ll.lat, ll.lng])
       this.$emit('update-route', this.points)
       if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
-      this.center = [lat, lng]
+      this.center = [ll.lat, ll.lng]
     },
     onMapMouseMove(evt) {
-      const latlng = evt.latlng
-      if (this.editing && this.points.length >= 2 && this.isNearAnySegment(latlng, 50)) {
-        this.hoverCircle = [latlng.lat, latlng.lng]
+      const ll = evt.latlng
+      if (this.cleaning) {
+        this.hoverCircle = [ll.lat, ll.lng]
+      } else if (this.editing && this.points.length >= 2 && this.isNearAnySegment(ll, 50)) {
+        this.hoverCircle = [ll.lat, ll.lng]
       } else {
         this.hoverCircle = null
       }
@@ -155,14 +181,22 @@ export default {
       this.$emit('update-route', this.points)
       if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
     },
+    onMarkerClick(idx, evt) {
+      if (!this.cleaning) return
+      evt.originalEvent.stopPropagation()
+      console.log('Removing point via marker click', idx)
+      this.points.splice(idx, 1)
+      this.$emit('update-route', this.points)
+      if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
+    },
     onPolylineClick(item, evt) {
       if (!this.editing) return
       evt.originalEvent.stopPropagation()
       this.skipMapClick = true
-      console.log('Polyline clicked', item.idx, evt.latlng)
-      const newPt = [evt.latlng.lat, evt.latlng.lng]
-      const insertIndex = this.findInsertIndex(this.points, evt.latlng)
-      this.points.splice(insertIndex, 0, newPt)
+      const ll = evt.latlng
+      console.log('Polyline clicked', item.idx, ll)
+      const insertIndex = this.findInsertIndex(this.points, ll)
+      this.points.splice(insertIndex, 0, [ll.lat, ll.lng])
       this.$emit('update-route', this.points)
       this.calcRoute(this.selectedRouteIdx, this.points)
     },
@@ -212,5 +246,8 @@ export default {
 <style scoped>
 .q-page.no-padding {
   padding: 0 !important;
+}
+.clean-mode .leaflet-container {
+  cursor: crosshair !important;
 }
 </style>

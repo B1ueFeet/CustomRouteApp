@@ -49,7 +49,10 @@
         </q-list>
         <q-separator spaced />
         <q-toggle v-model="editing" label="Modo edición" class="full-width" dense>
-          <q-tooltip>Activar/Desactivar edición de puntos</q-tooltip>
+          <q-tooltip>Activar edición</q-tooltip>
+        </q-toggle>
+        <q-toggle v-model="cleaning" label="Eliminar puntos" class="full-width" dense>
+          <q-tooltip>Modo limpieza de puntos</q-tooltip>
         </q-toggle>
       </div>
     </q-drawer>
@@ -64,6 +67,7 @@
         :current-route="currentRoute"
         :recalc-idx="recalcIdx"
         :editing="editing"
+        :cleaning="cleaning"
         @update-route="updateRoute"
       />
     </q-page-container>
@@ -80,7 +84,8 @@ export default {
       routes: [{ name: 'Ruta 1', points: [], color: 'red', visible: true }],
       selectedRouteIdx: 0,
       recalcIdx: null,
-      editing: false
+      editing: false,
+      cleaning: false
     }
   },
   computed: {
@@ -161,3 +166,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.q-page.no-padding {
+  padding: 0 !important;
+}
+</style>
