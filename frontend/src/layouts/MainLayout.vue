@@ -41,6 +41,9 @@
               <q-btn dense flat icon="clear_all" @click.stop="clearRoute(idx)">
                 <q-tooltip>Limpiar ruta completa</q-tooltip>
               </q-btn>
+              <q-btn dense flat icon="swap_vert" @click.stop="invertRoute(idx)">
+                <q-tooltip>Invertir ruta</q-tooltip>
+              </q-btn>
               <q-toggle v-model="route.visible" dense>
                 <q-tooltip>Mostrar/Ocultar ruta</q-tooltip>
               </q-toggle>
@@ -96,7 +99,6 @@ export default {
   methods: {
     addRoute() {
       const idx = this.routes.length
-      console.log('Adding route', idx + 1)
       this.routes.push({
         name: `Ruta ${idx + 1}`,
         points: [],
@@ -106,11 +108,9 @@ export default {
       this.selectedRouteIdx = idx
     },
     selectRoute(idx) {
-      console.log('Selecting route', idx)
       this.selectedRouteIdx = idx
     },
     deleteRoute(idx) {
-      console.log('Deleting route', idx)
       const prev = this.selectedRouteIdx
       this.routes.splice(idx, 1)
       this.routes.forEach((r, i) => {
@@ -123,19 +123,16 @@ export default {
       else this.selectedRouteIdx = prev
     },
     recalcRoute(idx) {
-      console.log('Recalculating route', idx)
       this.recalcIdx = idx
       setTimeout(() => { this.recalcIdx = null }, 0)
     },
     updateRoute(updatedPoints) {
       if (this.currentRoute) {
-        console.log('Updating route', this.selectedRouteIdx, updatedPoints)
         this.currentRoute.points = updatedPoints
       }
     },
     undoRoute(idx) {
       if (this.routes[idx].points.length) {
-        console.log('Undoing last point for route', idx)
         this.routes[idx].points.pop()
         this.recalcIdx = idx
         setTimeout(() => { this.recalcIdx = null }, 0)
@@ -143,11 +140,22 @@ export default {
     },
     clearRoute(idx) {
       if (this.routes[idx].points.length) {
-        console.log('Clearing route', idx)
         this.routes[idx].points = []
         this.recalcIdx = idx
         setTimeout(() => { this.recalcIdx = null }, 0)
       }
+    },
+    invertRoute(idx) {
+      const base = this.routes[idx]
+      const newIdx = this.routes.length
+      const invertedPoints = base.points.slice().reverse()
+      this.routes.push({
+        name: `${base.name} (Invertida)`,
+        points: invertedPoints,
+        color: this.colors[newIdx % this.colors.length],
+        visible: base.visible
+      })
+      this.selectedRouteIdx = newIdx
     }
   },
   setup() {
@@ -166,9 +174,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.q-page.no-padding {
-  padding: 0 !important;
-}
-</style>

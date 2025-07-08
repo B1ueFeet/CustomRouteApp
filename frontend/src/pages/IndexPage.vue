@@ -16,6 +16,7 @@
           v-for="(pt, idx) in points"
           :key="idx"
           :lat-lng="pt"
+          :icon="getMarkerIcon(idx)"
           :draggable="editing"
           @dragend="onMarkerDragEnd($event, idx)"
           @click="onMarkerClick(idx, $event)"
@@ -51,6 +52,32 @@ import {
 } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
 
+// marker icons
+const defaultIcon = L.icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+  shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+const greenIcon = L.icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+  shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+const redIcon = L.icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+  shadowUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
 export default {
   name: 'IndexPage',
   components: { LMap, LTileLayer, LMarker, LPolyline, LCircle },
@@ -83,7 +110,6 @@ export default {
   watch: {
     routes: {
       handler(newRoutes) {
-        console.log('Routes changed, updating routeGeometries', newRoutes)
         this.routeGeometries = newRoutes.map(r => r.points ? r.points.slice() : [])
       },
       deep: true,
@@ -91,7 +117,6 @@ export default {
     },
     currentRoute: {
       handler(newRoute) {
-        console.log('Current route changed, updating points', newRoute)
         this.points = newRoute && newRoute.points ? newRoute.points.slice() : []
       },
       immediate: true,
@@ -99,12 +124,17 @@ export default {
     },
     recalcIdx(val) {
       if (val === this.selectedRouteIdx && this.points.length >= 2) {
-        console.log('Recalculating route geometry for current route', val)
         this.calcRoute(val, this.points)
       }
     }
   },
   methods: {
+    getMarkerIcon(idx) {
+      const last = this.points.length - 1
+      if (idx === 0) return greenIcon
+      if (idx === last) return redIcon
+      return defaultIcon
+    },
     isNearAnySegment(latlng, radius) {
       for (let i = 0; i < this.points.length - 1; i++) {
         const p1 = L.latLng(this.points[i][0], this.points[i][1])
@@ -115,27 +145,19 @@ export default {
       return false
     },
     findNearbyPointIndex(latlng, radius) {
-      let idx = -1
-      let minDist = radius
+      let idx = -1, minDist = radius
       this.points.forEach((p, i) => {
         const d = latlng.distanceTo(L.latLng(p[0], p[1]))
-        if (d < minDist) {
-          minDist = d
-          idx = i
-        }
+        if (d < minDist) { minDist = d; idx = i }
       })
       return idx
     },
     onMapClick(evt) {
-      if (this.skipMapClick) {
-        this.skipMapClick = false
-        return
-      }
+      if (this.skipMapClick) { this.skipMapClick = false; return }
       const ll = evt.latlng
       if (this.cleaning) {
         const removeIdx = this.findNearbyPointIndex(ll, 200)
         if (removeIdx !== -1) {
-          console.log('Removing point', removeIdx)
           this.points.splice(removeIdx, 1)
           this.$emit('update-route', this.points)
           if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
@@ -148,14 +170,12 @@ export default {
         const p2 = this.points[insertIndex]
         const mid = L.latLng((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2)
         if (ll.distanceTo(mid) <= 50) {
-          console.log('Adding intermediate point', insertIndex, ll)
           this.points.splice(insertIndex, 0, [ll.lat, ll.lng])
           this.$emit('update-route', this.points)
           this.calcRoute(this.selectedRouteIdx, this.points)
           return
         }
       }
-      console.log('Adding end point', ll)
       this.points.push([ll.lat, ll.lng])
       this.$emit('update-route', this.points)
       if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
@@ -176,7 +196,6 @@ export default {
     },
     onMarkerDragEnd(evt, idx) {
       const latlng = evt.target.getLatLng()
-      console.log('Marker dragged', idx, latlng)
       this.points.splice(idx, 1, [latlng.lat, latlng.lng])
       this.$emit('update-route', this.points)
       if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
@@ -184,7 +203,6 @@ export default {
     onMarkerClick(idx, evt) {
       if (!this.cleaning) return
       evt.originalEvent.stopPropagation()
-      console.log('Removing point via marker click', idx)
       this.points.splice(idx, 1)
       this.$emit('update-route', this.points)
       if (this.points.length >= 2) this.calcRoute(this.selectedRouteIdx, this.points)
@@ -194,7 +212,6 @@ export default {
       evt.originalEvent.stopPropagation()
       this.skipMapClick = true
       const ll = evt.latlng
-      console.log('Polyline clicked', item.idx, ll)
       const insertIndex = this.findInsertIndex(this.points, ll)
       this.points.splice(insertIndex, 0, [ll.lat, ll.lng])
       this.$emit('update-route', this.points)
@@ -212,7 +229,6 @@ export default {
       return index
     },
     async calcRoute(idx, pts) {
-      console.log(`Calculating route ${idx}`, pts)
       const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
       try {
         const res = await fetch(`http://localhost:8000/api/route?coords=${coords}`)
@@ -222,9 +238,7 @@ export default {
           const latlngs = coordsGeo.map(c => [c[1], c[0]])
           this.routeGeometries.splice(idx, 1, latlngs)
         }
-      } catch (err) {
-        console.error('Error fetching route', err)
-      }
+      } catch {}
     }
   },
   mounted() {
