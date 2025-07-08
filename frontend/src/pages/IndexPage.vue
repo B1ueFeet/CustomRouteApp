@@ -39,7 +39,7 @@
         <l-circle
           v-if="hoverCircle"
           :center="hoverCircle"
-          :radius="cleaning ? 200 : 50"
+          :radius="cleaning ? 500 : 200"
           :clickable="false"
         />
 
