@@ -1,0 +1,21 @@
+# Stage único: construye y ejecuta la API
+FROM python:3.11-slim
+
+# Crea un directorio de trabajo
+WORKDIR /app
+
+# Copia e instala dependencias
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia el resto del código
+COPY . .
+
+# Expone el puerto de FastAPI
+EXPOSE 8000
+
+# Comando por defecto para arrancar Uvicorn
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
+# CONSTRUIR EL DOCKER FILE 
