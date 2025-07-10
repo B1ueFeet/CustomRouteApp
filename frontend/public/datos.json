@@ -1,0 +1,3694 @@
+{
+    "most_frequent_points": [
+        {
+            "dpa_despar": "BELISARIO QUEVEDO",
+            "lat": -0.2054806710310219,
+            "lon": -78.49943236491787,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "CENTRO HISTORICO",
+            "lat": -0.23250838000000001,
+            "lon": -78.51507088,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "CHILIBULO",
+            "lat": -0.24910407,
+            "lon": -78.53973962999999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "CHILLOGALLO",
+            "lat": -0.28894413,
+            "lon": -78.57019145,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "CHIMBACALLE",
+            "lat": -0.25012080000000003,
+            "lon": -78.51324116999999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "GUAMANI",
+            "lat": -0.3480306,
+            "lon": -78.56613667999999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "ITCHIMBIA",
+            "lat": -0.22984203,
+            "lon": -78.50512726699999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "LA ARGELIA",
+            "lat": -0.29318324,
+            "lon": -78.53091964999999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "LA ECUATORIANA",
+            "lat": -0.3112998,
+            "lon": -78.56435959,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "LA FERROVIARIA",
+            "lat": -0.2687977243403694,
+            "lon": -78.5094553776385,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "LA LIBERTAD",
+            "lat": -0.23053959000000002,
+            "lon": -78.53240373,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "LA MAGDALENA",
+            "lat": -0.25285834,
+            "lon": -78.52392934999999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "LA MENA",
+            "lat": -0.26613058,
+            "lon": -78.55473747999999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "MARISCAL SUCRE",
+            "lat": -0.2127265192239546,
+            "lon": -78.48567323348688,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "PUENGASI",
+            "lat": -0.23971833,
+            "lon": -78.50436727699999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "QUITUMBE",
+            "lat": -0.3251575,
+            "lon": -78.52016223,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "SAN BARTOLO",
+            "lat": -0.26615792,
+            "lon": -78.53469695999999,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "SAN JUAN",
+            "lat": -0.2176909858701923,
+            "lon": -78.5182732961298,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "SOLANDA",
+            "lat": -0.27535693,
+            "lon": -78.53033396,
+            "num_usuarios": 1
+        },
+        {
+            "dpa_despar": "TURUBAMBA",
+            "lat": -0.351704,
+            "lon": -78.53265262999999,
+            "num_usuarios": 1
+        }
+    ],
+    "most_frequent_points_barrio": [
+        {
+            "nombre": "4 DE DICIEMBRE",
+            "lat": -0.24509582000000002,
+            "lon": -78.54187042999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 0
+        },
+        {
+            "nombre": "AM\u00c9RICA",
+            "lat": -0.21046684000000002,
+            "lon": -78.50417943299999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 1
+        },
+        {
+            "nombre": "ARGELIA ALTA",
+            "lat": -0.2815647163776722,
+            "lon": -78.51917696108075,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 2
+        },
+        {
+            "nombre": "ATAHUALPA OCCIDENTAL",
+            "lat": -0.24950798000000002,
+            "lon": -78.53195086999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 3
+        },
+        {
+            "nombre": "ATAHUALPA ORIENTAL",
+            "lat": -0.24828688587019232,
+            "lon": -78.5296645961298,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 3
+        },
+        {
+            "nombre": "BELLAVISTA DEL SUR",
+            "lat": -0.333843362078652,
+            "lon": -78.53014016060393,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 4
+        },
+        {
+            "nombre": "BOSQUE  IESS",
+            "lat": -0.23971833,
+            "lon": -78.50436727699999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 5
+        },
+        {
+            "nombre": "CEDOC",
+            "lat": -0.34107529999999997,
+            "lon": -78.56001341,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 6
+        },
+        {
+            "nombre": "CHILIBULO",
+            "lat": -0.24300509961013642,
+            "lon": -78.54604973645225,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 7
+        },
+        {
+            "nombre": "CHILLOGALLO",
+            "lat": -0.2865129575737847,
+            "lon": -78.56257619131944,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 8
+        },
+        {
+            "nombre": "CHIMBACALLE",
+            "lat": -0.23495391860465112,
+            "lon": -78.51480304069766,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "CHIRIYACU BAJO",
+            "lat": -0.24933089,
+            "lon": -78.51928439,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 10
+        },
+        {
+            "nombre": "CHIRIYACU CENTRAL",
+            "lat": -0.25012080000000003,
+            "lon": -78.51324116999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 11
+        },
+        {
+            "nombre": "CIUDADELA  UNIVERSITARIA",
+            "lat": -0.2026636058148431,
+            "lon": -78.50521612168131,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 12
+        },
+        {
+            "nombre": "CIUDADELA AMAZONAS",
+            "lat": -0.2124524543799472,
+            "lon": -78.51582476229551,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 13
+        },
+        {
+            "nombre": "CIUDADELA ARGENTINA",
+            "lat": -0.21815751,
+            "lon": -78.499467321,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 1
+        },
+        {
+            "nombre": "CIUDADELA ESPEJO",
+            "lat": -0.21226681160250352,
+            "lon": -78.51925573341403,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 13
+        },
+        {
+            "nombre": "CIUDADELA METROPOLITANA CAUPICHU",
+            "lat": -0.330831216377672,
+            "lon": -78.53399006108074,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 14
+        },
+        {
+            "nombre": "CUMUNA MARCOPAMBA - CHILIBULO -  LA RAYA",
+            "lat": -0.23888329000000003,
+            "lon": -78.54610802999998,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 7
+        },
+        {
+            "nombre": "ED\u00c9N DEL SUR",
+            "lat": -0.323394016377672,
+            "lon": -78.52914806108075,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 15
+        },
+        {
+            "nombre": "EJ\u00c9RCITO NACIONAL 1RA. ETAPA",
+            "lat": -0.3082304,
+            "lon": -78.55399754999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 16
+        },
+        {
+            "nombre": "EL ARMERO",
+            "lat": -0.1992009328,
+            "lon": -78.51206658899999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 17
+        },
+        {
+            "nombre": "EL BEL\u00c9N",
+            "lat": -0.21347221,
+            "lon": -78.49887536099999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 18
+        },
+        {
+            "nombre": "EL CISNE",
+            "lat": -0.29732113,
+            "lon": -78.56574156999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 19
+        },
+        {
+            "nombre": "EL COMERCIO",
+            "lat": -0.27535693,
+            "lon": -78.53033396,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 20
+        },
+        {
+            "nombre": "EL DORADO",
+            "lat": -0.219347684073107,
+            "lon": -78.49589490345952,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 1
+        },
+        {
+            "nombre": "EL PANECILLO",
+            "lat": -0.23001179,
+            "lon": -78.52134299999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 21
+        },
+        {
+            "nombre": "EL PARAISO",
+            "lat": -0.23717000000000002,
+            "lon": -78.53744252999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 22
+        },
+        {
+            "nombre": "EL RECREO",
+            "lat": -0.26376541,
+            "lon": -78.52387049,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 23
+        },
+        {
+            "nombre": "EL ROSAL",
+            "lat": -0.207694924,
+            "lon": -78.51897614999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 24
+        },
+        {
+            "nombre": "EL SENA",
+            "lat": -0.23250838000000001,
+            "lon": -78.51507088,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "EL TEJAR",
+            "lat": -0.2135854886538461,
+            "lon": -78.51733088076921,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 13
+        },
+        {
+            "nombre": "EL TR\u00c1NSITO",
+            "lat": -0.28894413,
+            "lon": -78.57019145,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 25
+        },
+        {
+            "nombre": "EUGENIO ESPEJO",
+            "lat": -0.26613058,
+            "lon": -78.55473747999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 26
+        },
+        {
+            "nombre": "FERROVIARIA ALTA",
+            "lat": -0.2687977243403694,
+            "lon": -78.5094553776385,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 27
+        },
+        {
+            "nombre": "FERROVIARIA MEDIA",
+            "lat": -0.2596185990528128,
+            "lon": -78.51428828119975,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 28
+        },
+        {
+            "nombre": "FLORIDA DEL SUR",
+            "lat": -0.3009875,
+            "lon": -78.56258408999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 29
+        },
+        {
+            "nombre": "FORESTAL ALTA",
+            "lat": -0.2567246544556132,
+            "lon": -78.50711669238196,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 30
+        },
+        {
+            "nombre": "FRENTE POPULAR",
+            "lat": -0.2607063831157862,
+            "lon": -78.54052914232697,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 31
+        },
+        {
+            "nombre": "GONZ\u00c1LEZ SU\u00c1REZ",
+            "lat": -0.21948669,
+            "lon": -78.51062987299998,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 13
+        },
+        {
+            "nombre": "HEMISFERIO SUR",
+            "lat": -0.3230623,
+            "lon": -78.56647795999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 32
+        },
+        {
+            "nombre": "ITCHIMB\u00cdA",
+            "lat": -0.2259753041197118,
+            "lon": -78.50159387544335,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "JES\u00daS DEL GRAN PODER",
+            "lat": -0.23555804000000002,
+            "lon": -78.53400248,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 22
+        },
+        {
+            "nombre": "JOSEFINA ENR\u00cdQUEZ",
+            "lat": -0.23053959000000002,
+            "lon": -78.53240373,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 33
+        },
+        {
+            "nombre": "JOS\u00c9 PERALTA",
+            "lat": -0.341398,
+            "lon": -78.57103953,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 34
+        },
+        {
+            "nombre": "LA ALAMEDA",
+            "lat": -0.21724787,
+            "lon": -78.50173446199999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 1
+        },
+        {
+            "nombre": "LA CHILENA",
+            "lat": -0.21491780000000002,
+            "lon": -78.51472023,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 13
+        },
+        {
+            "nombre": "LA COLMENA",
+            "lat": -0.22587956,
+            "lon": -78.52834750999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 33
+        },
+        {
+            "nombre": "LA ECUATORIANA",
+            "lat": -0.3112998,
+            "lon": -78.56435959,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 35
+        },
+        {
+            "nombre": "LA FLORESTA",
+            "lat": -0.2127265192239546,
+            "lon": -78.48567323348688,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 36
+        },
+        {
+            "nombre": "LA GASCA",
+            "lat": -0.1977035063,
+            "lon": -78.50931476599999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 17
+        },
+        {
+            "nombre": "LA LOMA",
+            "lat": -0.23017504835309652,
+            "lon": -78.50727916337286,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "LA MERCED",
+            "lat": -0.21902842,
+            "lon": -78.51468197,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 13
+        },
+        {
+            "nombre": "LA PAMPA",
+            "lat": -0.351704,
+            "lon": -78.53265262999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 37
+        },
+        {
+            "nombre": "LA PUERTA NEGRA",
+            "lat": -0.3084142,
+            "lon": -78.53742319,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 38
+        },
+        {
+            "nombre": "LA RAYA",
+            "lat": -0.25588628,
+            "lon": -78.54531164,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 39
+        },
+        {
+            "nombre": "LA RECOLETA",
+            "lat": -0.23227312,
+            "lon": -78.51112877399999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "LA SANTIAGO",
+            "lat": -0.24910407,
+            "lon": -78.53973962999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 40
+        },
+        {
+            "nombre": "LA TOLA",
+            "lat": -0.22380967185338863,
+            "lon": -78.50628507308438,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "LA UNI\u00d3N",
+            "lat": -0.23859798000000002,
+            "lon": -78.53245976999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 22
+        },
+        {
+            "nombre": "LA VICENTINA",
+            "lat": -0.2179946793248944,
+            "lon": -78.49137820365681,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 1
+        },
+        {
+            "nombre": "LARREA",
+            "lat": -0.21024776207865162,
+            "lon": -78.50379756060393,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 1
+        },
+        {
+            "nombre": "LAS CUADRAS",
+            "lat": -0.28870474,
+            "lon": -78.55812664,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 41
+        },
+        {
+            "nombre": "LOS ANDES",
+            "lat": -0.24511996000000003,
+            "lon": -78.51584018,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 42
+        },
+        {
+            "nombre": "LOS DOS PUENTES",
+            "lat": -0.23497396,
+            "lon": -78.52386750999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 43
+        },
+        {
+            "nombre": "LOS LIBERTADORES",
+            "lat": -0.2407275518055555,
+            "lon": -78.53548925122683,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 22
+        },
+        {
+            "nombre": "LULUNCONTO  ALTO",
+            "lat": -0.2440029511600854,
+            "lon": -78.50223803720132,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 5
+        },
+        {
+            "nombre": "LULUNCOTO",
+            "lat": -0.23333305956887482,
+            "lon": -78.50584356598317,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "MANUELITA S\u00c1ENZ",
+            "lat": -0.3325922,
+            "lon": -78.58035982999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 44
+        },
+        {
+            "nombre": "MARISCAL SUCRE",
+            "lat": -0.210092137571839,
+            "lon": -78.49395856665768,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 45
+        },
+        {
+            "nombre": "MAR\u00cdA ELENA SALAZAR",
+            "lat": -0.28465154000000004,
+            "lon": -78.53966903999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 46
+        },
+        {
+            "nombre": "MAYORISTA",
+            "lat": -0.27149087,
+            "lon": -78.53257665999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 20
+        },
+        {
+            "nombre": "MIRADOR DE PUENGASI",
+            "lat": -0.2636056,
+            "lon": -78.50471886999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 47
+        },
+        {
+            "nombre": "MIRAFLORES",
+            "lat": -0.20807450400000002,
+            "lon": -78.512539491,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 48
+        },
+        {
+            "nombre": "M\u00c9XICO",
+            "lat": -0.23979467000000002,
+            "lon": -78.51108999699998,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 49
+        },
+        {
+            "nombre": "M\u00daSCULOS Y RIELES",
+            "lat": -0.32579898836077803,
+            "lon": -78.52592001957335,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 15
+        },
+        {
+            "nombre": "NUEVA AURORA",
+            "lat": -0.22449184,
+            "lon": -78.53239222999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 33
+        },
+        {
+            "nombre": "NUEVA TOLA",
+            "lat": -0.22876000000000002,
+            "lon": -78.49975639099999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "NUEVOS HORIZONTES DEL SUR",
+            "lat": -0.30917,
+            "lon": -78.52754117999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 50
+        },
+        {
+            "nombre": "PIO XII",
+            "lat": -0.2415872752989536,
+            "lon": -78.51118950724963,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 49
+        },
+        {
+            "nombre": "PLACER ALTO",
+            "lat": -0.21586801,
+            "lon": -78.52189664999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 13
+        },
+        {
+            "nombre": "PLACER BAJO",
+            "lat": -0.2176909858701923,
+            "lon": -78.5182732961298,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 13
+        },
+        {
+            "nombre": "PRIMERO DE MAYO EL CALZADO",
+            "lat": -0.25741994,
+            "lon": -78.52552023,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 51
+        },
+        {
+            "nombre": "QUITO SUR",
+            "lat": -0.26615792,
+            "lon": -78.53469695999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 52
+        },
+        {
+            "nombre": "REINO DE QUITO",
+            "lat": -0.25671829,
+            "lon": -78.55699847,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 53
+        },
+        {
+            "nombre": "RUCCULLACTA",
+            "lat": -0.29487841000000004,
+            "lon": -78.55126315,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 54
+        },
+        {
+            "nombre": "SAN  BLAS",
+            "lat": -0.2216679993403694,
+            "lon": -78.50527322763851,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "SAN ANTONIO DE LA LIBERTAD",
+            "lat": -0.28665676,
+            "lon": -78.58061314999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 55
+        },
+        {
+            "nombre": "SAN BARTOLO ALTO",
+            "lat": -0.2768228544556133,
+            "lon": -78.51137769238196,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 56
+        },
+        {
+            "nombre": "SAN CRISTOBAL",
+            "lat": -0.29318324,
+            "lon": -78.53091964999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 57
+        },
+        {
+            "nombre": "SAN DIEGO",
+            "lat": -0.2243787886538461,
+            "lon": -78.52274478076922,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 58
+        },
+        {
+            "nombre": "SAN FRANCISCO DE AS\u00cdS",
+            "lat": -0.306439457573785,
+            "lon": -78.57038909131944,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 59
+        },
+        {
+            "nombre": "SAN ISIDRO",
+            "lat": -0.3480306,
+            "lon": -78.56613667999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 60
+        },
+        {
+            "nombre": "SAN JOS\u00c9 DE CHILIBULO",
+            "lat": -0.2410914810295519,
+            "lon": -78.53795777849538,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 22
+        },
+        {
+            "nombre": "SAN JUAN",
+            "lat": -0.21445335000000001,
+            "lon": -78.509798346,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 61
+        },
+        {
+            "nombre": "SAN MARCOS",
+            "lat": -0.22599806,
+            "lon": -78.507233195,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "SAN MART\u00cdN DE PORRES",
+            "lat": -0.2993793,
+            "lon": -78.52713612999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 62
+        },
+        {
+            "nombre": "SAN PATRICIO DE PUENGASI",
+            "lat": -0.2533367192239546,
+            "lon": -78.50274353348688,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 63
+        },
+        {
+            "nombre": "SAN ROQUE",
+            "lat": -0.22085398,
+            "lon": -78.52178846999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 58
+        },
+        {
+            "nombre": "SAN SEBASTI\u00c1N",
+            "lat": -0.22674431,
+            "lon": -78.51462633999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 64
+        },
+        {
+            "nombre": "SANTA ANA",
+            "lat": -0.24037859,
+            "lon": -78.52141398999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 65
+        },
+        {
+            "nombre": "SANTA BARBARA ALTA",
+            "lat": -0.2648309116025036,
+            "lon": -78.55203813341403,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 26
+        },
+        {
+            "nombre": "SANTA CLARA DE SAN MILL\u00c1N",
+            "lat": -0.2054806710310219,
+            "lon": -78.49943236491787,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 66
+        },
+        {
+            "nombre": "SANTA LUC\u00cdA  BAJA",
+            "lat": -0.22935292680555552,
+            "lon": -78.52905105122683,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 33
+        },
+        {
+            "nombre": "SANTA LUC\u00cdA ALTA",
+            "lat": -0.22829638000000002,
+            "lon": -78.53066826999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 33
+        },
+        {
+            "nombre": "SANTA PRISCA",
+            "lat": -0.21418541922395462,
+            "lon": -78.50493248348688,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 1
+        },
+        {
+            "nombre": "SANTA RITA",
+            "lat": -0.27357687,
+            "lon": -78.54627479999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 67
+        },
+        {
+            "nombre": "SANTA ROSA 1RA. ETAPA",
+            "lat": -0.2790939575737847,
+            "lon": -78.56125869131944,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 68
+        },
+        {
+            "nombre": "SANTA ROSA 4TA. ETAPA",
+            "lat": -0.27227456,
+            "lon": -78.56455369999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 69
+        },
+        {
+            "nombre": "SANTA ROSA DE LA ARGELIA",
+            "lat": -0.2780253810295519,
+            "lon": -78.52779597849539,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 20
+        },
+        {
+            "nombre": "SANTIAGO ALTO",
+            "lat": -0.2477252358333333,
+            "lon": -78.54427813571428,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 0
+        },
+        {
+            "nombre": "SANTO TOM\u00c1S I",
+            "lat": -0.339736453517141,
+            "lon": -78.54919088149256,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 70
+        },
+        {
+            "nombre": "SANTOSPAMBA",
+            "lat": -0.3446479,
+            "lon": -78.57175176,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 34
+        },
+        {
+            "nombre": "SOLANDA SECTOR-4",
+            "lat": -0.2707251968533886,
+            "lon": -78.54231484808439,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 71
+        },
+        {
+            "nombre": "SUCRE FUNDEPORTE",
+            "lat": -0.28774893,
+            "lon": -78.55072204999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 72
+        },
+        {
+            "nombre": "TAMIALLACTA",
+            "lat": -0.29022471,
+            "lon": -78.55261162999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 72
+        },
+        {
+            "nombre": "TARQUI",
+            "lat": -0.25513451,
+            "lon": -78.55110749999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 73
+        },
+        {
+            "nombre": "TEPEYAC",
+            "lat": -0.33999310000000005,
+            "lon": -78.57365392,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 34
+        },
+        {
+            "nombre": "TOLA ALTA",
+            "lat": -0.2224300483530966,
+            "lon": -78.50317226337286,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "TOLA BAJA",
+            "lat": -0.22984203,
+            "lon": -78.50512726699999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 9
+        },
+        {
+            "nombre": "UNI\u00d3N DE CIUDADELAS",
+            "lat": -0.24232731000000002,
+            "lon": -78.50576489199999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 5
+        },
+        {
+            "nombre": "URBANIZACI\u00d3N LOS ARRAYANES",
+            "lat": -0.2559908268055555,
+            "lon": -78.53447915122683,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 74
+        },
+        {
+            "nombre": "VENCEDORES DEL PICHINCHA",
+            "lat": -0.24922954,
+            "lon": -78.55057805999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 75
+        },
+        {
+            "nombre": "VICTORIA CENTRAL",
+            "lat": -0.343340988360778,
+            "lon": -78.55038081957335,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 70
+        },
+        {
+            "nombre": "VILLA FLORA",
+            "lat": -0.25285834,
+            "lon": -78.52392934999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 76
+        },
+        {
+            "nombre": "YAGUACHI",
+            "lat": -0.2343498886538461,
+            "lon": -78.5299994807692,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 22
+        },
+        {
+            "nombre": "ZONA DE PROTECCI\u00d3N CHILIBULO",
+            "lat": -0.22879286000000001,
+            "lon": -78.53802705,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 77
+        },
+        {
+            "nombre": "ZONA DE PROTECCI\u00d3N ITCHIMBIA",
+            "lat": -0.219553419095182,
+            "lon": -78.4925397628672,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 1
+        },
+        {
+            "nombre": "ZONA DE PROTECCI\u00d3N LA MENA",
+            "lat": -0.25556581,
+            "lon": -78.55568924999999,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 53
+        },
+        {
+            "nombre": "ZONA DE PROTECCI\u00d3N QUITUMBE",
+            "lat": -0.3251575,
+            "lon": -78.52016223,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 78
+        },
+        {
+            "nombre": "ZONA DE PROTECCI\u00d3N SAN JUAN",
+            "lat": -0.20698555200000002,
+            "lon": -78.51444355,
+            "num_usuarios": 1,
+            "num_puntos": 1,
+            "cluster": 48
+        }
+    ],
+    "heat_data": [
+        [
+            -0.333843362078652,
+            -78.53014016060393
+        ],
+        [
+            -0.309839962078652,
+            -78.52167546060393
+        ],
+        [
+            -0.21024776207865162,
+            -78.50379756060393
+        ],
+        [
+            -0.210685687571839,
+            -78.50826886665769
+        ],
+        [
+            -0.210092137571839,
+            -78.49395856665768
+        ],
+        [
+            -0.208372237571839,
+            -78.50152451665768
+        ],
+        [
+            -0.19937011860465112,
+            -78.50058884069766
+        ],
+        [
+            -0.23495391860465112,
+            -78.51480304069766
+        ],
+        [
+            -0.23852431860465112,
+            -78.52260684069766
+        ],
+        [
+            -0.229813415392366,
+            -78.51074768572782
+        ],
+        [
+            -0.211073315392366,
+            -78.51151928572783
+        ],
+        [
+            -0.202379415392366,
+            -78.49233758572782
+        ],
+        [
+            -0.2002197115,
+            -78.49927565415625
+        ],
+        [
+            -0.2282574114999999,
+            -78.51166300415625
+        ],
+        [
+            -0.2164858115,
+            -78.50410460415624
+        ],
+        [
+            -0.2082008887254902,
+            -78.49119101029413
+        ],
+        [
+            -0.2093534887254902,
+            -78.49364351029412
+        ],
+        [
+            -0.2076700387254902,
+            -78.49638516029412
+        ],
+        [
+            -0.19895299961013652,
+            -78.51090723645224
+        ],
+        [
+            -0.19751579961013652,
+            -78.51197233645225
+        ],
+        [
+            -0.24300509961013642,
+            -78.54604973645225
+        ],
+        [
+            -0.20105924156853872,
+            -78.50513703959842
+        ],
+        [
+            -0.20025419156853871,
+            -78.50400763959843
+        ],
+        [
+            -0.1999760415685386,
+            -78.50306153959842
+        ],
+        [
+            -0.2576139858701922,
+            -78.5333082961298
+        ],
+        [
+            -0.24828688587019232,
+            -78.5296645961298
+        ],
+        [
+            -0.2176909858701923,
+            -78.5182732961298
+        ],
+        [
+            -0.2034242651785714,
+            -78.49689890547617
+        ],
+        [
+            -0.2086339651785714,
+            -78.48285890547618
+        ],
+        [
+            -0.2027555651785716,
+            -78.49775680547617
+        ],
+        [
+            -0.1983393064516129,
+            -78.50297324032258
+        ],
+        [
+            -0.1983393064516129,
+            -78.50297324032258
+        ],
+        [
+            -0.1983393064516129,
+            -78.50297324032258
+        ],
+        [
+            -0.2258320041197118,
+            -78.49956737544335
+        ],
+        [
+            -0.2075672041197118,
+            -78.50845877544336
+        ],
+        [
+            -0.2259753041197118,
+            -78.50159387544335
+        ],
+        [
+            -0.20768632103102191,
+            -78.49764256491785
+        ],
+        [
+            -0.2054806710310219,
+            -78.49943236491787
+        ],
+        [
+            -0.2034969710310219,
+            -78.49675101491786
+        ],
+        [
+            -0.2207310793248944,
+            -78.5023298036568
+        ],
+        [
+            -0.2053993793248944,
+            -78.49486460365681
+        ],
+        [
+            -0.2179946793248944,
+            -78.49137820365681
+        ],
+        [
+            -0.20370911909518202,
+            -78.4989332628672
+        ],
+        [
+            -0.219553419095182,
+            -78.4925397628672
+        ],
+        [
+            -0.211185869095182,
+            -78.4859681128672
+        ],
+        [
+            -0.19896309905281281,
+            -78.50852628119975
+        ],
+        [
+            -0.2505586990528128,
+            -78.50519638119975
+        ],
+        [
+            -0.2596185990528128,
+            -78.51428828119975
+        ],
+        [
+            -0.2123452752989536,
+            -78.50006350724962
+        ],
+        [
+            -0.2296593752989536,
+            -78.51250443224963
+        ],
+        [
+            -0.2415872752989536,
+            -78.51118950724963
+        ],
+        [
+            -0.2224300483530966,
+            -78.50317226337286
+        ],
+        [
+            -0.23017504835309652,
+            -78.50727916337286
+        ],
+        [
+            -0.2274891483530961,
+            -78.50887506337286
+        ],
+        [
+            -0.20499620782274042,
+            -78.4956545247447
+        ],
+        [
+            -0.2101719578227404,
+            -78.50541957474469
+        ],
+        [
+            -0.2058518078227404,
+            -78.4878418247447
+        ],
+        [
+            -0.2021474344713656,
+            -78.5046123900881
+        ],
+        [
+            -0.1979251844713657,
+            -78.5046201900881
+        ],
+        [
+            -0.2030319344713656,
+            -78.5027459900881
+        ],
+        [
+            -0.20930649329176101,
+            -78.51863381963341
+        ],
+        [
+            -0.20801279329176112,
+            -78.52040871963341
+        ],
+        [
+            -0.19811719329176122,
+            -78.5071425196334
+        ],
+        [
+            -0.2066215162130238,
+            -78.4974346465078
+        ],
+        [
+            -0.20386931621302382,
+            -78.4980517465078
+        ],
+        [
+            -0.2010087162130238,
+            -78.5021016465078
+        ],
+        [
+            -0.2086142290123455,
+            -78.49716085742284
+        ],
+        [
+            -0.2056287790123455,
+            -78.49439695742284
+        ],
+        [
+            -0.2102329290123456,
+            -78.48818575742283
+        ],
+        [
+            -0.20798260021186432,
+            -78.51096286398304
+        ],
+        [
+            -0.2025937252118643,
+            -78.49695603898303
+        ],
+        [
+            -0.22418270021186432,
+            -78.51188806398304
+        ],
+        [
+            -0.32497827778221,
+            -78.51818251427004
+        ],
+        [
+            -0.20761752778220982,
+            -78.50722186427004
+        ],
+        [
+            -0.22471637778220982,
+            -78.50181841427003
+        ],
+        [
+            -0.19941597864494,
+            -78.50439714451115
+        ],
+        [
+            -0.20199997864494001,
+            -78.49978234451115
+        ],
+        [
+            -0.21159987864494,
+            -78.50914134451114
+        ],
+        [
+            -0.2815647163776722,
+            -78.51917696108075
+        ],
+        [
+            -0.323394016377672,
+            -78.52914806108075
+        ],
+        [
+            -0.330831216377672,
+            -78.53399006108074
+        ],
+        [
+            -0.202960153785425,
+            -78.49899176044534
+        ],
+        [
+            -0.271760653785425,
+            -78.53062316044533
+        ],
+        [
+            -0.202218753785425,
+            -78.49938276044533
+        ],
+        [
+            -0.2135854886538461,
+            -78.51733088076921
+        ],
+        [
+            -0.2243787886538461,
+            -78.52274478076922
+        ],
+        [
+            -0.2343498886538461,
+            -78.5299994807692
+        ],
+        [
+            -0.1998053545415074,
+            -78.49932783720908
+        ],
+        [
+            -0.2010718795415074,
+            -78.49656511220908
+        ],
+        [
+            -0.20597277954150742,
+            -78.49763006220908
+        ],
+        [
+            -0.2017112693047696,
+            -78.50916855816087
+        ],
+        [
+            -0.2096012693047696,
+            -78.51338195816086
+        ],
+        [
+            -0.2079331693047696,
+            -78.48523445816086
+        ],
+        [
+            -0.2065878058148431,
+            -78.50729902168132
+        ],
+        [
+            -0.2026636058148431,
+            -78.50521612168131
+        ],
+        [
+            -0.1991184058148431,
+            -78.51049472168131
+        ],
+        [
+            -0.19822788311578632,
+            -78.51069154232698
+        ],
+        [
+            -0.2594159331157862,
+            -78.54070669232698
+        ],
+        [
+            -0.2607063831157862,
+            -78.54052914232697
+        ],
+        [
+            -0.21080655740740742,
+            -78.51150185018808
+        ],
+        [
+            -0.2013141574074074,
+            -78.50232805018808
+        ],
+        [
+            -0.20244625740740751,
+            -78.50690985018808
+        ],
+        [
+            -0.2410914810295519,
+            -78.53795777849538
+        ],
+        [
+            -0.2780253810295519,
+            -78.52779597849539
+        ],
+        [
+            -0.2685445810295519,
+            -78.51999387849538
+        ],
+        [
+            -0.2077612595688748,
+            -78.50569956598316
+        ],
+        [
+            -0.2014448095688748,
+            -78.50335381598316
+        ],
+        [
+            -0.23333305956887482,
+            -78.50584356598317
+        ],
+        [
+            -0.209093837701743,
+            -78.49418973053582
+        ],
+        [
+            -0.211110537701743,
+            -78.49632203053582
+        ],
+        [
+            -0.206206737701743,
+            -78.48530453053583
+        ],
+        [
+            -0.32579898836077803,
+            -78.52592001957335
+        ],
+        [
+            -0.35836618836077805,
+            -78.55694781957334
+        ],
+        [
+            -0.343340988360778,
+            -78.55038081957335
+        ],
+        [
+            -0.2533367192239546,
+            -78.50274353348688
+        ],
+        [
+            -0.21418541922395462,
+            -78.50493248348688
+        ],
+        [
+            -0.2127265192239546,
+            -78.48567323348688
+        ],
+        [
+            -0.2012502490119151,
+            -78.50112230037054
+        ],
+        [
+            -0.2009656490119151,
+            -78.50645650037053
+        ],
+        [
+            -0.1998220490119151,
+            -78.50716770037053
+        ],
+        [
+            -0.2108929543799472,
+            -78.5092293622955
+        ],
+        [
+            -0.21315675437994722,
+            -78.5159282622955
+        ],
+        [
+            -0.2124524543799472,
+            -78.51582476229551
+        ],
+        [
+            -0.21226681160250352,
+            -78.51925573341403
+        ],
+        [
+            -0.2648309116025036,
+            -78.55203813341403
+        ],
+        [
+            -0.2003881116025035,
+            -78.50695333341403
+        ],
+        [
+            -0.2088940298364579,
+            -78.50532202884922
+        ],
+        [
+            -0.19802062983645802,
+            -78.50768572884922
+        ],
+        [
+            -0.1996546298364579,
+            -78.50694612884922
+        ],
+        [
+            -0.2440029511600854,
+            -78.50223803720132
+        ],
+        [
+            -0.26115775116008544,
+            -78.51309863720132
+        ],
+        [
+            -0.24566805116008542,
+            -78.50289273720132
+        ],
+        [
+            -0.21766368407310702,
+            -78.49854750345952
+        ],
+        [
+            -0.233065284073107,
+            -78.50860265345952
+        ],
+        [
+            -0.219347684073107,
+            -78.49589490345952
+        ],
+        [
+            -0.2009280282828283,
+            -78.50818274019606
+        ],
+        [
+            -0.20351162828282832,
+            -78.50143904019606
+        ],
+        [
+            -0.20723932828282832,
+            -78.48759534019607
+        ],
+        [
+            -0.2790939575737847,
+            -78.56125869131944
+        ],
+        [
+            -0.2865129575737847,
+            -78.56257619131944
+        ],
+        [
+            -0.306439457573785,
+            -78.57038909131944
+        ],
+        [
+            -0.22874158583333332,
+            -78.53620278571428
+        ],
+        [
+            -0.2277730358333333,
+            -78.53728003571428
+        ],
+        [
+            -0.2477252358333333,
+            -78.54427813571428
+        ],
+        [
+            -0.22935292680555552,
+            -78.52905105122683
+        ],
+        [
+            -0.2407275518055555,
+            -78.53548925122683
+        ],
+        [
+            -0.2559908268055555,
+            -78.53447915122683
+        ],
+        [
+            -0.2012094968533886,
+            -78.49716834808439
+        ],
+        [
+            -0.22380967185338863,
+            -78.50628507308438
+        ],
+        [
+            -0.2707251968533886,
+            -78.54231484808439
+        ],
+        [
+            -0.2768228544556133,
+            -78.51137769238196
+        ],
+        [
+            -0.2117216544556132,
+            -78.49433269238196
+        ],
+        [
+            -0.2567246544556132,
+            -78.50711669238196
+        ],
+        [
+            -0.20099743972868211,
+            -78.50498361659619
+        ],
+        [
+            -0.2019161897286821,
+            -78.50028226659619
+        ],
+        [
+            -0.2055209897286821,
+            -78.49474606659619
+        ],
+        [
+            -0.2216679993403694,
+            -78.50527322763851
+        ],
+        [
+            -0.2671278993403694,
+            -78.51237532763851
+        ],
+        [
+            -0.2687977243403694,
+            -78.5094553776385
+        ],
+        [
+            -0.2065205289806547,
+            -78.49359696352305
+        ],
+        [
+            -0.2096331789806547,
+            -78.51819521352304
+        ],
+        [
+            -0.2091427789806547,
+            -78.49173921352305
+        ],
+        [
+            -0.2184195386942675,
+            -78.49326130317142
+        ],
+        [
+            -0.21630823869426752,
+            -78.49729600317143
+        ],
+        [
+            -0.2046277886942675,
+            -78.49576280317143
+        ],
+        [
+            -0.2079332035171409,
+            -78.50341498149255
+        ],
+        [
+            -0.19922140351714102,
+            -78.51140018149256
+        ],
+        [
+            -0.339736453517141,
+            -78.54919088149256
+        ],
+        [
+            -0.203052862230821,
+            -78.50686749688761
+        ],
+        [
+            -0.205897662230821,
+            -78.5082943968876
+        ],
+        [
+            -0.208252462230821,
+            -78.49158549688761
+        ],
+        [
+            -0.2993793,
+            -78.52713612999999
+        ],
+        [
+            -0.23717000000000002,
+            -78.53744252999999
+        ],
+        [
+            -0.3263401,
+            -78.53434782999999
+        ],
+        [
+            -0.21030032,
+            -78.48270177999999
+        ],
+        [
+            -0.20207481600000002,
+            -78.49622635799999
+        ],
+        [
+            -0.26615792,
+            -78.53469695999999
+        ],
+        [
+            -0.207967603,
+            -78.496667452
+        ],
+        [
+            -0.203049253,
+            -78.49841110199999
+        ],
+        [
+            -0.21141110000000002,
+            -78.50164715199999
+        ],
+        [
+            -0.203812717,
+            -78.49721177999999
+        ],
+        [
+            -0.204065617,
+            -78.49643447999999
+        ],
+        [
+            -0.202773317,
+            -78.49696773
+        ],
+        [
+            -0.20073988,
+            -78.50642331099999
+        ],
+        [
+            -0.1987683298,
+            -78.511793661
+        ],
+        [
+            -0.20604033000000002,
+            -78.51978645999999
+        ],
+        [
+            -0.20302888600000002,
+            -78.50186224699999
+        ],
+        [
+            -0.203120386,
+            -78.500666172
+        ],
+        [
+            -0.21158424,
+            -78.51198912199999
+        ],
+        [
+            -0.21633158000000002,
+            -78.49537705699998
+        ],
+        [
+            -0.21864998000000002,
+            -78.50567035699999
+        ],
+        [
+            -0.21904898,
+            -78.505980857
+        ],
+        [
+            -0.204762414,
+            -78.48958757
+        ],
+        [
+            -0.20476181400000001,
+            -78.48887746999999
+        ],
+        [
+            -0.206776164,
+            -78.49288057
+        ],
+        [
+            -0.20034004900000002,
+            -78.505183436
+        ],
+        [
+            -0.202756649,
+            -78.50085453599999
+        ],
+        [
+            -0.20703374900000002,
+            -78.49752203599999
+        ],
+        [
+            -0.28665676,
+            -78.58061314999999
+        ],
+        [
+            -0.24161776000000001,
+            -78.54509694999999
+        ],
+        [
+            -0.3082304,
+            -78.55399754999999
+        ],
+        [
+            -0.25588628,
+            -78.54531164
+        ],
+        [
+            -0.20028958300000002,
+            -78.500577439
+        ],
+        [
+            -0.1992009328,
+            -78.51206658899999
+        ],
+        [
+            -0.20034632600000002,
+            -78.50779964699998
+        ],
+        [
+            -0.201301176,
+            -78.50344644649999
+        ],
+        [
+            -0.28894413,
+            -78.57019145
+        ],
+        [
+            -0.201486773,
+            -78.50950741199999
+        ],
+        [
+            -0.203115973,
+            -78.49054686
+        ],
+        [
+            -0.21724787,
+            -78.50173446199999
+        ],
+        [
+            -0.19843975407,
+            -78.50399401719999
+        ],
+        [
+            -0.20936145,
+            -78.48509562
+        ],
+        [
+            -0.21295850000000002,
+            -78.48849582
+        ],
+        [
+            -0.1976331841,
+            -78.50573838899999
+        ],
+        [
+            -0.20579218400000002,
+            -78.504234989
+        ],
+        [
+            -0.20970578,
+            -78.49525903899999
+        ],
+        [
+            -0.20701465600000002,
+            -78.495528392
+        ],
+        [
+            -0.201441806,
+            -78.511752092
+        ],
+        [
+            -0.19953605600000002,
+            -78.51008769199998
+        ],
+        [
+            -0.28465154000000004,
+            -78.53966903999999
+        ],
+        [
+            -0.28870474,
+            -78.55812664
+        ],
+        [
+            -0.27241039,
+            -78.54326248999999
+        ],
+        [
+            -0.202043418,
+            -78.498536546
+        ],
+        [
+            -0.200696168,
+            -78.50149499599999
+        ],
+        [
+            -0.201387168,
+            -78.496114896
+        ],
+        [
+            -0.29732113,
+            -78.56574156999999
+        ],
+        [
+            -0.20890893000000002,
+            -78.51221256999999
+        ],
+        [
+            -0.20982608,
+            -78.51524921999999
+        ],
+        [
+            -0.23227312,
+            -78.51112877399999
+        ],
+        [
+            -0.23054912,
+            -78.51485962
+        ],
+        [
+            -0.21902842,
+            -78.51468197
+        ],
+        [
+            -0.20210207400000002,
+            -78.493104549
+        ],
+        [
+            -0.2106425,
+            -78.49278344999999
+        ],
+        [
+            -0.202803974,
+            -78.49359634899999
+        ],
+        [
+            -0.24922954,
+            -78.55057805999999
+        ],
+        [
+            -0.21683779,
+            -78.507677957
+        ],
+        [
+            -0.25749619,
+            -78.53165480999999
+        ],
+        [
+            -0.25012080000000003,
+            -78.51324116999999
+        ],
+        [
+            -0.26251442,
+            -78.50929086999999
+        ],
+        [
+            -0.2636056,
+            -78.50471886999999
+        ],
+        [
+            -0.1980036386,
+            -78.505494073
+        ],
+        [
+            -0.1989705886,
+            -78.506225073
+        ],
+        [
+            -0.21948669,
+            -78.51062987299998
+        ],
+        [
+            -0.200097785,
+            -78.50580010499999
+        ],
+        [
+            -0.22046059,
+            -78.52203669999999
+        ],
+        [
+            -0.23001179,
+            -78.52134299999999
+        ],
+        [
+            -0.21101614000000002,
+            -78.494996519
+        ],
+        [
+            -0.20357179,
+            -78.50063276899999
+        ],
+        [
+            -0.20017664000000002,
+            -78.51088351899999
+        ],
+        [
+            -0.23053959000000002,
+            -78.53240373
+        ],
+        [
+            -0.23555804000000002,
+            -78.53400248
+        ],
+        [
+            -0.22449184,
+            -78.53239222999999
+        ],
+        [
+            -0.24509582000000002,
+            -78.54187042999999
+        ],
+        [
+            -0.24910407,
+            -78.53973962999999
+        ],
+        [
+            -0.3313884,
+            -78.54684223
+        ],
+        [
+            -0.21586801,
+            -78.52189664999999
+        ],
+        [
+            -0.27227456,
+            -78.56455369999999
+        ],
+        [
+            -0.25556581,
+            -78.55568924999999
+        ],
+        [
+            -0.25930008,
+            -78.52069177999999
+        ],
+        [
+            -0.20224973000000002,
+            -78.510985126
+        ],
+        [
+            -0.23250838000000001,
+            -78.51507088
+        ],
+        [
+            -0.20080938,
+            -78.50558492299999
+        ],
+        [
+            -0.20381328,
+            -78.504874123
+        ],
+        [
+            -0.20295438000000002,
+            -78.50309712344999
+        ],
+        [
+            -0.200429732,
+            -78.51153975599999
+        ],
+        [
+            -0.21190873000000002,
+            -78.493430056
+        ],
+        [
+            -0.204151532,
+            -78.49414035599999
+        ],
+        [
+            -0.26590389000000003,
+            -78.51572718999999
+        ],
+        [
+            -0.24933089,
+            -78.51928439
+        ],
+        [
+            -0.24037859,
+            -78.52141398999999
+        ],
+        [
+            -0.207637774,
+            -78.48531765999999
+        ],
+        [
+            -0.21050957,
+            -78.494710058
+        ],
+        [
+            -0.27149087,
+            -78.53257665999999
+        ],
+        [
+            -0.3084142,
+            -78.53742319
+        ],
+        [
+            -0.298863,
+            -78.52614729
+        ],
+        [
+            -0.29514601,
+            -78.52659123999999
+        ],
+        [
+            -0.20015027700000002,
+            -78.50188115799999
+        ],
+        [
+            -0.20684697700000002,
+            -78.49641115799999
+        ],
+        [
+            -0.19834957690000002,
+            -78.50295905768999
+        ],
+        [
+            -0.21259179,
+            -78.49455450699999
+        ],
+        [
+            -0.21454799000000002,
+            -78.48929940999999
+        ],
+        [
+            -0.21489324,
+            -78.48912856
+        ],
+        [
+            -0.27535693,
+            -78.53033396
+        ],
+        [
+            -0.20411953200000002,
+            -78.50301755953399
+        ],
+        [
+            -0.24304363,
+            -78.51904615999999
+        ],
+        [
+            -0.205052709,
+            -78.48699575999999
+        ],
+        [
+            -0.208176109,
+            -78.500374211
+        ],
+        [
+            -0.21347221,
+            -78.49887536099999
+        ],
+        [
+            -0.1993170508,
+            -78.5034464301
+        ],
+        [
+            -0.19867175080000002,
+            -78.50834372999999
+        ],
+        [
+            -0.196718251,
+            -78.51048773
+        ],
+        [
+            -0.20999327,
+            -78.512173217
+        ],
+        [
+            -0.20008667200000002,
+            -78.50754871699999
+        ],
+        [
+            -0.19848737174,
+            -78.503004917391
+        ],
+        [
+            -0.19726015100000002,
+            -78.50571843699998
+        ],
+        [
+            -0.21236375000000002,
+            -78.49090518999999
+        ],
+        [
+            -0.2094164,
+            -78.499181387
+        ],
+        [
+            -0.1991962515,
+            -78.50546454799999
+        ],
+        [
+            -0.20698555200000002,
+            -78.51444355
+        ],
+        [
+            -0.201318452,
+            -78.51136429799999
+        ],
+        [
+            -0.199803861,
+            -78.506676659
+        ],
+        [
+            -0.1993268614,
+            -78.50364220879999
+        ],
+        [
+            -0.1979943614,
+            -78.504630959
+        ],
+        [
+            -0.22797442,
+            -78.512649824
+        ],
+        [
+            -0.1990127942,
+            -78.501051224
+        ],
+        [
+            -0.1987330192,
+            -78.505913924
+        ],
+        [
+            -0.22889812,
+            -78.51708794999999
+        ],
+        [
+            -0.20948527,
+            -78.49169964999999
+        ],
+        [
+            -0.206326125,
+            -78.49169959999999
+        ],
+        [
+            -0.20493943,
+            -78.50011464699999
+        ],
+        [
+            -0.20638403,
+            -78.51112174699999
+        ],
+        [
+            -0.28774893,
+            -78.55072204999999
+        ],
+        [
+            -0.20013371500000002,
+            -78.50705294599999
+        ],
+        [
+            -0.207647265,
+            -78.51735065
+        ],
+        [
+            -0.20143586500000002,
+            -78.51024894599999
+        ],
+        [
+            -0.25592893,
+            -78.50314687679999
+        ],
+        [
+            -0.23971833,
+            -78.50436727699999
+        ],
+        [
+            -0.21353313000000002,
+            -78.495138277
+        ],
+        [
+            -0.21259406,
+            -78.51453480999999
+        ],
+        [
+            -0.34107529999999997,
+            -78.56001341
+        ],
+        [
+            -0.23497396,
+            -78.52386750999999
+        ],
+        [
+            -0.20506285800000001,
+            -78.495388775
+        ],
+        [
+            -0.20168385800000002,
+            -78.50210112459999
+        ],
+        [
+            -0.21256061,
+            -78.48904841999999
+        ],
+        [
+            -0.202825208,
+            -78.509002657
+        ],
+        [
+            -0.22587956,
+            -78.52834750999999
+        ],
+        [
+            -0.19735870800000002,
+            -78.510422557
+        ],
+        [
+            -0.20125462400000002,
+            -78.49830128699999
+        ],
+        [
+            -0.20805472400000002,
+            -78.50348058719999
+        ],
+        [
+            -0.197489524,
+            -78.504937387
+        ],
+        [
+            -0.20815355800000002,
+            -78.50268156909999
+        ],
+        [
+            -0.21264951,
+            -78.49679866899999
+        ],
+        [
+            -0.20918701,
+            -78.497638169
+        ],
+        [
+            -0.20749636300000002,
+            -78.48243616999999
+        ],
+        [
+            -0.204685363,
+            -78.498678621
+        ],
+        [
+            -0.21815751,
+            -78.499467321
+        ],
+        [
+            -0.351704,
+            -78.53265262999999
+        ],
+        [
+            -0.341398,
+            -78.57103953
+        ],
+        [
+            -0.3325922,
+            -78.58035982999999
+        ],
+        [
+            -0.22829638000000002,
+            -78.53066826999999
+        ],
+        [
+            -0.22375158,
+            -78.52139356999999
+        ],
+        [
+            -0.22085398,
+            -78.52178846999999
+        ],
+        [
+            -0.25538394000000003,
+            -78.50722374799999
+        ],
+        [
+            -0.29318324,
+            -78.53091964999999
+        ],
+        [
+            -0.25285834,
+            -78.52392934999999
+        ],
+        [
+            -0.24500015,
+            -78.51093371799999
+        ],
+        [
+            -0.1987288,
+            -78.500817043
+        ],
+        [
+            -0.2276149,
+            -78.51864516999999
+        ],
+        [
+            -0.201631329,
+            -78.50069313899999
+        ],
+        [
+            -0.20387922900000002,
+            -78.50078553899999
+        ],
+        [
+            -0.20090992900000001,
+            -78.50054388899999
+        ],
+        [
+            -0.25741994,
+            -78.52552023
+        ],
+        [
+            -0.3251575,
+            -78.52016223
+        ],
+        [
+            -0.21046684000000002,
+            -78.50417943299999
+        ],
+        [
+            -0.19730164900000002,
+            -78.505316146
+        ],
+        [
+            -0.21445335000000001,
+            -78.509798346
+        ],
+        [
+            -0.205675049,
+            -78.49605174599999
+        ],
+        [
+            -0.27145781,
+            -78.54608483999999
+        ],
+        [
+            -0.28359461,
+            -78.55130573999999
+        ],
+        [
+            -0.22674431,
+            -78.51462633999999
+        ],
+        [
+            -0.29022471,
+            -78.55261162999999
+        ],
+        [
+            -0.24483511000000002,
+            -78.51886062999999
+        ],
+        [
+            -0.24511996000000003,
+            -78.51584018
+        ],
+        [
+            -0.20807450400000002,
+            -78.512539491
+        ],
+        [
+            -0.2085041,
+            -78.51328688999999
+        ],
+        [
+            -0.22876000000000002,
+            -78.49975639099999
+        ],
+        [
+            -0.20237543600000002,
+            -78.50254696309999
+        ],
+        [
+            -0.198736986,
+            -78.50806011299998
+        ],
+        [
+            -0.203779186,
+            -78.509357513
+        ],
+        [
+            -0.1977035063,
+            -78.50931476599999
+        ],
+        [
+            -0.208440606,
+            -78.50790436599999
+        ],
+        [
+            -0.199808106,
+            -78.49945296599999
+        ],
+        [
+            -0.21057602,
+            -78.499521131
+        ],
+        [
+            -0.20085201700000002,
+            -78.507389431
+        ],
+        [
+            -0.20873592000000002,
+            -78.50736843099999
+        ],
+        [
+            -0.20093023200000001,
+            -78.496452853
+        ],
+        [
+            -0.203530332,
+            -78.501058753
+        ],
+        [
+            -0.203691132,
+            -78.49774795299999
+        ],
+        [
+            -0.200462675,
+            -78.50585471599999
+        ],
+        [
+            -0.21240202,
+            -78.51330956999999
+        ],
+        [
+            -0.20434612500000002,
+            -78.507629716
+        ],
+        [
+            -0.23903738000000002,
+            -78.52056728999999
+        ],
+        [
+            -0.200481083,
+            -78.51136689299999
+        ],
+        [
+            -0.26360228,
+            -78.55936369
+        ],
+        [
+            -0.21302856,
+            -78.49702351699999
+        ],
+        [
+            -0.21825326,
+            -78.51791961999999
+        ],
+        [
+            -0.23993906,
+            -78.510697817
+        ],
+        [
+            -0.20641493,
+            -78.5026099174
+        ],
+        [
+            -0.33999310000000005,
+            -78.57365392
+        ],
+        [
+            -0.22984203,
+            -78.50512726699999
+        ],
+        [
+            -0.204703464,
+            -78.51144994699999
+        ],
+        [
+            -0.20898526,
+            -78.51786034999999
+        ],
+        [
+            -0.22879286000000001,
+            -78.53802705
+        ],
+        [
+            -0.21622077,
+            -78.49587062299999
+        ],
+        [
+            -0.1982777725,
+            -78.507883423
+        ],
+        [
+            -0.206155622,
+            -78.50841612299999
+        ],
+        [
+            -0.19946464490000002,
+            -78.50291507511999
+        ],
+        [
+            -0.21650499,
+            -78.501804025
+        ],
+        [
+            -0.205972645,
+            -78.49686117499999
+        ],
+        [
+            -0.20290123200000001,
+            -78.504801092
+        ],
+        [
+            -0.24232731000000002,
+            -78.50576489199999
+        ],
+        [
+            -0.22713768,
+            -78.51031044199999
+        ],
+        [
+            -0.202540448,
+            -78.51085012799999
+        ],
+        [
+            -0.21491780000000002,
+            -78.51472023
+        ],
+        [
+            -0.22074500000000002,
+            -78.52187167999999
+        ],
+        [
+            -0.20955872,
+            -78.500349953
+        ],
+        [
+            -0.20601122400000002,
+            -78.50774435299999
+        ],
+        [
+            -0.207694924,
+            -78.51897614999999
+        ],
+        [
+            -0.20478042700000001,
+            -78.50901063199998
+        ],
+        [
+            -0.20322187700000002,
+            -78.50789078199999
+        ],
+        [
+            -0.26613058,
+            -78.55473747999999
+        ],
+        [
+            -0.20349540600000002,
+            -78.51013970899999
+        ],
+        [
+            -0.21308611,
+            -78.5023288092
+        ],
+        [
+            -0.23864551,
+            -78.54504080999999
+        ],
+        [
+            -0.1987042588,
+            -78.504121519
+        ],
+        [
+            -0.19846615875,
+            -78.50569111899999
+        ],
+        [
+            -0.19865060880000002,
+            -78.50667276899999
+        ],
+        [
+            -0.22339257,
+            -78.501728995
+        ],
+        [
+            -0.21452077,
+            -78.49121998999999
+        ],
+        [
+            -0.20445501800000002,
+            -78.50274886969999
+        ],
+        [
+            -0.201816255,
+            -78.5036230163
+        ],
+        [
+            -0.22986905000000002,
+            -78.509037216
+        ],
+        [
+            -0.21668396,
+            -78.49651986599999
+        ],
+        [
+            -0.22599806,
+            -78.507233195
+        ],
+        [
+            -0.1994147601,
+            -78.50971924499999
+        ],
+        [
+            -0.1979795101,
+            -78.51131739499999
+        ],
+        [
+            -0.22681509,
+            -78.50808378199999
+        ],
+        [
+            -0.30917,
+            -78.52754117999999
+        ],
+        [
+            -0.3480306,
+            -78.56613667999999
+        ],
+        [
+            -0.20987045000000001,
+            -78.51330105999999
+        ],
+        [
+            -0.20880615000000002,
+            -78.499209911
+        ],
+        [
+            -0.21144020000000002,
+            -78.48887366
+        ],
+        [
+            -0.25513451,
+            -78.55110749999999
+        ],
+        [
+            -0.27010466,
+            -78.55111914999999
+        ],
+        [
+            -0.29487841000000004,
+            -78.55126315
+        ],
+        [
+            -0.1993663169,
+            -78.5021838048
+        ],
+        [
+            -0.202169217,
+            -78.50279240479999
+        ],
+        [
+            -0.20011261700000002,
+            -78.497732805
+        ],
+        [
+            -0.23859798000000002,
+            -78.53245976999999
+        ],
+        [
+            -0.24950798000000002,
+            -78.53195086999999
+        ],
+        [
+            -0.24767968,
+            -78.52681483999999
+        ],
+        [
+            -0.20568944,
+            -78.505267835
+        ],
+        [
+            -0.20499159,
+            -78.50406613499999
+        ],
+        [
+            -0.23888329000000003,
+            -78.54610802999998
+        ],
+        [
+            -0.28456993,
+            -78.54633770999999
+        ],
+        [
+            -0.3230623,
+            -78.56647795999999
+        ],
+        [
+            -0.3446479,
+            -78.57175176
+        ],
+        [
+            -0.23979467000000002,
+            -78.51108999699998
+        ],
+        [
+            -0.24093867000000002,
+            -78.507892797
+        ],
+        [
+            -0.27357687,
+            -78.54627479999999
+        ],
+        [
+            -0.202596425,
+            -78.49283053999999
+        ],
+        [
+            -0.20962333,
+            -78.496993736
+        ],
+        [
+            -0.20984583,
+            -78.51081703599999
+        ],
+        [
+            -0.19946562780000002,
+            -78.50165953499999
+        ],
+        [
+            -0.200336178,
+            -78.50181988499999
+        ],
+        [
+            -0.204044628,
+            -78.50545138499999
+        ],
+        [
+            -0.1991781899,
+            -78.506935672
+        ],
+        [
+            -0.25671829,
+            -78.55699847
+        ],
+        [
+            -0.22381144,
+            -78.51011632199999
+        ],
+        [
+            -0.202556478,
+            -78.50351646489999
+        ],
+        [
+            -0.21039708000000001,
+            -78.48752255999999
+        ],
+        [
+            -0.204978928,
+            -78.49566641499999
+        ],
+        [
+            -0.204516636,
+            -78.4890973
+        ],
+        [
+            -0.20881434000000001,
+            -78.49637575099999
+        ],
+        [
+            -0.202656536,
+            -78.49158265
+        ],
+        [
+            -0.20007649700000002,
+            -78.507019773
+        ],
+        [
+            -0.200372197,
+            -78.50937887299999
+        ],
+        [
+            -0.20707619700000002,
+            -78.510848473
+        ],
+        [
+            -0.3009875,
+            -78.56258408999999
+        ],
+        [
+            -0.26376541,
+            -78.52387049
+        ],
+        [
+            -0.3112998,
+            -78.56435959
+        ]
+    ],
+    "grouped_barrios": [
+        {
+            "cluster": 0,
+            "lat": -0.24641052791666668,
+            "lon": -78.54307428285713,
+            "num_usuarios": 2,
+            "nombre": "4 DE DICIEMBRE",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 1,
+            "lat": -0.2159001479744737,
+            "lon": -78.49924051625929,
+            "num_usuarios": 8,
+            "nombre": "AM\u00c9RICA",
+            "num_puntos": 8
+        },
+        {
+            "cluster": 2,
+            "lat": -0.2815647163776722,
+            "lon": -78.51917696108075,
+            "num_usuarios": 1,
+            "nombre": "ARGELIA ALTA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 3,
+            "lat": -0.24889743293509617,
+            "lon": -78.5308077330649,
+            "num_usuarios": 2,
+            "nombre": "ATAHUALPA OCCIDENTAL",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 4,
+            "lat": -0.333843362078652,
+            "lon": -78.53014016060393,
+            "num_usuarios": 1,
+            "nombre": "BELLAVISTA DEL SUR",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 5,
+            "lat": -0.24201619705336183,
+            "lon": -78.5041234020671,
+            "num_usuarios": 3,
+            "nombre": "BOSQUE  IESS",
+            "num_puntos": 3
+        },
+        {
+            "cluster": 6,
+            "lat": -0.34107529999999997,
+            "lon": -78.56001341,
+            "num_usuarios": 1,
+            "nombre": "CEDOC",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 7,
+            "lat": -0.24094419480506823,
+            "lon": -78.54607888322612,
+            "num_usuarios": 2,
+            "nombre": "CHILIBULO",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 8,
+            "lat": -0.2865129575737847,
+            "lon": -78.56257619131944,
+            "num_usuarios": 1,
+            "nombre": "CHILLOGALLO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 9,
+            "lat": -0.22847722001609908,
+            "lon": -78.50688055971607,
+            "num_usuarios": 12,
+            "nombre": "CHIMBACALLE",
+            "num_puntos": 12
+        },
+        {
+            "cluster": 10,
+            "lat": -0.24933089,
+            "lon": -78.51928439,
+            "num_usuarios": 1,
+            "nombre": "CHIRIYACU BAJO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 11,
+            "lat": -0.25012080000000003,
+            "lon": -78.51324116999999,
+            "num_usuarios": 1,
+            "nombre": "CHIRIYACU CENTRAL",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 12,
+            "lat": -0.2026636058148431,
+            "lon": -78.50521612168131,
+            "num_usuarios": 1,
+            "nombre": "CIUDADELA  UNIVERSITARIA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 13,
+            "lat": -0.21566208256331115,
+            "lon": -78.51657667445106,
+            "num_usuarios": 8,
+            "nombre": "CIUDADELA AMAZONAS",
+            "num_puntos": 8
+        },
+        {
+            "cluster": 14,
+            "lat": -0.330831216377672,
+            "lon": -78.53399006108074,
+            "num_usuarios": 1,
+            "nombre": "CIUDADELA METROPOLITANA CAUPICHU",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 15,
+            "lat": -0.324596502369225,
+            "lon": -78.52753404032705,
+            "num_usuarios": 2,
+            "nombre": "ED\u00c9N DEL SUR",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 16,
+            "lat": -0.3082304,
+            "lon": -78.55399754999999,
+            "num_usuarios": 1,
+            "nombre": "EJ\u00c9RCITO NACIONAL 1RA. ETAPA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 17,
+            "lat": -0.19845221955,
+            "lon": -78.51069067749998,
+            "num_usuarios": 2,
+            "nombre": "EL ARMERO",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 18,
+            "lat": -0.21347221,
+            "lon": -78.49887536099999,
+            "num_usuarios": 1,
+            "nombre": "EL BEL\u00c9N",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 19,
+            "lat": -0.29732113,
+            "lon": -78.56574156999999,
+            "num_usuarios": 1,
+            "nombre": "EL CISNE",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 20,
+            "lat": -0.2749577270098506,
+            "lon": -78.5302355328318,
+            "num_usuarios": 3,
+            "nombre": "EL COMERCIO",
+            "num_puntos": 3
+        },
+        {
+            "cluster": 21,
+            "lat": -0.23001179,
+            "lon": -78.52134299999999,
+            "num_usuarios": 1,
+            "nombre": "EL PANECILLO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 22,
+            "lat": -0.23791582358149224,
+            "lon": -78.53455854841523,
+            "num_usuarios": 6,
+            "nombre": "EL PARAISO",
+            "num_puntos": 6
+        },
+        {
+            "cluster": 23,
+            "lat": -0.26376541,
+            "lon": -78.52387049,
+            "num_usuarios": 1,
+            "nombre": "EL RECREO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 24,
+            "lat": -0.207694924,
+            "lon": -78.51897614999999,
+            "num_usuarios": 1,
+            "nombre": "EL ROSAL",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 25,
+            "lat": -0.28894413,
+            "lon": -78.57019145,
+            "num_usuarios": 1,
+            "nombre": "EL TR\u00c1NSITO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 26,
+            "lat": -0.2654807458012518,
+            "lon": -78.55338780670701,
+            "num_usuarios": 2,
+            "nombre": "EUGENIO ESPEJO",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 27,
+            "lat": -0.2687977243403694,
+            "lon": -78.5094553776385,
+            "num_usuarios": 1,
+            "nombre": "FERROVIARIA ALTA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 28,
+            "lat": -0.2596185990528128,
+            "lon": -78.51428828119975,
+            "num_usuarios": 1,
+            "nombre": "FERROVIARIA MEDIA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 29,
+            "lat": -0.3009875,
+            "lon": -78.56258408999999,
+            "num_usuarios": 1,
+            "nombre": "FLORIDA DEL SUR",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 30,
+            "lat": -0.2567246544556132,
+            "lon": -78.50711669238196,
+            "num_usuarios": 1,
+            "nombre": "FORESTAL ALTA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 31,
+            "lat": -0.2607063831157862,
+            "lon": -78.54052914232697,
+            "num_usuarios": 1,
+            "nombre": "FRENTE POPULAR",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 32,
+            "lat": -0.3230623,
+            "lon": -78.56647795999999,
+            "num_usuarios": 1,
+            "nombre": "HEMISFERIO SUR",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 33,
+            "lat": -0.2277120593611111,
+            "lon": -78.53057255824535,
+            "num_usuarios": 5,
+            "nombre": "JOSEFINA ENR\u00cdQUEZ",
+            "num_puntos": 5
+        },
+        {
+            "cluster": 34,
+            "lat": -0.34201299999999996,
+            "lon": -78.57214840333333,
+            "num_usuarios": 3,
+            "nombre": "JOS\u00c9 PERALTA",
+            "num_puntos": 3
+        },
+        {
+            "cluster": 35,
+            "lat": -0.3112998,
+            "lon": -78.56435959,
+            "num_usuarios": 1,
+            "nombre": "LA ECUATORIANA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 36,
+            "lat": -0.2127265192239546,
+            "lon": -78.48567323348688,
+            "num_usuarios": 1,
+            "nombre": "LA FLORESTA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 37,
+            "lat": -0.351704,
+            "lon": -78.53265262999999,
+            "num_usuarios": 1,
+            "nombre": "LA PAMPA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 38,
+            "lat": -0.3084142,
+            "lon": -78.53742319,
+            "num_usuarios": 1,
+            "nombre": "LA PUERTA NEGRA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 39,
+            "lat": -0.25588628,
+            "lon": -78.54531164,
+            "num_usuarios": 1,
+            "nombre": "LA RAYA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 40,
+            "lat": -0.24910407,
+            "lon": -78.53973962999999,
+            "num_usuarios": 1,
+            "nombre": "LA SANTIAGO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 41,
+            "lat": -0.28870474,
+            "lon": -78.55812664,
+            "num_usuarios": 1,
+            "nombre": "LAS CUADRAS",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 42,
+            "lat": -0.24511996000000003,
+            "lon": -78.51584018,
+            "num_usuarios": 1,
+            "nombre": "LOS ANDES",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 43,
+            "lat": -0.23497396,
+            "lon": -78.52386750999999,
+            "num_usuarios": 1,
+            "nombre": "LOS DOS PUENTES",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 44,
+            "lat": -0.3325922,
+            "lon": -78.58035982999999,
+            "num_usuarios": 1,
+            "nombre": "MANUELITA S\u00c1ENZ",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 45,
+            "lat": -0.210092137571839,
+            "lon": -78.49395856665768,
+            "num_usuarios": 1,
+            "nombre": "MARISCAL SUCRE",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 46,
+            "lat": -0.28465154000000004,
+            "lon": -78.53966903999999,
+            "num_usuarios": 1,
+            "nombre": "MAR\u00cdA ELENA SALAZAR",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 47,
+            "lat": -0.2636056,
+            "lon": -78.50471886999999,
+            "num_usuarios": 1,
+            "nombre": "MIRADOR DE PUENGASI",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 48,
+            "lat": -0.20753002800000003,
+            "lon": -78.5134915205,
+            "num_usuarios": 2,
+            "nombre": "MIRAFLORES",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 49,
+            "lat": -0.2406909726494768,
+            "lon": -78.5111397521248,
+            "num_usuarios": 2,
+            "nombre": "M\u00c9XICO",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 50,
+            "lat": -0.30917,
+            "lon": -78.52754117999999,
+            "num_usuarios": 1,
+            "nombre": "NUEVOS HORIZONTES DEL SUR",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 51,
+            "lat": -0.25741994,
+            "lon": -78.52552023,
+            "num_usuarios": 1,
+            "nombre": "PRIMERO DE MAYO EL CALZADO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 52,
+            "lat": -0.26615792,
+            "lon": -78.53469695999999,
+            "num_usuarios": 1,
+            "nombre": "QUITO SUR",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 53,
+            "lat": -0.25614205,
+            "lon": -78.55634386,
+            "num_usuarios": 2,
+            "nombre": "REINO DE QUITO",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 54,
+            "lat": -0.29487841000000004,
+            "lon": -78.55126315,
+            "num_usuarios": 1,
+            "nombre": "RUCCULLACTA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 55,
+            "lat": -0.28665676,
+            "lon": -78.58061314999999,
+            "num_usuarios": 1,
+            "nombre": "SAN ANTONIO DE LA LIBERTAD",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 56,
+            "lat": -0.2768228544556133,
+            "lon": -78.51137769238196,
+            "num_usuarios": 1,
+            "nombre": "SAN BARTOLO ALTO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 57,
+            "lat": -0.29318324,
+            "lon": -78.53091964999999,
+            "num_usuarios": 1,
+            "nombre": "SAN CRISTOBAL",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 58,
+            "lat": -0.22261638432692304,
+            "lon": -78.5222666253846,
+            "num_usuarios": 2,
+            "nombre": "SAN DIEGO",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 59,
+            "lat": -0.306439457573785,
+            "lon": -78.57038909131944,
+            "num_usuarios": 1,
+            "nombre": "SAN FRANCISCO DE AS\u00cdS",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 60,
+            "lat": -0.3480306,
+            "lon": -78.56613667999999,
+            "num_usuarios": 1,
+            "nombre": "SAN ISIDRO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 61,
+            "lat": -0.21445335000000001,
+            "lon": -78.509798346,
+            "num_usuarios": 1,
+            "nombre": "SAN JUAN",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 62,
+            "lat": -0.2993793,
+            "lon": -78.52713612999999,
+            "num_usuarios": 1,
+            "nombre": "SAN MART\u00cdN DE PORRES",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 63,
+            "lat": -0.2533367192239546,
+            "lon": -78.50274353348688,
+            "num_usuarios": 1,
+            "nombre": "SAN PATRICIO DE PUENGASI",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 64,
+            "lat": -0.22674431,
+            "lon": -78.51462633999999,
+            "num_usuarios": 1,
+            "nombre": "SAN SEBASTI\u00c1N",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 65,
+            "lat": -0.24037859,
+            "lon": -78.52141398999999,
+            "num_usuarios": 1,
+            "nombre": "SANTA ANA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 66,
+            "lat": -0.2054806710310219,
+            "lon": -78.49943236491787,
+            "num_usuarios": 1,
+            "nombre": "SANTA CLARA DE SAN MILL\u00c1N",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 67,
+            "lat": -0.27357687,
+            "lon": -78.54627479999999,
+            "num_usuarios": 1,
+            "nombre": "SANTA RITA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 68,
+            "lat": -0.2790939575737847,
+            "lon": -78.56125869131944,
+            "num_usuarios": 1,
+            "nombre": "SANTA ROSA 1RA. ETAPA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 69,
+            "lat": -0.27227456,
+            "lon": -78.56455369999999,
+            "num_usuarios": 1,
+            "nombre": "SANTA ROSA 4TA. ETAPA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 70,
+            "lat": -0.3415387209389595,
+            "lon": -78.54978585053296,
+            "num_usuarios": 2,
+            "nombre": "SANTO TOM\u00c1S I",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 71,
+            "lat": -0.2707251968533886,
+            "lon": -78.54231484808439,
+            "num_usuarios": 1,
+            "nombre": "SOLANDA SECTOR-4",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 72,
+            "lat": -0.28898682,
+            "lon": -78.55166684,
+            "num_usuarios": 2,
+            "nombre": "SUCRE FUNDEPORTE",
+            "num_puntos": 2
+        },
+        {
+            "cluster": 73,
+            "lat": -0.25513451,
+            "lon": -78.55110749999999,
+            "num_usuarios": 1,
+            "nombre": "TARQUI",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 74,
+            "lat": -0.2559908268055555,
+            "lon": -78.53447915122683,
+            "num_usuarios": 1,
+            "nombre": "URBANIZACI\u00d3N LOS ARRAYANES",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 75,
+            "lat": -0.24922954,
+            "lon": -78.55057805999999,
+            "num_usuarios": 1,
+            "nombre": "VENCEDORES DEL PICHINCHA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 76,
+            "lat": -0.25285834,
+            "lon": -78.52392934999999,
+            "num_usuarios": 1,
+            "nombre": "VILLA FLORA",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 77,
+            "lat": -0.22879286000000001,
+            "lon": -78.53802705,
+            "num_usuarios": 1,
+            "nombre": "ZONA DE PROTECCI\u00d3N CHILIBULO",
+            "num_puntos": 1
+        },
+        {
+            "cluster": 78,
+            "lat": -0.3251575,
+            "lon": -78.52016223,
+            "num_usuarios": 1,
+            "nombre": "ZONA DE PROTECCI\u00d3N QUITUMBE",
+            "num_puntos": 1
+        }
+    ]
+}
