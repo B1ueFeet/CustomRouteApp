@@ -53,6 +53,10 @@ module.exports = configure(function (/* ctx */) {
         node: 'node20'
       },
 
+      env: {
+        VITE_API_BASE_URL: '/api'
+      },
+
       vueRouterMode: 'hash', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,

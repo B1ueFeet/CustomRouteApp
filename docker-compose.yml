@@ -37,6 +37,7 @@ services:
       args:
         # Definimos variable para que Quasar genere rutas relativas
         VITE_API_BASE_URL: '/api'
+
     container_name: frontend
     ports:
       - "8080:80"

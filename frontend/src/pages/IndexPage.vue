@@ -348,7 +348,9 @@ export default {
     async calcRoute(idx, pts) {
       const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
       try {
-        const res = await fetch(`/api/route?coords=${coords}&steps=true&overview=full`)
+        const base = import.meta.env.VITE_API_BASE_URL || ''
+        const res  = await fetch(`${base}/route?coords=${coords}&steps=true&overview=full`)
+        //const res = await fetch(`/api/route?coords=${coords}&steps=true&overview=full`)
         //const res = await fetch(`http://localhost:8000/api/route?coords=${coords}&steps=true&overview=full`)
         const data = await res.json()
         if (data.routes?.length) {
