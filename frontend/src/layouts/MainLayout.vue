@@ -420,25 +420,44 @@ export default {
         window.speechSynthesis.speak(u)
       }
     },
-    updateCurrentStep() {
-      if (!this.guidanceActive || !this.instructions.length || !this.position) return
-      let next = this.currentStepIndex
-      for (let i = 0; i < this.instructions.length; i++) {
-        const [lat, lng] = this.instructions[i].location
-        const d = L.latLng(...this.position).distanceTo(L.latLng(lat, lng))
-        if (d < 20) next = i + 1
-        else break
+     startGuidance() {
+    this.guidanceActive = true
+    this.currentStepIndex = 0
+
+    // === Lee la primera instrucción en voz alta ===
+    if (this.instructions.length && 'speechSynthesis' in window) {
+      const u = new SpeechSynthesisUtterance(this.instructions[0].text)
+      u.lang = 'es-ES'
+      window.speechSynthesis.cancel()
+      window.speechSynthesis.speak(u)
+    }
+  },
+
+  updateCurrentStep() {
+    if (!this.guidanceActive || !this.instructions.length || !this.position) return
+
+    let next = this.currentStepIndex
+    for (let i = 0; i < this.instructions.length; i++) {
+      const [lat, lng] = this.instructions[i].location
+      const d = L.latLng(...this.position).distanceTo(L.latLng(lat, lng))
+      if (d < 20) next = i + 1
+      else break
+    }
+
+    const newIndex = Math.min(next, this.instructions.length - 1)
+    if (newIndex !== this.currentStepIndex) {
+      this.currentStepIndex = newIndex
+
+      // === Y habla cada nuevo paso ===
+      const texto = this.instructions[newIndex].text
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(texto)
+        u.lang = 'es-ES'
+        window.speechSynthesis.cancel()
+        window.speechSynthesis.speak(u)
       }
-      if (next !== this.currentStepIndex) {
-        console.log('updateCurrentStep:', this.currentStepIndex, '->', next)
-        this.currentStepIndex = Math.min(next, this.instructions.length - 1)
-      }
-    },
-    startGuidance() {
-      this.guidanceActive = true
-      this.currentStepIndex = 0
-      console.log('startGuidance')
-    },
+    }
+  },
     stopGuidance() {
       this.guidanceActive = false
       console.log('stopGuidance')
