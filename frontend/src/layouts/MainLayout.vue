@@ -1,9 +1,12 @@
 <template>
   <q-layout view="hHh lpr lFr">
+    <!-- HEADER -->
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer">
-          <q-tooltip>Mostrar menú izquierdo</q-tooltip>
+          <q-tooltip anchor="middle left" self="middle right">
+            Mostrar menú izquierdo
+          </q-tooltip>
         </q-btn>
         <q-toolbar-title>
           <q-avatar>
@@ -12,41 +15,40 @@
           Title
         </q-toolbar-title>
         <q-btn dense flat round icon="menu" @click="toggleRightDrawer">
-          <q-tooltip>Mostrar menú derecho</q-tooltip>
+          <q-tooltip anchor="middle right" self="middle left">
+            Mostrar menú derecho
+          </q-tooltip>
         </q-btn>
       </q-toolbar>
     </q-header>
 
-    <q-banner
-      v-if="guidanceActive && instructions.length"
-      dense
-      class="bg-white text-primary"
-      style="justify-content: space-between"
-    >
-      <div style="font-size: 1.1em;">
-        {{ currentInstruction.text }}
-      </div>
-      <div style="font-size: 0.9em;">
-        {{ formatDistance(currentInstruction.distance) }}
-      </div>
-    </q-banner>
-
     <!-- LEFT DRAWER -->
     <q-drawer v-model="leftDrawerOpen" side="left" overlay elevated>
       <q-tabs v-model="leftTab" dense>
-        <q-tab name="rutas" label="Rutas" icon="route" />
+        <q-tab name="rutas"  label="Rutas"  icon="route" />
         <q-tab name="paradas" label="Paradas" icon="directions_bus" />
       </q-tabs>
       <q-separator spaced />
       <q-tab-panels v-model="leftTab" animated>
+
+        <!-- RUTAS -->
         <q-tab-panel name="rutas" class="q-pa-md">
           <q-btn label="Nueva ruta" color="primary" @click="addRoute" class="full-width" />
           <q-separator spaced />
-          <q-btn dense flat icon="file_upload" @click="triggerFileInput" class="full-width" />
-          <q-tooltip>Importar rutas</q-tooltip>
-          <q-btn dense flat icon="cloud_download" @click="exportAllRoutes" class="full-width" />
-          <q-tooltip>Exportar todas las rutas</q-tooltip>
+          <q-btn dense flat icon="file_upload" @click="triggerFileInput">
+            <q-tooltip anchor="middle left" self="middle right">
+              Importar rutas
+            </q-tooltip>
+          </q-btn>
+          <q-btn dense flat icon="cloud_download" @click="exportAllRoutes">
+            <q-tooltip anchor="middle left" self="middle right">
+              Exportar todas las rutas
+            </q-tooltip>
+          </q-btn>
           <input type="file" ref="fileInput" @change="onFileChange" accept=".json" style="display:none" />
+          <q-separator spaced />                    
+          <q-toggle v-model="editing" label="Modo edición" class="full-width" dense />
+          <q-toggle v-model="cleaning" label="Eliminar puntos" class="full-width" dense />
           <q-separator spaced />
           <q-list bordered padding>
             <q-item
@@ -56,26 +58,58 @@
               @click="selectRoute(idx)"
               :active="idx === selectedRouteIdx"
             >
-              <q-item-section side class="route-color-bar" :style="{ backgroundColor: route.color }" />
+              <q-item-section
+                side
+                class="route-color-bar"
+                :style="{ backgroundColor: route.color }"
+              />
               <q-item-section>{{ route.name }}</q-item-section>
+
               <q-item-section side top class="route-actions-top">
-                <q-btn dense flat icon="delete" @click.stop="deleteRoute(idx)" />
-                <q-btn dense flat icon="refresh" @click.stop="recalcRoute(idx)" />
-                <q-btn dense flat icon="undo" @click.stop="undoRoute(idx)" />
+                <q-btn dense flat icon="delete" @click.stop="deleteRoute(idx)">
+                  <q-tooltip anchor="middle left" self="middle right">
+                    Eliminar ruta
+                  </q-tooltip>
+                </q-btn>
+                <q-btn dense flat icon="refresh" @click.stop="recalcRoute(idx)">
+                  <q-tooltip anchor="middle left" self="middle right">
+                    Recalcular ruta
+                  </q-tooltip>
+                </q-btn>
+                <q-btn dense flat icon="undo" @click.stop="undoRoute(idx)">
+                  <q-tooltip anchor="middle left" self="middle right">
+                    Deshacer último punto
+                  </q-tooltip>
+                </q-btn>
               </q-item-section>
+
               <q-item-section side bottom class="route-actions-bottom">
-                <q-btn dense flat icon="clear_all" @click.stop="clearRoute(idx)" />
-                <q-btn dense flat icon="swap_vert" @click.stop="invertRoute(idx)" />
-                <q-btn dense flat icon="file_download" @click.stop="exportRoute(idx)" />
-                <q-toggle v-model="route.visible" dense />
+                <q-btn dense flat icon="clear_all" @click.stop="clearRoute(idx)">
+                  <q-tooltip anchor="middle left" self="middle right">
+                    Limpiar ruta completa
+                  </q-tooltip>
+                </q-btn>
+                <q-btn dense flat icon="swap_vert" @click.stop="invertRoute(idx)">
+                  <q-tooltip anchor="middle left" self="middle right">
+                    Invertir ruta
+                  </q-tooltip>
+                </q-btn>
+                <q-btn dense flat icon="file_download" @click.stop="exportRoute(idx)">
+                  <q-tooltip anchor="middle left" self="middle right">
+                    Exportar esta ruta
+                  </q-tooltip>
+                </q-btn>
+                <q-toggle v-model="route.visible" dense>
+                  <q-tooltip anchor="middle left" self="middle right">
+                    Mostrar/Ocultar ruta
+                  </q-tooltip>
+                </q-toggle>
               </q-item-section>
             </q-item>
           </q-list>
-          <q-separator spaced />
-          <q-toggle v-model="editing" label="Modo edición" class="full-width" dense />
-          <q-toggle v-model="cleaning" label="Eliminar puntos" class="full-width" dense />
         </q-tab-panel>
 
+        <!-- PARADAS -->
         <q-tab-panel name="paradas" class="q-pa-md">
           <q-toggle v-model="stopsMode" label="Definir paradas" class="full-width" dense />
           <q-toggle v-model="stopsEditing" label="Modo edición de paradas" class="full-width" dense />
@@ -88,46 +122,39 @@
             :max="1000"
             :step="10"
           />
-          <q-btn label="Limpiar paradas" color="negative" @click="updateStops([])" class="full-width" />
+          <q-btn label="Limpiar paradas" color="negative" @click="updateStops([])" class="full-width">
+            <q-tooltip anchor="middle left" self="middle right">
+              Eliminar todas las paradas
+            </q-tooltip>
+          </q-btn>
           <q-separator spaced />
           <q-list bordered padding v-if="stops.length">
             <q-item v-for="(label, i) in stopsLabels" :key="i">
               <q-item-section>{{ label }}</q-item-section>
               <q-item-section side>
-                <q-btn dense flat icon="delete" @click="removeStop(i)" />
+                <q-btn dense flat icon="delete" @click="removeStop(i)">
+                  <q-tooltip anchor="middle left" self="middle right">
+                    Eliminar parada
+                  </q-tooltip>
+                </q-btn>
               </q-item-section>
             </q-item>
           </q-list>
           <div v-else class="text-grey">No hay paradas</div>
         </q-tab-panel>
+
       </q-tab-panels>
     </q-drawer>
 
-    <!-- RIGHT DRAWER -->
+    <!-- RIGHT DRAWER: INDICACIONES y GUIDANCE -->
     <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated>
       <div class="q-pa-md">
         <div v-if="instructions.length">
-          <q-btn
-            v-if="!guidanceActive"
-            label="Iniciar guía"
-            color="primary"
-            class="full-width q-mb-sm"
-            @click="startGuidance"
-          />
-          <q-btn
-            v-else
-            label="Detener guía"
-            color="secondary"
-            class="full-width q-mb-sm"
-            @click="stopGuidance"
-          />
+          <q-btn v-if="!guidanceActive" label="Iniciar guía" color="primary" class="full-width q-mb-sm" @click="startGuidance" />
+          <q-btn v-else label="Detener guía" color="secondary" class="full-width q-mb-sm" @click="stopGuidance" />
           <h6>Indicaciones</h6>
           <q-list bordered>
-            <q-item
-              v-for="(step, i) in instructions"
-              :key="i"
-              :active="i === currentStepIndex"
-            >
+            <q-item v-for="(step, i) in instructions" :key="i" :active="i === currentStepIndex">
               <q-item-section>{{ i+1 }}. {{ step.text }}</q-item-section>
               <q-item-section side>{{ Math.round(step.distance) }} m</q-item-section>
             </q-item>
@@ -143,8 +170,8 @@
         :routes="routes"
         :stops-editing="stopsEditing"
         :stops-cleaning="stopsCleaning"
-        :selected-route-idx="selectedRouteIdx"      
-        :current-route="currentRoute"
+        :selected-route-idx="selectedRouteIdx"
+        :current-route=" currentRoute"
         :recalc-idx="recalcIdx"
         :editing="editing"
         :cleaning="cleaning"
