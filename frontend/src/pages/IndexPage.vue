@@ -346,46 +346,50 @@ export default {
       return idx
     },
     async calcRoute(idx, pts) {
-      const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
-      try {
+  const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
+  try {
         const res = await fetch(`/api/route?coords=${coords}&steps=true&overview=full`)
         //const res = await fetch(`/api/route?coords=${coords}&steps=true&overview=full`)
         //const res = await fetch(`http://localhost:8000/api/route?coords=${coords}&steps=true&overview=full`)
         const data = await res.json()
         if (data.routes?.length) {
-          // Polylínea
+          // dibujar la polilínea
           const geo = data.routes[0].geometry.coordinates
           const latlngs = geo.map(c => [c[1], c[0]])
           this.routeGeometries.splice(idx, 1, latlngs)
-          // Indicaciones legibles
-          const steps = data.routes[0].legs[0].steps.map(s => {
-            const { type, modifier } = s.maneuver
-            let text = ''
-            switch (type) {
-              case 'turn':
-                if (modifier === 'left')  text = `Gira a la izquierda en ${s.name || 'la calle'}`
-                else if (modifier === 'right') text = `Gira a la derecha en ${s.name || 'la calle'}`
-                else text = `Gira ${modifier || ''} en ${s.name || 'la calle'}`
-                break
-              case 'depart':
-                text = `Comienza en ${s.name || 'tu posición'}`
-                break
-              case 'continue':
-                text = `Continúa por ${s.name || 'esta vía'}`
-                break
-              case 'arrive':
-                text = `Has llegado a tu destino`
-                break
-              default:
-                text = `${type} ${s.name || ''}`.trim()
-            }
-            return {
-              text,
-              distance: s.distance,
-              duration: s.duration,
-              location: [s.maneuver.location[1], s.maneuver.location[0]]
-            }
-          })
+
+          // **Todas** las instrucciones, no sólo la primera leg
+          const steps = data.routes[0].legs.flatMap(leg =>
+            leg.steps.map(s => {
+              const { type, modifier } = s.maneuver
+              let text = ''
+              switch (type) {
+                case 'turn':
+                  if (modifier === 'left')      text = `Gira a la izquierda en ${s.name || 'la calle'}`
+                  else if (modifier === 'right') text = `Gira a la derecha en ${s.name || 'la calle'}`
+                  else                           text = `Gira ${modifier || ''} en ${s.name || 'la calle'}`
+                  break
+                case 'depart':
+                  text = `Comienza en ${s.name || 'tu posición'}`
+                  break
+                case 'continue':
+                  text = `Continúa por ${s.name || 'esta vía'}`
+                  break
+                case 'arrive':
+                  text = `Has llegado a tu destino`
+                  break
+                default:
+                  text = `${type} ${s.name || ''}`.trim()
+              }
+              return {
+                text,
+                distance: s.distance,
+                duration: s.duration,
+                location: [s.maneuver.location[1], s.maneuver.location[0]]
+              }
+            })
+          )
+
           this.$emit('update-instructions', idx, steps)
         }
       } catch (e) {
