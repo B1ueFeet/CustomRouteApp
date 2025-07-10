@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  osrm:
+    image: osrm/osrm-backend
+    container_name: osrm
+    volumes:
+      - ./OSRM/ecuador-latest.osm.pbf:/data/region.osm.pbf
+      - ./OSRM/ecuador-data:/data
+    ports:
+      - "5000:5000"
+    command: >
+      sh -c "
+        osrm-extract -p /opt/car.lua /data/region.osm.pbf &&
+        osrm-partition /data/region.osrm &&
+        osrm-customize /data/region.osrm &&
+        osrm-routed --algorithm mld /data/region.osrm
+      "
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "8000:8000"
+    environment:
+      OSRM_URL: http://osrm:5000/route/v1/driving/
+      NOMINATIM_URL: https://nominatim.openstreetmap.org/search
+    depends_on:
+      - osrm
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Definimos variable para que Quasar genere rutas relativas
+        VITE_API_BASE_URL: '/api'
+    container_name: frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
