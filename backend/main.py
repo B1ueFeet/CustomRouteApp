@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
+import os
 
 app = FastAPI()
 
@@ -12,8 +13,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OSRM_URL = "http://localhost:5000/route/v1/driving/"
-NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
+OSRM_URL      = os.getenv("OSRM_URL",      "http://localhost:5000/route/v1/driving/")
+NOMINATIM_URL = os.getenv("NOMINATIM_URL", "https://nominatim.openstreetmap.org/search")
 
 
 @app.get("/api/route")
