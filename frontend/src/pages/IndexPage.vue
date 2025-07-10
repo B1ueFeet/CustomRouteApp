@@ -345,57 +345,76 @@ export default {
       })
       return idx
     },
-    async calcRoute(idx, pts) {
-  const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
-  try {
-        const res = await fetch(`/api/route?coords=${coords}&steps=true&overview=full`)
-        //const res = await fetch(`/api/route?coords=${coords}&steps=true&overview=full`)
-        //const res = await fetch(`http://localhost:8000/api/route?coords=${coords}&steps=true&overview=full`)
-        const data = await res.json()
-        if (data.routes?.length) {
-          // dibujar la polilínea
-          const geo = data.routes[0].geometry.coordinates
-          const latlngs = geo.map(c => [c[1], c[0]])
-          this.routeGeometries.splice(idx, 1, latlngs)
+  async calcRoute(idx, pts) {
+    const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
+    try {
+      const res  = await fetch(`/api/route?coords=${coords}&steps=true&overview=full`)
+      const data = await res.json()
+      if (!data.routes?.length) return
 
-          // **Todas** las instrucciones, no sólo la primera leg
-          const steps = data.routes[0].legs.flatMap(leg =>
-            leg.steps.map(s => {
-              const { type, modifier } = s.maneuver
-              let text = ''
-              switch (type) {
-                case 'turn':
-                  if (modifier === 'left')      text = `Gira a la izquierda en ${s.name || 'la calle'}`
-                  else if (modifier === 'right') text = `Gira a la derecha en ${s.name || 'la calle'}`
-                  else                           text = `Gira ${modifier || ''} en ${s.name || 'la calle'}`
-                  break
-                case 'depart':
-                  text = `Comienza en ${s.name || 'tu posición'}`
-                  break
-                case 'continue':
-                  text = `Continúa por ${s.name || 'esta vía'}`
-                  break
-                case 'arrive':
-                  text = `Has llegado a tu destino`
-                  break
-                default:
-                  text = `${type} ${s.name || ''}`.trim()
-              }
-              return {
-                text,
-                distance: s.distance,
-                duration: s.duration,
-                location: [s.maneuver.location[1], s.maneuver.location[0]]
-              }
-            })
-          )
+      // 1) Dibuja la polilínea completa
+      const geo = data.routes[0].geometry.coordinates
+      const latlngs = geo.map(c => [c[1], c[0]])
+      this.routeGeometries.splice(idx, 1, latlngs)
 
-          this.$emit('update-instructions', idx, steps)
-        }
-      } catch (e) {
-        console.error('calcRoute error:', e)
-      }
+      // 2) Genera instrucciones de TODOS los legs
+      const legs = data.routes[0].legs
+      const steps = legs.flatMap((leg, legIndex) =>
+        leg.steps.map(s => {
+          const { type, modifier } = s.maneuver
+          let text = ''
+
+          switch (type) {
+            case 'depart':
+              // Primer leg vs intermedios
+              if (legIndex === 0) {
+                text = `Comienza en ${s.name || 'tu posición'}`
+              } else {
+                text = `Continúa por ${s.name || 'esta vía'}`
+              }
+              break
+
+            case 'continue':
+              text = `Continúa por ${s.name || 'esta vía'}`
+              break
+
+            case 'turn':
+              if (modifier === 'left')  text = `Gira a la izquierda en ${s.name || 'la calle'}`
+              else if (modifier === 'right') text = `Gira a la derecha en ${s.name || 'la calle'}`
+              else text = `Gira ${modifier || ''} en ${s.name || 'la calle'}`
+              break
+
+            case 'arrive':
+              // Leg intermedio vs último destino
+              if (legIndex < legs.length - 1) {
+                text = `Has llegado al punto de ruta ${legIndex + 1}` +
+                       (s.name ? ` en ${s.name}` : '')
+              } else {
+                text = `Has llegado a tu destino` +
+                       (s.name ? ` en ${s.name}` : '')
+              }
+              break
+
+            default:
+              // new name, fork, end of road, etc.
+              text = `Continúa por ${s.name || 'esta vía'}`
+          }
+
+          return {
+            text,
+            distance: s.distance,
+            duration: s.duration,
+            location: [s.maneuver.location[1], s.maneuver.location[0]]
+          }
+        })
+      )
+
+      this.$emit('update-instructions', idx, steps)
     }
+    catch (e) {
+      console.error('calcRoute error:', e)
+    }
+  }
   },
   mounted() {
     const resize = () => this.$refs.mapRef.mapObject.invalidateSize()
