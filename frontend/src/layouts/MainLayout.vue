@@ -4,7 +4,7 @@
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer">
-          <q-tooltip anchor="middle left" self="middle right">
+          <q-tooltip anchor="center left" self="center right">
             Mostrar menú izquierdo
           </q-tooltip>
         </q-btn>
@@ -15,7 +15,7 @@
           Title
         </q-toolbar-title>
         <q-btn dense flat round icon="menu" @click="toggleRightDrawer">
-          <q-tooltip anchor="middle right" self="middle left">
+          <q-tooltip anchor="center right" self="center left">
             Mostrar menú derecho
           </q-tooltip>
         </q-btn>
@@ -36,17 +36,17 @@
           <q-btn label="Nueva ruta" color="primary" @click="addRoute" class="full-width" />
           <q-separator spaced />
           <q-btn dense flat icon="file_upload" @click="triggerFileInput">
-            <q-tooltip anchor="middle left" self="middle right">
+            <q-tooltip anchor="center left" self="center right">
               Importar rutas
             </q-tooltip>
           </q-btn>
           <q-btn dense flat icon="cloud_download" @click="exportAllRoutes">
-            <q-tooltip anchor="middle left" self="middle right">
+            <q-tooltip anchor="center left" self="center right">
               Exportar todas las rutas
             </q-tooltip>
           </q-btn>
           <input type="file" ref="fileInput" @change="onFileChange" accept=".json" style="display:none" />
-          <q-separator spaced />                    
+          <q-separator spaced />
           <q-toggle v-model="editing" label="Modo edición" class="full-width" dense />
           <q-toggle v-model="cleaning" label="Eliminar puntos" class="full-width" dense />
           <q-separator spaced />
@@ -67,17 +67,17 @@
 
               <q-item-section side top class="route-actions-top">
                 <q-btn dense flat icon="delete" @click.stop="deleteRoute(idx)">
-                  <q-tooltip anchor="middle left" self="middle right">
+                  <q-tooltip anchor="center left" self="center right">
                     Eliminar ruta
                   </q-tooltip>
                 </q-btn>
                 <q-btn dense flat icon="refresh" @click.stop="recalcRoute(idx)">
-                  <q-tooltip anchor="middle left" self="middle right">
+                  <q-tooltip anchor="center left" self="center right">
                     Recalcular ruta
                   </q-tooltip>
                 </q-btn>
                 <q-btn dense flat icon="undo" @click.stop="undoRoute(idx)">
-                  <q-tooltip anchor="middle left" self="middle right">
+                  <q-tooltip anchor="center left" self="center right">
                     Deshacer último punto
                   </q-tooltip>
                 </q-btn>
@@ -85,22 +85,22 @@
 
               <q-item-section side bottom class="route-actions-bottom">
                 <q-btn dense flat icon="clear_all" @click.stop="clearRoute(idx)">
-                  <q-tooltip anchor="middle left" self="middle right">
+                  <q-tooltip anchor="center left" self="center right">
                     Limpiar ruta completa
                   </q-tooltip>
                 </q-btn>
                 <q-btn dense flat icon="swap_vert" @click.stop="invertRoute(idx)">
-                  <q-tooltip anchor="middle left" self="middle right">
+                  <q-tooltip anchor="center left" self="center right">
                     Invertir ruta
                   </q-tooltip>
                 </q-btn>
                 <q-btn dense flat icon="file_download" @click.stop="exportRoute(idx)">
-                  <q-tooltip anchor="middle left" self="middle right">
+                  <q-tooltip anchor="center left" self="center right">
                     Exportar esta ruta
                   </q-tooltip>
                 </q-btn>
                 <q-toggle v-model="route.visible" dense>
-                  <q-tooltip anchor="middle left" self="middle right">
+                  <q-tooltip anchor="center left" self="center right">
                     Mostrar/Ocultar ruta
                   </q-tooltip>
                 </q-toggle>
@@ -121,9 +121,10 @@
             :min="50"
             :max="1000"
             :step="10"
+            style="margin-top: 50px;"
           />
           <q-btn label="Limpiar paradas" color="negative" @click="updateStops([])" class="full-width">
-            <q-tooltip anchor="middle left" self="middle right">
+            <q-tooltip anchor="center left" self="center right">
               Eliminar todas las paradas
             </q-tooltip>
           </q-btn>
@@ -133,7 +134,7 @@
               <q-item-section>{{ label }}</q-item-section>
               <q-item-section side>
                 <q-btn dense flat icon="delete" @click="removeStop(i)">
-                  <q-tooltip anchor="middle left" self="middle right">
+                  <q-tooltip anchor="center left" self="center right">
                     Eliminar parada
                   </q-tooltip>
                 </q-btn>
@@ -171,7 +172,7 @@
         :stops-editing="stopsEditing"
         :stops-cleaning="stopsCleaning"
         :selected-route-idx="selectedRouteIdx"
-        :current-route=" currentRoute"
+        :current-route="currentRoute"
         :recalc-idx="recalcIdx"
         :editing="editing"
         :cleaning="cleaning"
