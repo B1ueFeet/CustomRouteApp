@@ -27,6 +27,7 @@
       <q-tabs v-model="leftTab" dense>
         <q-tab name="rutas"  label="Rutas"  icon="route" />
         <q-tab name="paradas" label="Paradas" icon="directions_bus" />
+        <q-tab name="layers" label="Capas"   icon="layers" />
       </q-tabs>
       <q-separator spaced />
       <q-tab-panels v-model="leftTab" animated>
@@ -143,7 +144,16 @@
           </q-list>
           <div v-else class="text-grey">No hay paradas</div>
         </q-tab-panel>
-
+        <!-- CAPAS -->
+         <q-tab-panel name="layers" class="q-pa-md">
+       <q-list bordered padding>
+         <q-item v-for="(label, key) in layerLabels" :key="key">
+           <q-item-section>
+             <q-checkbox v-model="layers[key]" :label="label" dense />
+           </q-item-section>
+         </q-item>
+       </q-list>
+     </q-tab-panel>
       </q-tab-panels>
     </q-drawer>
 
@@ -176,6 +186,7 @@
         :recalc-idx="recalcIdx"
         :editing="editing"
         :cleaning="cleaning"
+        :layers="layers"
         :stops="stops"
         :stops-mode="stopsMode"
         :stops-radius="stopsRadius"
@@ -190,15 +201,33 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref , reactive } from 'vue'
 import L from 'leaflet'
+const layerLabels = {
+  most_frequent_points:        'Most Frequent Points',
+  most_frequent_points_barrio: 'Most Frequent Points Barrio',
+  heat_data:                   'Heat Data',
+  grouped_barrios:             'Grouped Barrios',
+  decesos_heat:                'Decesos (Heat Negro)',
+  decesos_points:              'Decesos (Icono Fantasma)'
+}
 
+const layers = reactive({
+  most_frequent_points:        false,
+  most_frequent_points_barrio: false,
+  heat_data:                   false,
+  grouped_barrios:             false,
+  decesos_heat:                false,
+  decesos_points:              false
+})
 export default {
   setup() {
     return {
       leftDrawerOpen: ref(false),
       rightDrawerOpen: ref(false),
-      leftTab: ref('rutas')
+      leftTab: ref('rutas'),
+      layerLabels,
+      layers
     }
   },
   data() {
@@ -219,7 +248,8 @@ export default {
       stopsCleaning: false,
       guidanceActive: false,
       position: null,
-      watchId: null
+      watchId: null,
+      
     }
   },
   computed: {

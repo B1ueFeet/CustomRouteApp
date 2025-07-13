@@ -90,6 +90,8 @@ import {
   LMap, LTileLayer, LMarker, LPolyline, LCircle
 } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
+import 'leaflet.heat'
+import Papa from 'papaparse'
 
 const defaultIcon = L.icon({
   iconUrl:
@@ -141,18 +143,19 @@ export default {
   name: 'IndexPage',
   components: { LMap, LTileLayer, LMarker, LPolyline, LCircle },
   props: {
-    routes: { type: Array, required: true },
-    selectedRouteIdx: { type: Number, default: null },
-    recalcIdx: { type: Number, default: null },
-    currentRoute: { type: Object, default: null },
-    editing: { type: Boolean, default: false },
-    cleaning: { type: Boolean, default: false },
-    position: { type: Array, default: null },
-    stops: { type: Array, default: () => [] },
-    stopsMode: { type: Boolean, default: false },
-    stopsRadius: { type: Number, default: 200 },
-    stopsEditing: { type: Boolean, default: false },
-    stopsCleaning: { type: Boolean, default: false }
+    routes:               { type: Array,   required: true },
+    selectedRouteIdx:     { type: Number,  default: null },
+    recalcIdx:            { type: Number,  default: null },
+    currentRoute:         { type: Object,  default: null },
+    editing:              { type: Boolean, default: false },
+    cleaning:             { type: Boolean, default: false },
+    position:             { type: Array,   default: null },
+    stops:                { type: Array,   default: () => [] },
+    stopsMode:            { type: Boolean, default: false },
+    stopsRadius:          { type: Number,  default: 200 },
+    stopsEditing:         { type: Boolean, default: false },
+    stopsCleaning:        { type: Boolean, default: false },
+    layers:               { type: Object,  required: true }
   },
   data() {
     return {
@@ -166,6 +169,21 @@ export default {
       localStops: this.stops.slice(),
       userIcon,
       busIcon,  
+      layerGroups: {
+        most_frequent_points:        L.layerGroup(),
+        most_frequent_points_barrio: L.layerGroup(),
+        grouped_barrios:             L.layerGroup(),
+        heat_data:                   null,
+        decesos_heat:                null,
+        decesos_points:              L.layerGroup()
+      },
+      // crea también aquí tus íconos
+      starIcon:       L.divIcon({ html: '<i class="fas fa-star"></i>',           iconSize:[24,24], iconAnchor:[12,12] }),
+      flagIcon:       L.divIcon({ html: '<i class="fas fa-flag"></i>',           iconSize:[24,24], iconAnchor:[12,12] }),
+      streetViewIcon: L.divIcon({ html: '<i class="fas fa-street-view"></i>',    iconSize:[24,24], iconAnchor:[12,12] }),
+      ghostIcon:      L.divIcon({ html: '<i class="fas fa-ghost"></i>',          iconSize:[24,24], iconAnchor:[12,12] }),
+      resizeHandler: null
+    
     }
   },
   watch: {
@@ -193,6 +211,22 @@ export default {
     },
     stops(newVal) {
       this.localStops = newVal.slice()
+    },
+    layers: {
+      handler(newL) {
+        const map = this.$refs.mapRef?.mapObject
+        if (!map) return
+        Object.entries(this.layerGroups).forEach(([key, grp]) => {
+          if (!grp) return
+          if (newL[key] && !map.hasLayer(grp)) {
+            map.addLayer(grp)
+          }
+          else if (!newL[key] && map.hasLayer(grp)) {
+            map.removeLayer(grp)
+          }
+        })
+      },
+      deep: true
     }
   },
   computed: {
@@ -421,13 +455,107 @@ export default {
     }
   }
   },
-  mounted() {
+  async mounted() {
     const resize = () => this.$refs.mapRef.mapObject.invalidateSize()
     setTimeout(resize, 300)
     window.addEventListener('resize', resize)
-  },
+    // guardamos el handler en this para poder eliminarlo luego
+    this.resizeHandler = () => {
+      const map = this.$refs.mapRef?.mapObject
+      if (map) map.invalidateSize()
+    }
+    setTimeout(this.resizeHandler, 300)
+    window.addEventListener('resize', this.resizeHandler)
+       // ─── Invalidate Size Handler ─────────────────────────────
+  this.resizeHandler = () => {
+    const map = this.$refs.mapRef?.mapObject
+    if (map) map.invalidateSize()
+  }
+  setTimeout(this.resizeHandler, 300)
+  window.addEventListener('resize', this.resizeHandler)
+
+  // ─── 1) Cargar datos.json ────────────────────────────────
+  try {
+    const res = await fetch('/datos.json')
+    if (!res.ok) throw new Error(`HTTP ${res.status} fetching datos.json`)
+    const datos = await res.json()
+
+    // most_frequent_points
+    if (Array.isArray(datos.most_frequent_points)) {
+      datos.most_frequent_points
+        .filter(p => Number.isFinite(p.lat) && Number.isFinite(p.lon))
+        .forEach(p =>
+          L.marker([p.lat, p.lon], { icon: this.starIcon })
+            .addTo(this.layerGroups.most_frequent_points)
+        )
+    }
+
+    // most_frequent_points_barrio
+    if (Array.isArray(datos.most_frequent_points_barrio)) {
+      datos.most_frequent_points_barrio
+        .filter(p => Number.isFinite(p.lat) && Number.isFinite(p.lon))
+        .forEach(p =>
+          L.marker([p.lat, p.lon], { icon: this.flagIcon })
+            .addTo(this.layerGroups.most_frequent_points_barrio)
+        )
+    }
+
+    // heat_data
+    if (Array.isArray(datos.heat_data)) {
+      const heatPts = datos.heat_data
+        .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon))
+      this.layerGroups.heat_data = L.heatLayer(heatPts, {
+        radius: 25, blur: 15,
+        gradient: { 0.4: 'yellow', 0.65: 'orange', 1: 'red' }
+      })
+    }
+
+    // grouped_barrios
+    if (Array.isArray(datos.grouped_barrios)) {
+      datos.grouped_barrios
+        .filter(b => Number.isFinite(b.lat) && Number.isFinite(b.lon))
+        .forEach(b => {
+          L.marker([b.lat, b.lon], { icon: this.streetViewIcon })
+            .addTo(this.layerGroups.grouped_barrios)
+          L.circle([b.lat, b.lon], { radius: 500, color: '#000' })
+            .addTo(this.layerGroups.grouped_barrios)
+        })
+    }
+
+  } catch (err) {
+    console.error('Error cargando datos.json:', err)
+  }
+
+  // ─── 2) Cargar Decesos.csv ────────────────────────────────
+  try {
+    const resCsv = await fetch('/Decesos.csv')
+    if (!resCsv.ok) throw new Error(`HTTP ${resCsv.status} fetching Decesos.csv`)
+    const text = await resCsv.text()
+    const rows = Papa.parse(text, { header: true }).data
+
+    const decesosCoords = rows
+      .map(r => [parseFloat(r.Latitud), parseFloat(r.Longitud)])
+      .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon))
+
+    if (decesosCoords.length) {
+      this.layerGroups.decesos_heat = L.heatLayer(decesosCoords, {
+        radius: 25, blur: 15,
+        gradient: { 0: 'transparent', 1: 'black' }
+      })
+      decesosCoords.forEach(([lat, lon]) =>
+        L.marker([lat, lon], { icon: this.ghostIcon })
+          .addTo(this.layerGroups.decesos_points)
+      )
+    }
+  } catch (err) {
+    console.error('Error cargando Decesos.csv:', err)
+  }
+},
   beforeUnmount() {
     window.removeEventListener('resize', this.resize)
+    if (this.resizeHandler) {
+      window.removeEventListener('resize', this.resizeHandler)
+    }
   }
 }
 </script>
