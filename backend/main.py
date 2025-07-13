@@ -13,8 +13,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OSRM_URL      = os.getenv("OSRM_URL",      "http://localhost:5000/route/v1/driving/")
-NOMINATIM_URL = os.getenv("NOMINATIM_URL", "https://nominatim.openstreetmap.org/search")
+OSRM_URL = os.environ["OSRM_URL"]
+NOMINATIM_URL = os.environ["NOMINATIM_URL"]
 
 
 @app.get("/api/route")

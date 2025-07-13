@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   osrm:
     image: osrm/osrm-backend
@@ -18,9 +16,7 @@ services:
       "
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: b1uefeet/back-maps:latest
     container_name: backend
     ports:
       - "8000:8000"
@@ -31,13 +27,7 @@ services:
       - osrm
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        # Definimos variable para que Quasar genere rutas relativas
-        VITE_API_BASE_URL: '/api'
-
+    image: b1uefeet/front-maps:latest
     container_name: frontend
     ports:
       - "8080:80"
