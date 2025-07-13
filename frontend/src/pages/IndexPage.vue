@@ -348,7 +348,12 @@ export default {
   async calcRoute(idx, pts) {
     const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
     try {
-      const res  = await fetch(`/api/route?coords=${coords}&steps=true&overview=full`)
+      const params = new URLSearchParams({
+        coords,
+        steps: 'true',
+        overview: 'full'
+      })
+      const res  = await fetch(`/api/route?${params.toString()}`)
       const data = await res.json()
       if (!data.routes?.length) return
 
