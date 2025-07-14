@@ -213,21 +213,22 @@ export default {
       this.localStops = newVal.slice()
     },
     layers: {
-      handler(newL) {
-        const map = this.$refs.mapRef?.mapObject
-        if (!map) return
-        Object.entries(this.layerGroups).forEach(([key, grp]) => {
-          if (!grp) return
-          if (newL[key] && !map.hasLayer(grp)) {
-            map.addLayer(grp)
-          }
-          else if (!newL[key] && map.hasLayer(grp)) {
-            map.removeLayer(grp)
-          }
-        })
-      },
-      deep: true
-    }
+    handler(newL) {
+      const map = this.$refs.mapRef?.mapObject
+      if (!map) return
+      Object.entries(this.layerGroups).forEach(([key, grp]) => {
+        if (!grp) return
+        if (newL[key] && !map.hasLayer(grp)) {
+          map.addLayer(grp)
+        }
+        else if (!newL[key] && map.hasLayer(grp)) {
+          map.removeLayer(grp)
+        }
+      })
+    },
+    deep: true,
+    immediate: true
+  }
   },
   computed: {
     routeLines() {
