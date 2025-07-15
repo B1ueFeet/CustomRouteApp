@@ -176,12 +176,12 @@ const layerLabels = {
 }
 
 const layers = reactive({
-  most_frequent_points:        true,
-  most_frequent_points_barrio: true,
+  most_frequent_points:        false,
+  most_frequent_points_barrio: false,
   heat_data:                   true,
-  grouped_barrios:             true,
-  decesos_heat:                false,
-  decesos_points:              true
+  grouped_barrios:             false,
+  decesos_heat:                true,
+  decesos_points:              false
 })
 export default {
   setup() {

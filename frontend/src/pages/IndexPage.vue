@@ -117,6 +117,9 @@
     :key="`gbc-${i}`"
     :lat-lng="[b.lat, b.lon]"
     :radius="500"
+    color="#0000FF"
+    fill-color="#0000FF"
+    fill-opacity="0.1"
   />
 </template>
 
@@ -173,20 +176,52 @@ const redIcon = L.icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 })
+
+const baseIconOpts = {
+  className: 'transparent-div-icon',  // <- aquí van las reglas de CSS
+  iconSize:   [24, 24],
+  iconAnchor: [12, 12]
+}
+
+
 const userIcon = L.divIcon({
   className: '',
   html:
-    '<i class="fa-solid fa-person" style="color:#63E6BE;font-size:30px"></i>',
+    '<i class="fa-solid fa-person" style="color:#63E6BE;font-size:24px"></i>',
   iconSize: [24, 24],
   iconAnchor: [12, 12]
 })
 const busIcon = L.divIcon({
   className: '',
   html:
-    '<i class="fa-solid fa-bus" style="color:#86158e;font-size:30px"></i>',
+    '<i class="fa-solid fa-bus" style="color:#86158e;font-size:24px"></i>',
   iconSize: [24, 24],
   iconAnchor: [12, 12]
 })
+const starIcon = L.divIcon({
+  ...baseIconOpts,
+  html: '<i class="fas fa-star" style="color: #FFD700; font-size:24px;"></i>',
+  iconSize: [24,24], iconAnchor: [12,12]
+})
+
+const flagIcon = L.divIcon({
+  ...baseIconOpts, 
+  html: '<i class="fas fa-flag" style="color: #FFA500; font-size:24px;"></i>',
+  iconSize: [24,24], iconAnchor: [12,12]
+})
+
+const streetViewIcon = L.divIcon({
+  ...baseIconOpts,
+  html: '<i class="fas fa-street-view" style="color: #0000FF; font-size:24px;"></i>',
+  iconSize: [24,24], iconAnchor: [12,12]
+})
+
+const ghostIcon = L.divIcon({
+  ...baseIconOpts,
+  html: '<i class="fas fa-ghost" style="color: #000000; font-size:24px;"></i>',
+  iconSize: [24,24], iconAnchor: [12,12]
+})
+
 const stopCircleColor = '#86158e'
 
 export default {
@@ -219,6 +254,10 @@ export default {
       localStops: this.stops.slice(),
       userIcon,
       busIcon,  
+      starIcon,
+      flagIcon,
+      streetViewIcon,
+      ghostIcon,
       layerGroups: {
         most_frequent_points:        L.layerGroup(),
         most_frequent_points_barrio: L.layerGroup(),
@@ -228,10 +267,6 @@ export default {
         decesos_points:              L.layerGroup()
       },
       // crea también aquí tus íconos
-      starIcon:       L.divIcon({ html: '<i class="fas fa-star"></i>',           iconSize:[24,24], iconAnchor:[12,12] }),
-      flagIcon:       L.divIcon({ html: '<i class="fas fa-flag"></i>',           iconSize:[24,24], iconAnchor:[12,12] }),
-      streetViewIcon: L.divIcon({ html: '<i class="fas fa-street-view"></i>',    iconSize:[24,24], iconAnchor:[12,12] }),
-      ghostIcon:      L.divIcon({ html: '<i class="fas fa-ghost"></i>',          iconSize:[24,24], iconAnchor:[12,12] }),
       resizeHandler: null,
       datos: {
         most_frequent_points: [],
@@ -659,4 +694,9 @@ export default {
 <style scoped>
 .q-page.no-padding { padding:0!important }
 .clean-mode .leaflet-container { cursor:crosshair!important }
+:global(.transparent-div-icon) {
+  background: transparent !important;
+  border: none         !important;
+  box-shadow: none     !important;
+}
 </style>
