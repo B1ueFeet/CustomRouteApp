@@ -1,6 +1,7 @@
 // src/boot/leaflet.js
 import { boot } from 'quasar/wrappers'
 import L from 'leaflet'
+
 import 'leaflet/dist/leaflet.css'
 import 'leaflet.heat'                // <-- importamos el plugin tras haber traído L
 
@@ -16,7 +17,7 @@ L.Icon.Default.mergeOptions({
   iconUrl,
   shadowUrl
 })
-
+window.L = L
 export default boot(({ app }) => {
   // no necesitas nada más aquí
 })

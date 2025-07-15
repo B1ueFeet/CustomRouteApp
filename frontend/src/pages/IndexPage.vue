@@ -3,14 +3,14 @@
     <div class="absolute-full" :class="{ 'clean-mode': cleaning }">
       <l-map
         ref="mapRef"
-        :use-global-leaflet="false"
+        :use-global-leaflet="true"
         :zoom="zoom"
         :center="center"
         style="width:100%;height:100%"
         @click="onMapClick"
         @mousemove="onMapMouseMove"
         @mouseout="onMapMouseOut"
-        @ready="onMapReady"
+        @ready="onMapReady($event)"
       >
         <l-tile-layer :url="tileUrl" />
 
@@ -138,12 +138,10 @@
 </template> 
 
 <script>
-import L from 'leaflet'
 import {
   LMap, LTileLayer, LMarker, LPolyline, LCircle
 } from '@vue-leaflet/vue-leaflet'
 import 'leaflet/dist/leaflet.css'
-import 'leaflet.heat'
 import Papa from 'papaparse'
 
 const defaultIcon = L.icon({
@@ -200,13 +198,13 @@ const busIcon = L.divIcon({
 })
 const starIcon = L.divIcon({
   ...baseIconOpts,
-  html: '<i class="fas fa-star" style="color: #FFD700; font-size:24px;"></i>',
+  html: '<i class="fas fa-star" style="color: #fac845; font-size:24px;"></i>',
   iconSize: [24,24], iconAnchor: [12,12]
 })
 
 const flagIcon = L.divIcon({
   ...baseIconOpts, 
-  html: '<i class="fas fa-flag" style="color: #CCA500; font-size:24px;"></i>',
+  html: '<i class="fas fa-flag" style="color: #f78a48; font-size:24px;"></i>',
   iconSize: [24,24], iconAnchor: [12,12]
 })
 
@@ -218,8 +216,8 @@ const streetViewIcon = L.divIcon({
 
 const ghostIcon = L.divIcon({
   ...baseIconOpts,
-  html: '<i class="fas fa-ghost" style="color: #000000; font-size:24px;"></i>',
-  iconSize: [24,24], iconAnchor: [12,12]
+  html: '<i class="fas fa-ghost" style="color: #000000; font-size:12px;"></i>',
+  iconSize: [16,16], iconAnchor: [8,8]
 })
 
 const stopCircleColor = '#86158e'
@@ -262,11 +260,10 @@ export default {
         most_frequent_points:        L.layerGroup(),
         most_frequent_points_barrio: L.layerGroup(),
         grouped_barrios:             L.layerGroup(),
-        heat_data:                   null,
-        decesos_heat:                null,
+        heat_data:                   L.layerGroup(),
+        decesos_heat:                L.layerGroup(),
         decesos_points:              L.layerGroup()
       },
-      // crea también aquí tus íconos
       resizeHandler: null,
       datos: {
         most_frequent_points: [],
@@ -274,7 +271,8 @@ export default {
         grouped_barrios: [],
         heat_data:                   []
       },
-      decesosCoords: []
+      decesosCoords: [],
+       map: null,
     
     }
   },
@@ -320,8 +318,9 @@ export default {
   },
   methods: {
 
-async onMapReady() {
-    const map = this.$refs.mapRef.mapObject
+  async onMapReady(mapInstance) {
+    this.map = mapInstance
+
     try {
       const res = await fetch('/datos.json')
       const json = res.ok ? await res.json() : {}
@@ -334,9 +333,10 @@ async onMapReady() {
     } catch (err) {
       console.error('Error cargando datos.json:', err)
     }
+
     try {
-      const res = await fetch('/Decesos.csv')
-      const text = res.ok ? await res.text() : ''
+      const res2 = await fetch('/Decesos.csv')
+      const text = res2.ok ? await res2.text() : ''
       const rows = text ? Papa.parse(text, { header: true }).data : []
       this.decesosCoords = rows
         .map(r => [parseFloat(r.Latitud), parseFloat(r.Longitud)])
@@ -344,28 +344,47 @@ async onMapReady() {
     } catch (err) {
       console.error('Error cargando Decesos.csv:', err)
     }
+
     const heatPts = this.datos.heat_data
       .filter(p => Array.isArray(p) && Number.isFinite(p[0]) && Number.isFinite(p[1]))
-      if (heatPts.length) {
+    if (heatPts.length) {
       this.layerGroups.heat_data = L.heatLayer(heatPts, {
         radius: 25,
-        gradient: { 0.4: 'yellow', 0.65: 'orange', 1: 'red' }
+        blur:   15,
+        gradient: { 0: 'blue', 0.3: 'green', 0.5: 'yellow' , 0.8: 'orange', 1: 'red' },
+        minOpacity: 0.3 
       })
     }
+
     if (this.decesosCoords.length) {
       this.layerGroups.decesos_heat = L.heatLayer(this.decesosCoords, {
         radius: 25,
         blur:   15,
-        gradient: { 0: 'transparent', 1: 'black' }
+        gradient: {  0.3: 'white', 1:  'black' },
+        minOpacity: 0.5
+
       })
     }
 
     this.updateMapLayers()
+
+    console.log('heat_data layer on map?', this.map.hasLayer(this.layerGroups.heat_data))
   },
 
+  updateMapLayers() {
+    if (!this.map) return
 
+    Object.entries(this.layerGroups).forEach(([key, grp]) => {
+      if (!grp) return
+      if (this.layers[key] && !this.map.hasLayer(grp)) {
+        this.map.addLayer(grp)
+      }
+      else if (!this.layers[key] && this.map.hasLayer(grp)) {
+        this.map.removeLayer(grp)
+      }
+    })
+  },
 
-  
     getMarkerIcon(i) {
       const last = this.points.length - 1
       if (i === 0) return greenIcon
@@ -508,22 +527,7 @@ async onMapReady() {
       })
       return idx
     },
-    updateMapLayers() {
-    const map = this.$refs.mapRef?.mapObject;
-    if (!map) return;
 
-    Object.entries(this.layerGroups).forEach(([key, grp]) => {
-      if (!grp) return;
-      // Si está activada en `layers` y no está en el mapa, la agregamos
-      if (this.layers[key] && !map.hasLayer(grp)) {
-        map.addLayer(grp);
-      }
-      // Si está desactivada y sí está en el mapa, la quitamos
-      else if (!this.layers[key] && map.hasLayer(grp)) {
-        map.removeLayer(grp);
-      }
-    });
-  },
   async calcRoute(idx, pts) {
     const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
     try {
@@ -536,12 +540,10 @@ async onMapReady() {
       const data = await res.json()
       if (!data.routes?.length) return
 
-      // 1) Dibuja la polilínea completa
       const geo = data.routes[0].geometry.coordinates
       const latlngs = geo.map(c => [c[1], c[0]])
       this.routeGeometries.splice(idx, 1, latlngs)
 
-      // 2) Genera instrucciones de TODOS los legs
       const legs = data.routes[0].legs
       const steps = legs.flatMap((leg, legIndex) =>
         leg.steps.map(s => {
@@ -550,7 +552,6 @@ async onMapReady() {
 
           switch (type) {
             case 'depart':
-              // Primer leg vs intermedios
               if (legIndex === 0) {
                 text = `Comienza en ${s.name || 'tu posición'}`
               } else {
@@ -569,7 +570,6 @@ async onMapReady() {
               break
 
             case 'arrive':
-              // Leg intermedio vs último destino
               if (legIndex < legs.length - 1) {
                 text = `Has llegado al punto de ruta ${legIndex + 1}` +
                        (s.name ? ` en ${s.name}` : '')
@@ -580,7 +580,6 @@ async onMapReady() {
               break
 
             default:
-              // new name, fork, end of road, etc.
               text = `Continúa por ${s.name || 'esta vía'}`
           }
 
@@ -620,5 +619,8 @@ beforeUnmount() {
   background: transparent !important;
   border: none         !important;
   box-shadow: none     !important;
+}
+.leaflet-overlay-pane canvas {
+  z-index: 600 !important;
 }
 </style>
