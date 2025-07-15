@@ -9,9 +9,11 @@
           <q-avatar><img src="../assets/icon.png" /></q-avatar>
           Custom Route Manager
         </q-toolbar-title>
+        <q-toggle v-model="satelliteMode" label="Modo Satelital" color="green" dense class="q-md-md" />
         <q-btn dense flat round icon="menu" @click="toggleRightDrawer">
           <q-tooltip anchor="center right" self="center left">Mostrar menú derecho</q-tooltip>
         </q-btn>
+
       </q-toolbar>
     </q-header>
 
@@ -38,13 +40,8 @@
           <q-toggle v-model="cleaning" label="Eliminar puntos" class="full-width" dense />
           <q-separator spaced />
           <q-list bordered padding>
-            <q-item
-              v-for="(route, idx) in routes"
-              :key="idx"
-              clickable
-              @click="selectRoute(idx)"
-              :active="idx === selectedRouteIdx"
-            >
+            <q-item v-for="(route, idx) in routes" :key="idx" clickable @click="selectRoute(idx)"
+              :active="idx === selectedRouteIdx">
               <q-item-section side class="route-color-bar" :style="{ backgroundColor: route.color }" />
               <q-item-section>{{ route.name }}</q-item-section>
               <q-item-section side top class="route-actions-top">
@@ -80,15 +77,8 @@
           <q-toggle v-model="stopsMode" label="Definir paradas" class="full-width" dense />
           <q-toggle v-model="stopsEditing" label="Modo edición de paradas" class="full-width" dense />
           <q-toggle v-model="stopsCleaning" label="Eliminar paradas" class="full-width" dense />
-          <q-slider
-            v-model="stopsRadius"
-            :label="`Radio: ${stopsRadius} m`"
-            label-always
-            :min="50"
-            :max="1000"
-            :step="10"
-            style="margin-top: 50px;"
-          />
+          <q-slider v-model="stopsRadius" :label="`Radio: ${stopsRadius} m`" label-always :min="50" :max="1000"
+            :step="10" style="margin-top: 50px;" />
           <q-btn label="Limpiar paradas" color="negative" @click="updateStops([])" class="full-width">
             <q-tooltip anchor="center left" self="center right">Eliminar todas las paradas</q-tooltip>
           </q-btn>
@@ -121,12 +111,13 @@
     <q-drawer v-model="rightDrawerOpen" side="right" overlay elevated>
       <div class="q-pa-md">
         <div v-if="instructions.length">
-          <q-btn v-if="!guidanceActive" label="Iniciar guía" color="primary" class="full-width q-mb-sm" @click="startGuidance" />
+          <q-btn v-if="!guidanceActive" label="Iniciar guía" color="primary" class="full-width q-mb-sm"
+            @click="startGuidance" />
           <q-btn v-else label="Detener guía" color="secondary" class="full-width q-mb-sm" @click="stopGuidance" />
           <h6>Indicaciones</h6>
           <q-list bordered>
             <q-item v-for="(step, i) in instructions" :key="i" :active="i === currentStepIndex">
-              <q-item-section>{{ i+1 }}. {{ step.text }}</q-item-section>
+              <q-item-section>{{ i + 1 }}. {{ step.text }}</q-item-section>
               <q-item-section side>{{ Math.round(step.distance) }} m</q-item-section>
             </q-item>
           </q-list>
@@ -137,26 +128,11 @@
 
     <q-page-container class="bg-grey-1">
       <router-view v-slot="{ Component }">
-        <component
-          :is="Component"
-          :routes="routes"
-          :stops-editing="stopsEditing"
-          :stops-cleaning="stopsCleaning"
-          :selected-route-idx="selectedRouteIdx"
-          :current-route="currentRoute"
-          :recalc-idx="recalcIdx"
-          :editing="editing"
-          :cleaning="cleaning"
-          :stops="stops"
-          :stops-mode="stopsMode"
-          :stops-radius="stopsRadius"
-          :position="position"
-          :guidance-active="guidanceActive"
-          :layers="layers"
-          @update-route="updateRoute"
-          @update-stops="updateStops"
-          @update-instructions="setInstructions"
-        />
+        <component :is="Component" :routes="routes" :stops-editing="stopsEditing" :stops-cleaning="stopsCleaning"
+          :selected-route-idx="selectedRouteIdx" :current-route="currentRoute" :recalc-idx="recalcIdx"
+          :editing="editing" :cleaning="cleaning" :stops="stops" :stops-mode="stopsMode" :stops-radius="stopsRadius"
+          :position="position" :guidance-active="guidanceActive" :layers="layers" :satellite-mode="satelliteMode"
+          @update-route="updateRoute" @update-stops="updateStops" @update-instructions="setInstructions" />
       </router-view>
     </q-page-container>
   </q-layout>
@@ -164,24 +140,24 @@
 
 
 <script>
-import { ref , reactive } from 'vue'
+import { ref, reactive } from 'vue'
 import L from 'leaflet'
 const layerLabels = {
-  most_frequent_points:        'Most Frequent Points',
+  most_frequent_points: 'Most Frequent Points',
   most_frequent_points_barrio: 'Most Frequent Points Barrio',
-  heat_data:                   'Heat Data',
-  grouped_barrios:             'Grouped Barrios',
-  decesos_heat:                'Decesos (Heat Negro)',
-  decesos_points:              'Decesos (Icono Fantasma)'
+  heat_data: 'Heat Data',
+  grouped_barrios: 'Grouped Barrios',
+  decesos_heat: 'Decesos (Heat Negro)',
+  decesos_points: 'Decesos (Icono Fantasma)'
 }
 
 const layers = reactive({
-  most_frequent_points:        false,
+  most_frequent_points: false,
   most_frequent_points_barrio: false,
-  heat_data:                   false,
-  grouped_barrios:             false,
-  decesos_heat:                false,
-  decesos_points:              false
+  heat_data: false,
+  grouped_barrios: false,
+  decesos_heat: false,
+  decesos_points: false
 })
 export default {
   setup() {
@@ -195,7 +171,7 @@ export default {
   },
   data() {
     return {
-      colors: ['red','blue','green','orange','purple','yellow','teal','magenta','cyan','brown','gray'],
+      colors: ['red', 'blue', 'green', 'orange', 'purple', 'yellow', 'teal', 'magenta', 'cyan', 'brown', 'gray'],
       routes: [
         { name: 'Ruta 1', points: [], color: 'red', visible: true, stops: [], stopsLabels: [] }
       ],
@@ -212,7 +188,7 @@ export default {
       guidanceActive: false,
       position: null,
       watchId: null,
-      
+      satelliteMode: false,
     }
   },
   computed: {
@@ -241,7 +217,7 @@ export default {
     addRoute() {
       const i = this.routes.length
       this.routes.push({
-        name: `Ruta ${i+1}`,
+        name: `Ruta ${i + 1}`,
         points: [],
         color: this.colors[i % this.colors.length],
         visible: true,
@@ -259,11 +235,11 @@ export default {
       const prev = this.selectedRouteIdx
       this.routes.splice(i, 1)
       this.routes.forEach((r, j) => {
-        r.name = `Ruta ${j+1}`
+        r.name = `Ruta ${j + 1}`
         r.color = this.colors[j % this.colors.length]
       })
       this.selectedRouteIdx = this.routes.length
-        ? prev > i ? prev-1 : Math.min(prev, this.routes.length-1)
+        ? prev > i ? prev - 1 : Math.min(prev, this.routes.length - 1)
         : null
       console.log('deleteRoute:', i, this.routes)
     },
@@ -320,13 +296,13 @@ export default {
       reader.onload = async () => {
         const json = JSON.parse(reader.result)
         const arr = Array.isArray(json) ? json : [json]
-        this.routes = arr.map((r,i) => ({
-          name: r.name || `Ruta ${i+1}`,
-          points: (r.waypoints||[]).map(w => [w.lat, w.lng]),
+        this.routes = arr.map((r, i) => ({
+          name: r.name || `Ruta ${i + 1}`,
+          points: (r.waypoints || []).map(w => [w.lat, w.lng]),
           color: r.color || this.colors[i % this.colors.length],
           visible: true,
-          stops: (r.stops||[]).map(s => [s.lat, s.lng]),
-          stopsLabels: (r.stops||[]).map(() => 'Buscando...')
+          stops: (r.stops || []).map(s => [s.lat, s.lng]),
+          stopsLabels: (r.stops || []).map(() => 'Buscando...')
         }))
         this.selectedRouteIdx = 0
         for (const route of this.routes) {
@@ -341,8 +317,8 @@ export default {
       const data = this.routes.map(r => ({
         name: r.name,
         color: r.color,
-        waypoints: r.points.map(p => ({ lat:p[0], lng:p[1] })),
-        stops: r.stops.map(s => ({ lat:s[0], lng:s[1] }))
+        waypoints: r.points.map(p => ({ lat: p[0], lng: p[1] })),
+        stops: r.stops.map(s => ({ lat: s[0], lng: s[1] }))
       }))
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
       const url = URL.createObjectURL(blob)
@@ -358,10 +334,10 @@ export default {
       const data = {
         name: r.name,
         color: r.color,
-        waypoints: r.points.map(p => ({ lat:p[0], lng:p[1] })),
-        stops: r.stops.map(s => ({ lat:s[0], lng:s[1] }))
+        waypoints: r.points.map(p => ({ lat: p[0], lng: p[1] })),
+        stops: r.stops.map(s => ({ lat: s[0], lng: s[1] }))
       }
-      const blob = new Blob([JSON.stringify(data, null,2)], { type:'application/json' })
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
@@ -404,7 +380,7 @@ export default {
       }
     },
     formatDistance(m) {
-      return m >= 1000 ? `${(m/1000).toFixed(1)} km` : `${Math.round(m)} m`
+      return m >= 1000 ? `${(m / 1000).toFixed(1)} km` : `${Math.round(m)} m`
     },
     speakInstruction(text) {
       console.log('speakInstruction:', text)
@@ -413,44 +389,44 @@ export default {
         window.speechSynthesis.speak(u)
       }
     },
-     startGuidance() {
-    this.guidanceActive = true
-    this.currentStepIndex = 0
+    startGuidance() {
+      this.guidanceActive = true
+      this.currentStepIndex = 0
 
-    // === Lee la primera instrucción en voz alta ===
-    if (this.instructions.length && 'speechSynthesis' in window) {
-      const u = new SpeechSynthesisUtterance(this.instructions[0].text)
-      u.lang = 'es-ES'
-      window.speechSynthesis.cancel()
-      window.speechSynthesis.speak(u)
-    }
-  },
-
-  updateCurrentStep() {
-    if (!this.guidanceActive || !this.instructions.length || !this.position) return
-
-    let next = this.currentStepIndex
-    for (let i = 0; i < this.instructions.length; i++) {
-      const [lat, lng] = this.instructions[i].location
-      const d = L.latLng(...this.position).distanceTo(L.latLng(lat, lng))
-      if (d < 20) next = i + 1
-      else break
-    }
-
-    const newIndex = Math.min(next, this.instructions.length - 1)
-    if (newIndex !== this.currentStepIndex) {
-      this.currentStepIndex = newIndex
-
-      // === Y habla cada nuevo paso ===
-      const texto = this.instructions[newIndex].text
-      if ('speechSynthesis' in window) {
-        const u = new SpeechSynthesisUtterance(texto)
+      // === Lee la primera instrucción en voz alta ===
+      if (this.instructions.length && 'speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(this.instructions[0].text)
         u.lang = 'es-ES'
         window.speechSynthesis.cancel()
         window.speechSynthesis.speak(u)
       }
-    }
-  },
+    },
+
+    updateCurrentStep() {
+      if (!this.guidanceActive || !this.instructions.length || !this.position) return
+
+      let next = this.currentStepIndex
+      for (let i = 0; i < this.instructions.length; i++) {
+        const [lat, lng] = this.instructions[i].location
+        const d = L.latLng(...this.position).distanceTo(L.latLng(lat, lng))
+        if (d < 20) next = i + 1
+        else break
+      }
+
+      const newIndex = Math.min(next, this.instructions.length - 1)
+      if (newIndex !== this.currentStepIndex) {
+        this.currentStepIndex = newIndex
+
+        // === Y habla cada nuevo paso ===
+        const texto = this.instructions[newIndex].text
+        if ('speechSynthesis' in window) {
+          const u = new SpeechSynthesisUtterance(texto)
+          u.lang = 'es-ES'
+          window.speechSynthesis.cancel()
+          window.speechSynthesis.speak(u)
+        }
+      }
+    },
     stopGuidance() {
       this.guidanceActive = false
       console.log('stopGuidance')
@@ -480,8 +456,23 @@ export default {
 </script>
 
 <style scoped>
-.route-color-bar { width:4px; margin-right:8px }
-.route-actions-top, .route-actions-bottom { display:flex; align-items:center }
-.route-actions-top q-btn, .route-actions-bottom q-btn { margin-left:4px }
-.route-actions-bottom { margin-top:4px }
+.route-color-bar {
+  width: 4px;
+  margin-right: 8px
+}
+
+.route-actions-top,
+.route-actions-bottom {
+  display: flex;
+  align-items: center
+}
+
+.route-actions-top q-btn,
+.route-actions-bottom q-btn {
+  margin-left: 4px
+}
+
+.route-actions-bottom {
+  margin-top: 4px
+}
 </style>
