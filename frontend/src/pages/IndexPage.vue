@@ -80,6 +80,55 @@
           @dragend="onStopDragEnd($event, i)"
           @click.stop="removeLocalStop(i)"
         />
+
+        <!-- ————————————————————————————— Capas de datos ————————————————————————————— -->
+
+<!-- Most Frequent Points -->
+<template v-if="layers.most_frequent_points">
+  <l-marker
+    v-for="(p,i) in datos.most_frequent_points"
+    :key="`mfp-${i}`"
+    :lat-lng="[p.lat, p.lon]"
+    :icon="starIcon"
+  />
+</template>
+
+
+<!-- Most Frequent Points Barrio -->
+<template v-if="layers.most_frequent_points_barrio">
+  <l-marker
+    v-for="(p,i) in datos.most_frequent_points_barrio"
+    :key="`mfpb-${i}`"
+    :lat-lng="[p.lat, p.lon]"
+    :icon="flagIcon"
+  />
+</template>
+
+<!-- Grouped Barrios (marcador + círculo) -->
+<template v-if="layers.grouped_barrios">
+  <l-marker
+    v-for="(b,i) in datos.grouped_barrios"
+    :key="`gb-${i}`"
+    :lat-lng="[b.lat, b.lon]"
+    :icon="streetViewIcon"
+  />
+  <l-circle
+    v-for="(b,i) in datos.grouped_barrios"
+    :key="`gbc-${i}`"
+    :lat-lng="[b.lat, b.lon]"
+    :radius="500"
+  />
+</template>
+
+<!-- Decesos (iconos fantasma) -->
+<template v-if="layers.decesos_points">
+  <l-marker
+    v-for="(c,i) in decesosCoords"
+    :key="`dec-${i}`"
+    :lat-lng="c"
+    :icon="ghostIcon"
+  />
+</template>
       </l-map>
     </div>
   </q-page>
@@ -183,7 +232,13 @@ export default {
       flagIcon:       L.divIcon({ html: '<i class="fas fa-flag"></i>',           iconSize:[24,24], iconAnchor:[12,12] }),
       streetViewIcon: L.divIcon({ html: '<i class="fas fa-street-view"></i>',    iconSize:[24,24], iconAnchor:[12,12] }),
       ghostIcon:      L.divIcon({ html: '<i class="fas fa-ghost"></i>',          iconSize:[24,24], iconAnchor:[12,12] }),
-      resizeHandler: null
+      resizeHandler: null,
+      datos: {
+        most_frequent_points: [],
+        most_frequent_points_barrio: [],
+        grouped_barrios: []
+      },
+      decesosCoords: []
     
     }
   },
@@ -562,8 +617,34 @@ export default {
   } catch (err) {
     console.error('Error cargando Decesos.csv:', err)
   }
-    this.$nextTick(() => {
+    this.$nextTick(async () => {
     this.updateMapLayers();
+
+    try {
+    const res = await fetch('/datos.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const datos = await res.json();
+    this.datos = {
+      most_frequent_points:        datos.most_frequent_points       || [],
+      most_frequent_points_barrio: datos.most_frequent_points_barrio || [],
+      grouped_barrios:             datos.grouped_barrios            || []
+    };
+  } catch (err) {
+    console.error('Error cargando datos.json:', err);
+  }
+
+  // 2) Cargar Decesos.csv
+  try {
+    const resCsv = await fetch('/Decesos.csv');
+    if (!resCsv.ok) throw new Error(`HTTP ${resCsv.status}`);
+    const text = await resCsv.text();
+    const rows = Papa.parse(text, { header: true }).data;
+    this.decesosCoords = rows
+      .map(r => [parseFloat(r.Latitud), parseFloat(r.Longitud)])
+      .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon));
+  } catch (err) {
+    console.error('Error cargando Decesos.csv:', err);
+  }
   });
 },
   beforeUnmount() {
