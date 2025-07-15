@@ -117,9 +117,9 @@
     :key="`gbc-${i}`"
     :lat-lng="[b.lat, b.lon]"
     :radius="500"
-    color="#0000FF"
-    fill-color="#0000FF"
-    fill-opacity="0.1"
+    color="#00ABFF"
+    fill-color="#00ABFF"
+    :fill-opacity= "0.1"
   />
 </template>
 
@@ -206,13 +206,13 @@ const starIcon = L.divIcon({
 
 const flagIcon = L.divIcon({
   ...baseIconOpts, 
-  html: '<i class="fas fa-flag" style="color: #FFA500; font-size:24px;"></i>',
+  html: '<i class="fas fa-flag" style="color: #CCA500; font-size:24px;"></i>',
   iconSize: [24,24], iconAnchor: [12,12]
 })
 
 const streetViewIcon = L.divIcon({
   ...baseIconOpts,
-  html: '<i class="fas fa-street-view" style="color: #0000FF; font-size:24px;"></i>',
+  html: '<i class="fas fa-street-view" style="color: #00ABFF; font-size:24px;"></i>',
   iconSize: [24,24], iconAnchor: [12,12]
 })
 
@@ -271,7 +271,8 @@ export default {
       datos: {
         most_frequent_points: [],
         most_frequent_points_barrio: [],
-        grouped_barrios: []
+        grouped_barrios: [],
+        heat_data:                   []
       },
       decesosCoords: []
     
@@ -319,10 +320,52 @@ export default {
   },
   methods: {
 
-      onMapReady() {
-    // El mapa ya existe, ahora sí podemos meter las capas
-    this.updateMapLayers();
+async onMapReady() {
+    const map = this.$refs.mapRef.mapObject
+    try {
+      const res = await fetch('/datos.json')
+      const json = res.ok ? await res.json() : {}
+      this.datos = {
+        most_frequent_points:        json.most_frequent_points       || [],
+        most_frequent_points_barrio: json.most_frequent_points_barrio || [],
+        grouped_barrios:             json.grouped_barrios            || [],
+        heat_data:                   json.heat_data                  || []
+      }
+    } catch (err) {
+      console.error('Error cargando datos.json:', err)
+    }
+    try {
+      const res = await fetch('/Decesos.csv')
+      const text = res.ok ? await res.text() : ''
+      const rows = text ? Papa.parse(text, { header: true }).data : []
+      this.decesosCoords = rows
+        .map(r => [parseFloat(r.Latitud), parseFloat(r.Longitud)])
+        .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon))
+    } catch (err) {
+      console.error('Error cargando Decesos.csv:', err)
+    }
+    const heatPts = this.datos.heat_data
+      .filter(p => Array.isArray(p) && Number.isFinite(p[0]) && Number.isFinite(p[1]))
+      if (heatPts.length) {
+      this.layerGroups.heat_data = L.heatLayer(heatPts, {
+        radius: 25,
+        gradient: { 0.4: 'yellow', 0.65: 'orange', 1: 'red' }
+      })
+    }
+    if (this.decesosCoords.length) {
+      this.layerGroups.decesos_heat = L.heatLayer(this.decesosCoords, {
+        radius: 25,
+        blur:   15,
+        gradient: { 0: 'transparent', 1: 'black' }
+      })
+    }
+
+    this.updateMapLayers()
   },
+
+
+
+  
     getMarkerIcon(i) {
       const last = this.points.length - 1
       if (i === 0) return greenIcon
@@ -557,137 +600,16 @@ export default {
     }
   }
   },
-  async mounted() {
-    const resize = () => this.$refs.mapRef.mapObject.invalidateSize()
-    setTimeout(resize, 300)
-    window.addEventListener('resize', resize)
-    // guardamos el handler en this para poder eliminarlo luego
-    this.resizeHandler = () => {
-      const map = this.$refs.mapRef?.mapObject
-      if (map) map.invalidateSize()
-    }
-    setTimeout(this.resizeHandler, 300)
-    window.addEventListener('resize', this.resizeHandler)
-       // ─── Invalidate Size Handler ─────────────────────────────
-  this.resizeHandler = () => {
-    const map = this.$refs.mapRef?.mapObject
-    if (map) map.invalidateSize()
-  }
-  setTimeout(this.resizeHandler, 300)
-  window.addEventListener('resize', this.resizeHandler)
-
-  // ─── 1) Cargar datos.json ────────────────────────────────
-  try {
-    const res = await fetch('/datos.json')
-    if (!res.ok) throw new Error(`HTTP ${res.status} fetching datos.json`)
-    const datos = await res.json()
-
-    // most_frequent_points
-    if (Array.isArray(datos.most_frequent_points)) {
-      datos.most_frequent_points
-        .filter(p => Number.isFinite(p.lat) && Number.isFinite(p.lon))
-        .forEach(p =>
-          L.marker([p.lat, p.lon], { icon: this.starIcon })
-            .addTo(this.layerGroups.most_frequent_points)
-        )
-    }
-
-    // most_frequent_points_barrio
-    if (Array.isArray(datos.most_frequent_points_barrio)) {
-      datos.most_frequent_points_barrio
-        .filter(p => Number.isFinite(p.lat) && Number.isFinite(p.lon))
-        .forEach(p =>
-          L.marker([p.lat, p.lon], { icon: this.flagIcon })
-            .addTo(this.layerGroups.most_frequent_points_barrio)
-        )
-    }
-
-    // heat_data
-    if (Array.isArray(datos.heat_data)) {
-      const heatPts = datos.heat_data
-        .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon))
-      this.layerGroups.heat_data = L.heatLayer(heatPts, {
-        radius: 25, blur: 15,
-        gradient: { 0.4: 'yellow', 0.65: 'orange', 1: 'red' }
-      })
-    }
-
-    // grouped_barrios
-    if (Array.isArray(datos.grouped_barrios)) {
-      datos.grouped_barrios
-        .filter(b => Number.isFinite(b.lat) && Number.isFinite(b.lon))
-        .forEach(b => {
-          L.marker([b.lat, b.lon], { icon: this.streetViewIcon })
-            .addTo(this.layerGroups.grouped_barrios)
-          L.circle([b.lat, b.lon], { radius: 500, color: '#000' })
-            .addTo(this.layerGroups.grouped_barrios)
-        })
-    }
-
-  } catch (err) {
-    console.error('Error cargando datos.json:', err)
-  }
-
-  // ─── 2) Cargar Decesos.csv ────────────────────────────────
-  try {
-    const resCsv = await fetch('/Decesos.csv')
-    if (!resCsv.ok) throw new Error(`HTTP ${resCsv.status} fetching Decesos.csv`)
-    const text = await resCsv.text()
-    const rows = Papa.parse(text, { header: true }).data
-
-    const decesosCoords = rows
-      .map(r => [parseFloat(r.Latitud), parseFloat(r.Longitud)])
-      .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon))
-
-    if (decesosCoords.length) {
-      this.layerGroups.decesos_heat = L.heatLayer(decesosCoords, {
-        radius: 25, blur: 15,
-        gradient: { 0: 'transparent', 1: 'black' }
-      })
-      decesosCoords.forEach(([lat, lon]) =>
-        L.marker([lat, lon], { icon: this.ghostIcon })
-          .addTo(this.layerGroups.decesos_points)
-      )
-    }
-  } catch (err) {
-    console.error('Error cargando Decesos.csv:', err)
-  }
-    this.$nextTick(async () => {
-    this.updateMapLayers();
-
-    try {
-    const res = await fetch('/datos.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const datos = await res.json();
-    this.datos = {
-      most_frequent_points:        datos.most_frequent_points       || [],
-      most_frequent_points_barrio: datos.most_frequent_points_barrio || [],
-      grouped_barrios:             datos.grouped_barrios            || []
-    };
-  } catch (err) {
-    console.error('Error cargando datos.json:', err);
-  }
-
-  // 2) Cargar Decesos.csv
-  try {
-    const resCsv = await fetch('/Decesos.csv');
-    if (!resCsv.ok) throw new Error(`HTTP ${resCsv.status}`);
-    const text = await resCsv.text();
-    const rows = Papa.parse(text, { header: true }).data;
-    this.decesosCoords = rows
-      .map(r => [parseFloat(r.Latitud), parseFloat(r.Longitud)])
-      .filter(([lat, lon]) => Number.isFinite(lat) && Number.isFinite(lon));
-  } catch (err) {
-    console.error('Error cargando Decesos.csv:', err);
-  }
-  });
+  mounted() {
+  const resize = () => this.$refs.mapRef.mapObject.invalidateSize()
+  setTimeout(resize, 300)
+  window.addEventListener('resize', resize)
+  this.resizeHandler = resize
 },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.resize)
-    if (this.resizeHandler) {
-      window.removeEventListener('resize', this.resizeHandler)
-    }
-  }
+beforeUnmount() {
+  window.removeEventListener('resize', this.resizeHandler)
+},
+ 
 }
 </script>
 
