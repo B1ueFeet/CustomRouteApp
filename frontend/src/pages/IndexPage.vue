@@ -10,6 +10,7 @@
         @click="onMapClick"
         @mousemove="onMapMouseMove"
         @mouseout="onMapMouseOut"
+        @ready="onMapReady"
       >
         <l-tile-layer :url="tileUrl" />
 
@@ -155,7 +156,7 @@ export default {
     stopsRadius:          { type: Number,  default: 200 },
     stopsEditing:         { type: Boolean, default: false },
     stopsCleaning:        { type: Boolean, default: false },
-    layers:               { type: Object,  required: true }
+    layers:               { type: Object,  required: true },
   },
   data() {
     return {
@@ -213,21 +214,10 @@ export default {
       this.localStops = newVal.slice()
     },
     layers: {
-    handler(newL) {
-      const map = this.$refs.mapRef?.mapObject
-      if (!map) return
-      Object.entries(this.layerGroups).forEach(([key, grp]) => {
-        if (!grp) return
-        if (newL[key] && !map.hasLayer(grp)) {
-          map.addLayer(grp)
-        }
-        else if (!newL[key] && map.hasLayer(grp)) {
-          map.removeLayer(grp)
-        }
-      })
+    handler() {
+      this.updateMapLayers();
     },
-    deep: true,
-    immediate: true
+    deep: true
   }
   },
   computed: {
@@ -238,6 +228,11 @@ export default {
     }
   },
   methods: {
+
+      onMapReady() {
+    // El mapa ya existe, ahora sí podemos meter las capas
+    this.updateMapLayers();
+  },
     getMarkerIcon(i) {
       const last = this.points.length - 1
       if (i === 0) return greenIcon
@@ -380,6 +375,22 @@ export default {
       })
       return idx
     },
+    updateMapLayers() {
+    const map = this.$refs.mapRef?.mapObject;
+    if (!map) return;
+
+    Object.entries(this.layerGroups).forEach(([key, grp]) => {
+      if (!grp) return;
+      // Si está activada en `layers` y no está en el mapa, la agregamos
+      if (this.layers[key] && !map.hasLayer(grp)) {
+        map.addLayer(grp);
+      }
+      // Si está desactivada y sí está en el mapa, la quitamos
+      else if (!this.layers[key] && map.hasLayer(grp)) {
+        map.removeLayer(grp);
+      }
+    });
+  },
   async calcRoute(idx, pts) {
     const coords = pts.map(p => `${p[1]},${p[0]}`).join(';')
     try {
@@ -551,6 +562,9 @@ export default {
   } catch (err) {
     console.error('Error cargando Decesos.csv:', err)
   }
+    this.$nextTick(() => {
+    this.updateMapLayers();
+  });
 },
   beforeUnmount() {
     window.removeEventListener('resize', this.resize)
