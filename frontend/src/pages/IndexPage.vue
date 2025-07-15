@@ -203,6 +203,7 @@ export default {
       map: null,
       lightNoLabels: 'https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
       lightLabels: 'https://a.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png',
+      darkLabels:     'https://a.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}.png',
       satellite: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       // opcional: tileUrl si quisieras seguir usando OSM puro
       tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
